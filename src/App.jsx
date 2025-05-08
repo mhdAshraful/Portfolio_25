@@ -17,7 +17,7 @@ import CanvasContainer from "./immersive/Immersive";
 
 /*** Components import */
 import Loading from "./Loading";
-import Mouse from "@cmpnnts/mouse";
+import Mouse from "@cmpnnts/Mouse";
 import { MylogoWrap } from "@cmpnnts/MyLogo";
 import Circles from "@cmpnnts/Circles";
 import SocialMedia from "@cmpnnts/SocialMedia";
