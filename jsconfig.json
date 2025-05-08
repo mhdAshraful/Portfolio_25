@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".", // Base directory for resolving non-relative module names
+		"paths": {
+			"@cmpnnts/*": ["src/components/*"], // Alias for components
+			"@imgs/*": ["assets/images/*"], // Alias for images
+			"@fnt/*": ["assets/fonts/*"] // Alias for fonts
+		}
+	},
+	"include": ["src/**/*"], // Include all files in the src directory
+	"exclude": ["node_modules", "dist"] // Exclude node_modules and build output
+}

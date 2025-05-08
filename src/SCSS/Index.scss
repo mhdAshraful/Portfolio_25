@@ -1,0 +1,82 @@
+@use "./partials/fonts";
+@use "./partials/sizes";
+@use "./partials/home";
+@use "./partials/about";
+@use "./partials/works";
+@use "./partials/contact";
+@use "./partials/socialmedia";
+@use "./partials/logo";
+@use "./partials/corner";
+@use "./partials/canvas";
+@use "./partials/spinFlower";
+
+:root {
+	--red: #ed3203;
+	--black: #0f0f0f;
+	--cream: #fafad2;
+	--white: #fffff2;
+	--white40: #fffff282;
+	--fira: "Fira Sans", sans-serif;
+	--neue: "Neue Regrade", sans-serif;
+	--neueVar: "Neue Regrade Variable", sans-serif;
+	--width: 100vw;
+	--height: 100vh;
+}
+/***
+ * --> Serif are small decorative strokes at the end of a letter.
+ * -> Sans means "without" 
+ * --> Sans-Serif has decorative strokes.
+ * 
+ * -- Grotesk, Fira Sans, Neue Regrade all are Sans-Serif ~ with no strokes
+ */
+
+*,
+html,
+body,
+#root {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	scroll-behavior: auto;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overscroll-behavior: none;
+}
+body {
+	background-color: var(--white);
+	color: var(--black);
+	font-family: var(--fira);
+	font-size: 16px;
+}
+
+.border {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: calc(100vw - 80px);
+	height: calc(100vh - 80px);
+	border: 1px solid var(--black);
+	border-radius: 16px;
+	transform: translate(-50%, -50%);
+	overflow: hidden;
+}
+
+#MenuCircle {
+	// in this project both here and in svg component has to set trnsperant and fill "none"
+	background: transparent;
+}
+
+.primaryMouse {
+	position: fixed;
+	z-index: 1000;
+	width: 50px;
+	height: 50px;
+	border: 1px solid var(--white);
+	background-color: var(--white);
+	mix-blend-mode: difference;
+	border-radius: 50%;
+	pointer-events: none;
+	overflow: hidden;
+	transform: translate3d(0, 0, 0);
+}

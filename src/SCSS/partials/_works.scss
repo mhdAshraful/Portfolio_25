@@ -1,0 +1,119 @@
+@use "./fonts";
+@use "./sizes";
+.works_container {
+	width: 100%;
+	min-height: calc(100vh - 80px);
+	// background-color: rgb(172, 255, 227);
+
+	.works {
+		position: relative;
+		min-width: calc(100vw - 80px);
+		min-height: calc(100vh - 80px);
+
+		.title_container {
+			position: relative;
+			top: 5vh;
+			left: 25vw;
+			display: flex;
+			flex-direction: row;
+			// justify-content: center;
+			// align-items: center;
+
+			.title {
+				position: relative;
+				// left: 20vw;
+				width: 40vw;
+				font-family: var(--neueVar);
+				font-variant-ligatures: discretionary-ligatures;
+				// min-f, base-f, min, base
+				@include fonts.font_size_be(20, 45, 320, 1920);
+				font-weight: 1000;
+				transition: all 0.6s cubic-bezier(0.65, 0.74, 0.18, 1);
+				font-feature-settings: "liga" 1, "kern" 1, "ss01" 0;
+				kerning: normal;
+			}
+
+			.imagebox {
+				position: inherit;
+				width: 100px;
+				height: 100px;
+				left: -40px;
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
+				}
+			}
+		}
+		.work_list {
+			position: relative;
+			@include sizes.width_be(450, 1000, 768, 1920);
+			top: 8vw;
+			left: 25vw;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 10px;
+
+			#item_0,
+			#item_1,
+			#item_2,
+			#item_3 {
+				// background-color: aqua;
+				height: 200px;
+				border: 1px solid var(--black);
+				border-bottom-right-radius: 32px;
+				overflow: hidden;
+				text-wrap: nowrap;
+
+				.marq_track {
+					width: 100%;
+					overflow: hidden;
+					display: inline-flex;
+				}
+				.num {
+					font-size: 40px;
+				}
+				.num,
+				.headline {
+					font-family: var(--neueVar);
+					font-weight: 1000;
+				}
+				.headline {
+					padding-right: 100%;
+				}
+				.headline.dup {
+					opacity: 1;
+				}
+
+				.box_heading {
+					width: 100%;
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: start;
+					padding: 10px;
+					text-transform: uppercase;
+					transition: all 0.5s ease-in-out;
+				}
+			}
+			#item_0 {
+				// width: 350px;
+				@include sizes.width_be(200, 380, 768, 1920);
+			}
+			#item_1 {
+				// width: 300px;
+				@include sizes.width_be(200, 400, 768, 1920);
+			}
+			#item_2 {
+				// width: 420px;
+				@include sizes.width_be(200, 500, 768, 1920);
+			}
+			#item_3 {
+				// width: 360px;
+				@include sizes.width_be(200, 420, 768, 1920);
+			}
+		}
+	}
+}

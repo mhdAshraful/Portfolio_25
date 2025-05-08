@@ -1,0 +1,291 @@
+@use "./fonts";
+@use "./sizes";
+.ui_wrapper,
+.webgl_wrapper,
+.interaction_wrapper,
+.focus_wrapper,
+.education_wrapper {
+	width: 100%;
+	max-height: calc(100vh - 80px);
+
+	section {
+		position: relative;
+		width: calc(100vw - 80px);
+		min-height: calc(100vh - 80px);
+		// display: flex;
+		// justify-content: center;
+		// align-items: center;
+
+		/** UI */
+		&.ui {
+			width: 100%;
+			height: 100%;
+
+			.title_top {
+				padding-top: 10px;
+				float: center;
+				text-align: center;
+			}
+			.middle {
+				margin: 2% 0 0 10%;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-evenly;
+				align-items: center;
+				gap: 5%;
+			}
+
+			.iphone {
+				width: 100%;
+				height: calc(100vh - 200px);
+				position: relative;
+				img {
+					height: calc(100vh - 200px);
+					aspect-ratio: 200/433;
+					object-fit: cover;
+				}
+			}
+
+			& .img3 {
+				position: absolute;
+				top: 20%;
+				right: 20px;
+			}
+			& .img4 {
+				position: absolute;
+				right: 20px;
+				bottom: 20px;
+			}
+			& .img5 {
+				position: absolute;
+				left: 360px;
+				bottom: 80px;
+			}
+		}
+		/** WEBGL */
+		&.webgl {
+			width: 100%;
+			height: 100%;
+			position: relative;
+
+			.middle {
+				width: 50vw;
+				position: relative;
+				.title {
+					max-width: 100%;
+					top: 30vh;
+					left: 10vw;
+				}
+			}
+		}
+
+		/** INTERACTION */
+		&.interaction {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: 15%;
+
+			.middle {
+				position: relative;
+				left: 10vw;
+				width: 50vw;
+				.title {
+					max-width: 100%;
+					display: inline-block;
+				}
+			}
+		}
+
+		/** FOCUS */
+		&.focus {
+			// background-color: lightblue;
+			position: relative;
+			width: 100%;
+			height: 100%;
+
+			.imag_contain {
+				position: absolute;
+				top: 11vh;
+				left: 6vw;
+				aspect-ratio: 134/106;
+				@include sizes.width_be(30, 134, 320, 1920);
+				height: auto;
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
+				}
+			}
+			.title {
+				position: absolute;
+				top: 15vh;
+				left: 10vw;
+				text-transform: none;
+				word-wrap: none;
+				word-break: keep-all;
+				max-width: 80%;
+				max-height: 80%;
+				font-family: var(--neueVar);
+				@include fonts.font_size_be(33, 96, 320, 1920);
+				font-weight: 1000;
+				letter-spacing: 3px;
+				font-feature-settings: "liga" 1, "kern" 1, "ss01" 0;
+			}
+			.reference {
+				position: absolute;
+				top: 35vh;
+				left: 35vw;
+				font-size: 20px;
+			}
+		}
+
+		/** EDUCATION */
+		&.education {
+			// background-color: #d9ebab;
+			width: 100%;
+			height: 100%;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			.title {
+				max-width: 100%;
+				font: var(--neueVar);
+				@include fonts.font_size_be(33, 96, 320, 1920);
+				text-align: center;
+			}
+			.books_self {
+				// background-color: aqua;
+				width: 100%;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				.book {
+					width: calc(100vw - (10vw * 2));
+					// width: calc(100vw - (170px * 2));
+
+					img {
+						width: 100%;
+						aspect-ratio: 6.4 / 1;
+						object-fit: cover; /* or contain, depending on your use */
+						display: block;
+					}
+					.bar {
+						margin-top: 4px;
+					}
+				}
+			}
+			.course-table {
+				position: relative;
+				width: calc(100vw - (10vw * 2));
+				// width: calc(100vw - (170px * 2));
+
+				tr.mainCourse {
+					height: 70px;
+
+					.year {
+						width: 45%;
+						max-width: 45%;
+						font-size: 13px;
+					}
+					.provider {
+						width: 25%;
+						max-width: 25%;
+						font-size: 20px;
+						@include fonts.font_size_be(10, 20, 320, 1920);
+						font-weight: 500;
+					}
+					#course_c1 {
+						margin-bottom: 30px;
+						font-weight: 600;
+						font-size: 34px;
+						@include fonts.font_size_be(12, 34, 320, 1920);
+					}
+					#course_c2 {
+						font-weight: 600;
+						font-size: 29px;
+						@include fonts.font_size_be(12, 29, 320, 1920);
+					}
+					#course_c3 {
+						font-weight: 600;
+						font-size: 24px;
+						@include fonts.font_size_be(12, 24, 320, 1920);
+					}
+				}
+			}
+			.shortTitle {
+				// width: calc(100vw - (170px * 2));
+				width: calc(100vw - (10vw * 2));
+				text-align: left;
+				font-size: 13px;
+			}
+
+			.other-course-table {
+				// width: calc(100vw - (170px * 2));
+				width: calc(100vw - (10vw * 2));
+				tr.otherCourse {
+					height: 30px;
+				}
+				.year {
+					width: 45%;
+					max-width: 45%;
+					font-size: 13px;
+				}
+				.provider_2 {
+					width: 25%;
+					max-width: 25%;
+					font-size: 16px;
+					font-weight: 500;
+				}
+				.course_online {
+					width: 40%;
+					max-width: 40%;
+					font-size: 16px;
+				}
+			}
+			.other-course-table .otherCourse td.provider_2,
+			.other-course-table .otherCourse td.course_online {
+				border-bottom: 1px solid var(--black);
+				padding: 8px 0; /* optional, for spacing */
+			}
+
+			.bookImage {
+				position: absolute;
+				z-index: 10;
+				width: 144px;
+				aspect-ratio: 144/ 171;
+				bottom: 5vw;
+				left: 30vw;
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+	.title {
+		position: relative;
+		max-width: 390px;
+		max-height: 339px;
+		word-wrap: break-word;
+		letter-spacing: 4%;
+
+		font-family: var(--neue);
+		font-variant-ligatures: discretionary-ligatures;
+		text-transform: uppercase;
+
+		// min-f, base-f, min, base
+		@include fonts.font_size_be(33, 96, 320, 1920);
+		font-weight: 1000;
+		transition: all 0.6s cubic-bezier(0.65, 0.74, 0.18, 1);
+		font-feature-settings: "liga" 1, "kern" 1, "ss01" 1;
+		kerning: normal;
+		// background-color: #2ec7c5;
+	}
+}

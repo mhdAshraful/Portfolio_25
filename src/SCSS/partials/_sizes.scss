@@ -1,0 +1,21 @@
+/**
+ * @param $property ~ The CSS property to apply (e.g., width, height)
+ * @param $min-itemsize ~ Minimum size for the property
+ * @param $base-item-size ~ Base size for the property
+ * @param $min-screen ~ Minimum screen size to calculate
+ * @param $base-screen ~ The default screen width designed (default: 1920px)
+ */
+@mixin height_be($min-itemsize, $base-item-size, $min-screen, $base-screen) {
+	height: clamp(
+		#{$min-itemsize}px,
+		calc(#{$base-item-size} * (100vh - 80px) / #{$base-screen}),
+		(100vh - 80px)
+	);
+}
+@mixin width_be($min-itemsize, $base-item-size, $min-screen, $base-screen) {
+	width: clamp(
+		#{$min-itemsize}px,
+		calc(#{$base-item-size} * (100vw - 80px) / #{$base-screen}),
+		(100vw - 80px)
+	);
+}

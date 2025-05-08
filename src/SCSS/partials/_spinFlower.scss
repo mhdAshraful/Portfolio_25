@@ -1,0 +1,24 @@
+.flower_box {
+	position: relative;
+	width: 400px;
+	height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.flowers,
+.lets_make {
+	position: absolute; /* allow overlap */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flowers img,
+.lets_make img {
+	max-width: 100%;
+	height: auto;
+}
+#flower {
+	margin: 0 40px 86px 20px;
+}
