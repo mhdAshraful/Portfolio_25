@@ -9,10 +9,4 @@ git init
 npm install
 update your icon.svg,
 
-## Installing GSAP Premium
-
-1. Download `gsap-bonus.tgz` from your GreenSock account.
-2. Place it in `root` folder.
-3. Run `npm install`.
-
-If using a different path, update `package.json` accordingly.
+GSAP is now free corrected Version is gsap: ^3.13
