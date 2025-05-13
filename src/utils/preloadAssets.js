@@ -51,8 +51,8 @@ export async function preloadAssets(onProgress) {
 
 	const fontNames = [
 		"Fira Sans", // Must match your @font-face
-		"Neue Regrade",
 		"Neue Regrade Variable",
+		"Neue Regrade",
 	];
 
 	/**

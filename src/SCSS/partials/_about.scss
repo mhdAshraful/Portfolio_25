@@ -1,3 +1,4 @@
+@use "./mixins";
 @use "./fonts";
 @use "./sizes";
 .ui_wrapper,
@@ -6,12 +7,12 @@
 .focus_wrapper,
 .education_wrapper {
 	width: 100%;
-	max-height: calc(100vh - 80px);
+	max-height: calc(100vh - (var(--gutter) * 2));
 
 	section {
 		position: relative;
-		width: calc(100vw - 80px);
-		min-height: calc(100vh - 80px);
+		width: calc(100vw - (var(--gutter) * 2));
+		min-height: calc(100vh - (var(--gutter) * 2));
 		// display: flex;
 		// justify-content: center;
 		// align-items: center;
@@ -27,39 +28,66 @@
 				text-align: center;
 			}
 			.middle {
-				margin: 2% 0 0 10%;
+				margin: 10% 0 0 10%;
 				display: flex;
 				flex-direction: row;
-				justify-content: space-evenly;
+				// justify-content: space-evenly;
 				align-items: center;
-				gap: 5%;
+				gap: 2%;
+				.title {
+					width: 40%;
+				}
+				.iphone {
+					// height: calc(100vh - 240px);
+					position: relative;
+					@include sizes.width_be(150, 460, 768, 1920);
+					aspect-ratio: 200/433;
+
+					img {
+						width: 100%;
+						height: 100%;
+						// height: calc(100vh - 240px);
+						// @include sizes.height_be(250, 600, 320, 1920);
+						object-fit: cover;
+					}
+				}
+
+				// @include mixins.MOBILE {
+				// 	.iphone {
+				// 		display: none;
+				// 	}
+				// }
 			}
 
-			.iphone {
-				width: 100%;
-				height: calc(100vh - 200px);
-				position: relative;
+			.img3 {
+				position: absolute;
+				top: 20%;
+				right: calc(var(--gutter) + 10px);
+				@include sizes.width_be(42, 150, 320, 1920);
 				img {
-					height: calc(100vh - 200px);
-					aspect-ratio: 200/433;
+					width: 100%;
 					object-fit: cover;
 				}
 			}
-
-			& .img3 {
+			.img4 {
 				position: absolute;
-				top: 20%;
-				right: 20px;
+				right: calc(var(--gutter) + 10px);
+				bottom: calc(var(--gutter) + 10px);
+				@include sizes.width_be(40, 150, 320, 1920);
+				img {
+					width: 100%;
+					object-fit: cover;
+				}
 			}
-			& .img4 {
+			.img5 {
 				position: absolute;
-				right: 20px;
-				bottom: 20px;
-			}
-			& .img5 {
-				position: absolute;
-				left: 360px;
-				bottom: 80px;
+				left: calc(var(--gutter) + 30vw);
+				bottom: calc(var(--gutter) + 20vh);
+				@include sizes.width_be(50, 120, 320, 1920);
+				img {
+					width: 100%;
+					object-fit: cover;
+				}
 			}
 		}
 		/** WEBGL */
@@ -124,14 +152,12 @@
 				top: 15vh;
 				left: 10vw;
 				text-transform: none;
-				word-wrap: none;
-				word-break: keep-all;
-				max-width: 80%;
+				max-width: 52%;
 				max-height: 80%;
 				font-family: var(--neueVar);
 				@include fonts.font_size_be(33, 96, 320, 1920);
 				font-weight: 1000;
-				letter-spacing: 3px;
+				// letter-spacing: 3px;
 				font-feature-settings: "liga" 1, "kern" 1, "ss01" 0;
 			}
 			.reference {
@@ -180,6 +206,13 @@
 						margin-top: 4px;
 					}
 				}
+
+				@include mixins.TABLET {
+					display: none;
+				}
+				@include mixins.MOBILE {
+					display: none;
+				}
 			}
 			.course-table {
 				position: relative;
@@ -190,8 +223,8 @@
 					height: 70px;
 
 					.year {
-						width: 45%;
-						max-width: 45%;
+						width: 40%;
+						max-width: 40%;
 						font-size: 13px;
 					}
 					.provider {
@@ -199,23 +232,23 @@
 						max-width: 25%;
 						font-size: 20px;
 						@include fonts.font_size_be(10, 20, 320, 1920);
-						font-weight: 500;
+						font-weight: 400;
 					}
 					#course_c1 {
 						margin-bottom: 30px;
 						font-weight: 600;
 						font-size: 34px;
-						@include fonts.font_size_be(12, 34, 320, 1920);
+						@include fonts.font_size_be(10, 34, 320, 1920);
 					}
 					#course_c2 {
 						font-weight: 600;
 						font-size: 29px;
-						@include fonts.font_size_be(12, 29, 320, 1920);
+						@include fonts.font_size_be(9, 29, 320, 1920);
 					}
 					#course_c3 {
 						font-weight: 600;
 						font-size: 24px;
-						@include fonts.font_size_be(12, 24, 320, 1920);
+						@include fonts.font_size_be(9, 24, 320, 1920);
 					}
 				}
 			}
@@ -233,15 +266,17 @@
 					height: 30px;
 				}
 				.year {
-					width: 45%;
-					max-width: 45%;
-					font-size: 13px;
+					width: 40%;
+					max-width: 40%;
+					// font-size: 13px;
+					// @include fonts.font_size_be(9, 24, 320, 1920);
 				}
 				.provider_2 {
 					width: 25%;
 					max-width: 25%;
 					font-size: 16px;
-					font-weight: 500;
+					@include fonts.font_size_be(9, 16, 320, 1920);
+					font-weight: 400;
 				}
 				.course_online {
 					width: 40%;
@@ -255,16 +290,74 @@
 				padding: 8px 0; /* optional, for spacing */
 			}
 
+			.mbl_tbl {
+				width: calc(100vw - (var(--gutter) * 2 + 40px));
+
+				tr.mbl_main {
+					width: 100%;
+					height: 8vh;
+					border-bottom: 1px solid var(--black);
+					p.provider {
+						font-size: 15px;
+						@include fonts.font_size_be(15, 20, 320, 768);
+					}
+					#cert_c1 {
+						font-size: 18px;
+						@include fonts.font_size_be(18, 24, 320, 768);
+						font-weight: 600;
+						display: inline-block;
+						margin-left: calc(var(--gutter) + 10px);
+					}
+					#cert_c2 {
+						font-size: 18px;
+						@include fonts.font_size_be(18, 22, 320, 768);
+						font-weight: 600;
+						display: inline-block;
+						margin-left: calc(var(--gutter) + 10px);
+					}
+					#cert_c3 {
+						font-size: 16px;
+						@include fonts.font_size_be(16, 20, 320, 768);
+						font-weight: 600;
+						display: inline-block;
+						margin-left: calc(var(--gutter) + 10px);
+					}
+				}
+				tr.mbl_other {
+					width: 100%;
+					height: 6vh;
+					p.provider {
+						font-size: 14px;
+						font-weight: 300;
+						@include fonts.font_size_be(14, 20, 320, 768);
+					}
+					span.cert {
+						font-size: 14px;
+						@include fonts.font_size_be(14, 20, 320, 768);
+						font-weight: 500;
+						display: inline-block;
+						margin-left: calc(var(--gutter) + 10px);
+					}
+				}
+			}
+
 			.bookImage {
 				position: absolute;
 				z-index: 10;
 				width: 144px;
+				@include sizes.width_be(100, 144, 768, 1920);
 				aspect-ratio: 144/ 171;
-				bottom: 5vw;
+				bottom: calc(var(--gutter) + 10px);
 				left: 30vw;
 				img {
 					width: 100%;
 					height: 100%;
+				}
+				@include mixins.TABLET {
+					display: none;
+				}
+				@include mixins.MOBILE {
+					display: none;
 				}
 			}
 		}
@@ -276,7 +369,7 @@
 		word-wrap: break-word;
 		letter-spacing: 4%;
 
-		font-family: var(--neue);
+		font-family: var(--neueVar);
 		font-variant-ligatures: discretionary-ligatures;
 		text-transform: uppercase;
 

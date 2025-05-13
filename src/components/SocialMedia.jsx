@@ -1,7 +1,4 @@
 import React, { forwardRef, useLayoutEffect, useState } from "react";
-import linkedIn from "/assets/images/linkedin.svg";
-import github from "/assets/images/github.svg";
-import twitter from "/assets/images/twitter.svg";
 import { clamp } from "three/src/math/MathUtils";
 
 const SocialMedial = forwardRef((props, ref) => {
@@ -43,18 +40,25 @@ const SocialMedial = forwardRef((props, ref) => {
 						href={props.twitter}
 						target="_blank"
 						rel="noopener noreferrer"
+						className="socialLinks"
 					>
-						<img src={twitter} alt="twitter icon" />
-					</a>
-					<a href={props.github} target="_blank" rel="noopener noreferrer">
-						<img src={github} alt="github icon" />
+						<img src="/assets/images/twitter.svg" alt="twitter icon" />
 					</a>
 					<a
-						href={props.linkedIn}
+						href={props.github}
 						target="_blank"
 						rel="noopener noreferrer"
+						className="socialLinks"
 					>
-						<img src={linkedIn} alt="linkein icon" />
+						<img src="/assets/images/github.svg" alt="github icon" />
+					</a>
+					<a
+						href={props.linkedin}
+						target="_blank"
+						rel="noopener noreferrer"
+						className="socialLinks"
+					>
+						<img src="/assets/images/linkedin.svg" alt="linkein icon" />
 					</a>
 				</div>
 				<svg

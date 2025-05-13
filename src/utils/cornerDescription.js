@@ -12,7 +12,7 @@ export const cornerDescription = {
 	ui: {
 		cornerH2: "based - dhaka",
 		description:
-			"I build digital experiences that feel effortless — and leave a lasting impression.",
+			"I build digital experiences that blend user-centric designs with creativity, bringing ideas to life accross web, mobile and interactive device — and leave a lasting impression",
 	},
 	webgl: {
 		cornerH2: "Dsgnd - 2025",
@@ -32,7 +32,7 @@ export const cornerDescription = {
 	education: {
 		cornerH2: "Darwin - Australia",
 		description:
-			"I studied Bachelor of Information Technology at Charles Darwin University, Australia. Human-Computer Interaction Design, Enterprise IT Management, Business Intelligence & Data Mining were some of my major subjects.",
+			"I studied Bachelor of Information Technology at Charles Darwin University, Australia. Human-Computer Interaction Design, Biulding Ineractive Software & Business Intelligence and Data Mining were some of my major subjects.",
 	},
 
 	myworks: {

@@ -27,7 +27,7 @@ const Data = [
 				ribbontext: "Motion Scroll and smooth user flows",
 			},
 			focus: {
-				title: "Focusing is about ||| saying no.",
+				title: "Focusing is about saying no.",
 				reference: "- STEVE JOBS",
 				img: "/assets/images/quote.svg",
 
@@ -166,7 +166,7 @@ const Data = [
 		sociallinks: {
 			github: "https://github.com/mhdAshraful",
 			gitImg: "/assets/images/boxGithub.svg",
-			linkedin: "www.linkedin.com/in/mhdashraful",
+			linkedin: "https://linkedin.com/in/mhdashraful",
 			linkdImg: "/assets/images/boxLinkedin.svg",
 			twitter: "https://twitter.com/mhdashraful/",
 			twitImg: "/assets/images/boxTwitter.svg",

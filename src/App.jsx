@@ -1,11 +1,9 @@
 /*** Tools */
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { preloadAssets } from "./utils/preloadAssets";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
-import { setCornerSectionName } from "./utils/animations";
 
 /*** Data */
 import Data from "./utils/info";
@@ -18,7 +16,7 @@ import CanvasContainer from "./immersive/Immersive";
 /*** Components import */
 import Loading from "./Loading";
 import Mouse from "@cmpnnts/Mouse";
-import { MylogoWrap } from "@cmpnnts/MyLogo";
+import { Logo } from "@cmpnnts/MyLogo";
 import Circles from "@cmpnnts/Circles";
 import SocialMedia from "@cmpnnts/SocialMedia";
 import Cornerinfo from "@cmpnnts/Cornerinfo";
@@ -29,11 +27,18 @@ import Contact from "@cmpnnts/Contact";
 import Works from "@cmpnnts/Works";
 import { Education, Focus, Interaction, UIEng, Web3d } from "@cmpnnts/UIEng";
 
+/** Functions or hooks */
+import { preloadAssets } from "./utils/preloadAssets";
+import { setCornerSectionName } from "./utils/animations";
+import { useTouchDevice } from "./utils/deviceDetector";
+import { replace, useLocation, useNavigate } from "react-router";
+
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
 /***
  * MAIN APP
  */
 function App() {
+	const [width, setWidth] = useState(window.innerWidth);
 	const [height, setHeight] = useState(window.innerHeight);
 	const [percentLoading, setPercentage] = useState(0);
 	const [loaded, setLoaded] = useState(false);
@@ -62,9 +67,25 @@ function App() {
 	const main = useRef();
 	const smoother = useRef();
 
+	/**
+	 * ROUTE URL Update
+	 */
+	const navgate = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.pathname === "/" && currentSection) {
+			navgate(`#${currentSection}`, { replace: true });
+		}
+	}, [currentSection]);
+
+	/**
+	 * Local Storage Check
+	 */
 	useEffect(() => {
 		const previouslyLoaded = localStorage.getItem("@mhdAshraful");
 		if (previouslyLoaded) {
+			console.log("useeffect--1: localstorage", loaded);
 			setLoaded(true);
 		} else {
 			preloadAssets(setPercentage)
@@ -78,22 +99,44 @@ function App() {
 		}
 	}, []);
 
+	/**
+	 * MOBILE check
+	 */
+	const touchDevice = useTouchDevice();
+
+	useEffect(() => {
+		if (!loaded) return;
+		if (ScrollTrigger.isTouch) {
+			document.body.classList.add("touch");
+			ScrollTrigger.refresh();
+		} else {
+			document.body.classList.remove("touch");
+			ScrollTrigger.refresh();
+		}
+	}, [loaded]);
+
+	/**
+	 * Smooth Scroll
+	 */
+	useEffect(() => {
+		if (!loaded) return;
+
+		/**
+		 * Smooth Scroller ----- runs first
+		 */
+		console.log("useeffect--3: smooth scroll", loaded);
+		smoother.current = ScrollSmoother.create({
+			smooth: 1.2,
+			effects: true,
+			smoothTouch: true,
+			wrapper: "#smooth-wrapper",
+			content: "#smooth-content",
+		});
+	}, [loaded]);
+
 	useGSAP(
 		() => {
 			if (!loaded) return;
-
-			/**
-			 * Smooth Scroller ----- runs first
-			 */
-			requestAnimationFrame(() => {
-				smoother.current = ScrollSmoother.create({
-					smooth: 2,
-					// normalizeScroll: true,
-					effects: true,
-					wrapper: "#smooth-wrapper",
-					content: "#smooth-content",
-				});
-			});
 
 			/**
 			 * Update Corner Section names to animate
@@ -130,15 +173,21 @@ function App() {
 				end: "bottom bottom",
 				onEnter: () => {
 					setShowSocial(false);
+					width < 768 && setShowCornerInfo(false);
 				},
 				onEnterBack: () => {
 					setShowSocial(false);
+					width < 768 && setShowCornerInfo(false);
 				},
 				onLeave: () => {
 					setShowSocial(true);
+					console.log("on leave", width);
+					width < 768 && setShowCornerInfo(true);
 				},
 				onLeaveBack: () => {
 					setShowSocial(true);
+					console.log("on leave", width);
+					width < 768 && setShowCornerInfo(true);
 				},
 			});
 		},
@@ -157,20 +206,20 @@ function App() {
 				endTrigger: ".contact",
 				end: "bottom bottom",
 				onEnter: () => {
-					setShowlogo(false);
+					width >= 768 ? setShowlogo(false) : null;
 					setShowCornerInfo(false);
 				},
 				onEnterBack: () => {
-					setShowlogo(false);
+					width >= 768 ? setShowlogo(false) : null;
 					setShowCornerInfo(false);
 				},
 				onLeave: () => {
-					setShowlogo(true);
-					setShowCornerInfo(true);
+					width >= 768 ? setShowlogo(true) : null;
+					width > 768 && setShowCornerInfo(true);
 				},
 				onLeaveBack: () => {
-					setShowlogo(true);
-					setShowCornerInfo(true);
+					width >= 768 ? setShowlogo(true) : null;
+					width > 768 && setShowCornerInfo(true);
 				},
 			});
 		},
@@ -182,9 +231,14 @@ function App() {
 	 * */
 	useLayoutEffect(() => {
 		const handleResize = () => {
+			setWidth(window.innerWidth);
 			setHeight(window.innerHeight);
+			console.log("useLayoutEffect--4: height", height, width);
+			ScrollTrigger.refresh();
 		};
+
 		window.addEventListener("resize", handleResize);
+
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
@@ -197,41 +251,60 @@ function App() {
 			<CanvasContainer />
 
 			<div ref={containerRef}>
-				{/*  */}
-				<Mouse />
-				<MylogoWrap show={showLogo} />
-
-				<Circles />
-				{height > 800 && showSocial && (
-					<SocialMedia
-						twitter={twitter}
-						linkedin={linkedin}
-						github={github}
-					/>
-				)}
-				{showCornerInfo && (
-					<Cornerinfo
-						ref={cornerRef}
-						description={description}
-						cornerH2={cornerH2}
-					/>
-				)}
-
 				<div ref={main} id="smooth-wrapper">
+					{/* Use Mouse if not touch device */}
+					{!touchDevice && <Mouse />}
+
+					{/* LOGO */}
+
+					<Logo show={showLogo} />
+
+					<Circles />
+
+					{width > 768 && height > 800 && showSocial && (
+						<SocialMedia
+							twitter={twitter}
+							linkedin={linkedin}
+							github={github}
+						/>
+					)}
+					{showCornerInfo && (
+						<Cornerinfo
+							ref={cornerRef}
+							description={description}
+							cornerH2={cornerH2}
+						/>
+					)}
+
 					<div className="border">
+						<span className="hiderBar" />
 						<div
 							id="smooth-content"
 							ref={contentRef}
-							className="container_all"
+							className="cont	ainer_all"
 						>
-							<Home ref={homeRef} />
-							<UIEng ref={uiRef} />
-							<Web3d ref={webglRef} />
-							<Interaction ref={interactionRef} />
-							<Focus ref={focusRef} />
-							<Education ref={educationRef} />
-							<Works ref={worksRef} />
-							<Contact ref={contactRef} />
+							<Home ref={homeRef} id="home" />
+							<UIEng ref={uiRef} id="ui" />
+							<Web3d ref={webglRef} id="webgl" />
+							<Interaction
+								ref={interactionRef}
+								loaded={loaded}
+								id="interaction"
+							/>
+							<Focus
+								ref={focusRef}
+								loaded={loaded}
+								width={width}
+								id="focus"
+							/>
+							<Education
+								ref={educationRef}
+								loaded={loaded}
+								id="education"
+								width={width}
+							/>
+							<Works ref={worksRef} loaded={loaded} id="works" />
+							<Contact ref={contactRef} loaded={loaded} id="contact" />
 						</div>
 					</div>
 				</div>

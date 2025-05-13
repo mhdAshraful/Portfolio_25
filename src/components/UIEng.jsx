@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Data from "../utils/info";
@@ -13,7 +13,7 @@ export const UIEng = forwardRef((props, ref) => {
 
 	useGSAP(
 		() => {
-			gsap.to(".img5", {
+			gsap.to(".img5 img", {
 				rotation: 360,
 				duration: 2,
 				ease: "none",
@@ -58,9 +58,16 @@ export const UIEng = forwardRef((props, ref) => {
 					<h1 className="title anim">{ui.title}</h1>
 					<MobileInterface urls={ui.mobile} />
 				</div>
-				<img className="img3 anim" src={ui.img2} alt="half star" />
-				<img className="img4 anim" src={ui.img3} alt="corner star" />
-				<img className="img5 anim" src={ui.img1} alt="full star" />
+
+				<div className="img3">
+					<img className=" anim" src={ui.img2} alt="half star" />
+				</div>
+				<div className="img4">
+					<img className=" anim" src={ui.img3} alt="corner star" />
+				</div>
+				<div className="img5">
+					<img className=" anim" src={ui.img1} alt="full star" />
+				</div>
 			</section>
 		</div>
 	);
@@ -144,49 +151,57 @@ export const Focus = forwardRef((props, ref) => {
 	const vowelChars = useRef([]);
 
 	useGSAP(() => {
-		splitedText.current = new SplitText(lineRef.current, {
-			type: "chars",
-			charsClass: "chars",
-		});
+		if (!props.loaded) return;
 
-		const allChars = splitedText.current.chars;
-		vowelChars.current = allChars.filter((char) =>
-			/[aeiuAEIU]/.test(char.textContent)
-		);
-
-		gsap.set(allChars, { fontStyle: "normal", fontWeight: 100 });
-
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: lineRef.current,
-				start: "top 40%",
-				once: false, // run only once
-			},
-		});
-		tl.to(allChars, {
-			duration: 0.4,
-			fontVariationSettings: "'wght' 400",
-			ease: "power2.inOut",
-		})
-			.to(allChars, {
-				duration: 0.4,
-				fontVariationSettings: "'wght' 100",
-				ease: "power2.inOut",
-			})
-			.to(allChars, {
-				duration: 0.5,
-				fontVariationSettings: "'wght' 1000",
-				ease: "power2.inOut",
-			})
-			.to(vowelChars.current, {
-				delay: 0.4, // delay after font weight changes
-				duration: 0.6,
-				fontStyle: "italic",
-				stagger: 0.03,
-				ease: "power2.inOut",
+		document.fonts.ready.then(() => {
+			splitedText.current = new SplitText(lineRef.current, {
+				type: "chars, words",
+				charsClass: "chars",
+				wordsClass: "words",
+				tag: "span",
 			});
 
-		return () => splitedText.current.revert();
+			const allChars = splitedText.current.chars;
+			vowelChars.current = allChars.filter((char) =>
+				/[aeiuAEIU]/.test(char.textContent)
+			);
+
+			gsap.set(allChars, { fontStyle: "normal", fontWeight: 100 });
+
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: lineRef.current,
+					start: "top 40%",
+					once: false, // run only once
+				},
+			});
+			tl.to(allChars, {
+				duration: 0.4,
+				fontVariationSettings: "'wght' 400",
+				ease: "power2.inOut",
+			})
+				.to(allChars, {
+					duration: 0.4,
+					fontVariationSettings: "'wght' 100",
+					ease: "power2.inOut",
+				})
+				.to(allChars, {
+					duration: 0.5,
+					fontVariationSettings: "'wght' 1000",
+					ease: "power2.inOut",
+				})
+				.to(vowelChars.current, {
+					delay: 0.4, // delay after font weight changes
+					duration: 0.6,
+					fontStyle: "italic",
+					stagger: 0.03,
+					ease: "power2.inOut",
+				});
+		});
+
+		return () => {
+			if (splitedText.current) splitedText.current.revert();
+		};
 	}, []);
 
 	return (
@@ -196,8 +211,7 @@ export const Focus = forwardRef((props, ref) => {
 					<img src={focus.img} alt="one quote svg" />
 				</div>
 				<h1 className="title" ref={lineRef}>
-					{t1[0]} <br />
-					{t1[1]}
+					{title}
 					{"\u201D"}
 				</h1>
 				<p className="reference">{focus.reference}</p>
@@ -216,34 +230,38 @@ export const Education = forwardRef((props, ref) => {
 	const italicChar = useRef([]);
 
 	useGSAP(() => {
-		splited.current = new SplitText(lineRef.current, {
-			type: "chars",
-			charsClass: "chars",
+		if (!props.loaded) return;
+
+		document.fonts.ready.then(() => {
+			splited.current = new SplitText(lineRef.current, {
+				type: "chars",
+				charsClass: "chars",
+			});
+
+			const allchar = splited.current.chars;
+			italicChar.current = allchar.filter((char) =>
+				/[dctnDCTN]/.test(char.textContent)
+			);
+
+			gsap.set(allchar, { fontStyle: "normal", fontWeight: 1000 });
+
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: lineRef.current,
+					start: "top center",
+				},
+			});
+
+			tl.to(italicChar.current, {
+				duration: 0.5,
+				fontStyle: "italic",
+				stagger: 0.3,
+				ease: "power2.inOut",
+			});
 		});
-		const allchar = splited.current.chars;
-		italicChar.current = allchar.filter((char) =>
-			/[dctnDCTN]/.test(char.textContent)
-		);
-
-		gsap.set(allchar, { fontStyle: "normal", fontWeight: 1000 });
-
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: lineRef.current,
-				start: "top 600px",
-				once: false,
-			},
-		});
-
-		tl.to(italicChar.current, {
-			duration: 0.5,
-			fontStyle: "italic",
-			stagger: 0.3,
-			ease: "power2.inOut",
-			marker: true,
-		});
-
-		return () => splited.current.revert();
+		return () => {
+			if (splited.current) splited.current.revert();
+		};
 	}, []);
 
 	return (
@@ -270,34 +288,60 @@ export const Education = forwardRef((props, ref) => {
 					</div>
 				</div>
 
-				<table className="course-table">
-					<tbody>
-						{Object.entries(maincourse).map(([key, value]) => (
-							<tr className="mainCourse" key={key}>
-								<td className="year">{value.year}</td>
-								<td className="provider">{value.provider}</td>
-								<td id={`course_${key}`}>{value.cert}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-				<div className="shortTitle">
-					<hr className="middleBar" />
-					<p>Skill Development Courses </p>
-				</div>
-				<table className="other-course-table">
-					<tbody>
-						<>
-							{Object.entries(othercourse).map(([key, value]) => (
-								<tr className="otherCourse" key={key}>
-									<td className="year" colSpan="1"></td>
-									<td className="provider_2">{value.provider}</td>
-									<td className="course_online">{value.cert}</td>
-								</tr>
-							))}
-						</>
-					</tbody>
-				</table>
+				{props.width > 768 ? (
+					<>
+						<table className="course-table">
+							<tbody>
+								{Object.entries(maincourse).map(([key, value]) => (
+									<tr className="mainCourse" key={key}>
+										<td className="year">{value.year}</td>
+										<td className="provider">{value.provider}</td>
+										<td id={`course_${key}`}>{value.cert}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+						<div className="shortTitle">
+							<hr className="middleBar" />
+							<p>Skill Development Courses </p>
+						</div>
+						<table className="other-course-table">
+							<tbody>
+								{Object.entries(othercourse).map(([key, value]) => (
+									<tr className="otherCourse" key={key}>
+										<td className="year" colSpan="1"></td>
+										<td className="provider_2">{value.provider}</td>
+										<td className="course_online">{value.cert}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</>
+				) : (
+					<>
+						<table className="mbl_tbl">
+							<tbody>
+								{Object.entries(maincourse).map(([key, val]) => (
+									<tr className="mbl_main" key={key}>
+										<td>
+											<p className="provider">{val.provider}</p>
+											<span id={`cert_${key}`}>{val.cert}</span>
+										</td>
+									</tr>
+								))}
+
+								{Object.entries(othercourse).map(([key, val]) => (
+									<tr key={key} className="mbl_other">
+										<td>
+											<p className="provider">{val.provider}</p>
+											<span className="cert">{val.cert}</span>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</>
+				)}
 
 				<div className="bookImage">
 					<img src="/assets/images/b3.webp" alt="bookImages" />

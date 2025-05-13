@@ -2,12 +2,12 @@
 	position: fixed;
 	inset: 0;
 	z-index: -1000;
-	pointer-events: none;
+	pointer-events: none !important;
 	// background-color: var(--white);
 	overflow: hidden;
 
-	width: calc(100vw - 80px);
-	height: calc(100vh - 80px);
+	width: calc(100vw - (var(--gutter) * 2));
+	height: calc(100vh - (var(--gutter) * 2));
 
 	top: 50%;
 	left: 50%;

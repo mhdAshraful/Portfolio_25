@@ -4,7 +4,7 @@
 	width: 16px;
 	height: 613px;
 	top: 18vh;
-	left: 64px;
+	left: calc(var(--gutter) + 20px);
 	z-index: 10;
 }
 .all_svgs,

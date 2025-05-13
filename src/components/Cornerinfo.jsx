@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { SplitText } from "gsap/SplitText";
+import { useTouchDevice } from "../utils/deviceDetector";
 gsap.registerPlugin(SplitText);
 
 const Cornerinfo = forwardRef(
@@ -78,6 +79,8 @@ const Cornerinfo = forwardRef(
 			}
 		);
 
+		const touchDevice = useTouchDevice();
+
 		/***
 		 * COMPONENT
 		 */
@@ -86,21 +89,21 @@ const Cornerinfo = forwardRef(
 				className="corner_container"
 				ref={ref}
 				style={{
-					width: clientTime ? "auto" : "350px",
+					width: clientTime ? "auto" : touchDevice ? "240px" : "270px",
 					position: clientTime ? "relative" : "fixed",
-					bottom: clientTime ? "none" : "70px",
-					left: clientTime ? "none" : "60px",
+					bottom: clientTime ? "none" : "calc(var(--gutter) + 16px)",
+					left: clientTime ? "none" : "calc(var(--gutter) + 10px)",
 					backdropFilter: clientTime ? "none" : "blur(32px)",
 					WebkitBackdropFilter: clientTime ? "none" : "blur(32px)",
-					borderRadius: clientTime ? "0px" : "16px",
-					paddingTop: clientTime ? "0px" : "10px",
+					borderRadius: clientTime ? "0px" : "8px",
+					padding: clientTime ? "0px" : "10px",
 					zIndex: "10",
 				}}
 			>
 				<div
 					className="cornerinfo"
 					style={{
-						height: clientTime ? "auto" : "170px",
+						height: clientTime ? "auto" : "auto",
 					}}
 					ref={cornerAnimationRef}
 				>

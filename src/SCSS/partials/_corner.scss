@@ -1,3 +1,4 @@
+@use "./fonts";
 .corner_container {
 	// position: fixed;
 	// width: 350px;
@@ -16,16 +17,17 @@
 	// backdrop-filter: blur(30px);
 	// -webkit-backdrop-filter: blur(30px);
 	.cornerinfo {
-		width: 188px;
-		height: 170px;
+		width: 100%;
+		height: 100%;
 
-		font-family: var(--neue);
+		font-family: var(--neueVar);
 		font-weight: 500;
 		font-size: 12px;
 		text-transform: uppercase;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
+		// gap: 2px;
 
 		.time_svg {
 			display: flex;
@@ -36,27 +38,30 @@
 
 			.mainTime {
 				font-weight: 1000;
-				font-size: 48px;
+				// font-size: 48px;
+				@include fonts.font_size_be(26, 48, 320, 1920);
 				line-height: 100%;
 			}
 			.amPm {
 				display: flex;
 				flex-direction: column;
-				gap: 5px;
+				gap: 2px;
 			}
 		}
 
 		.heading2 {
 			font-weight: 800;
-			font-size: 20px;
-			letter-spacing: 4%;
+			// font-size: 20px;
+			@include fonts.font_size_be(16, 20, 320, 1920);
+
+			letter-spacing: 10%;
 			width: 250px;
 			line-height: 90%;
 		}
 
 		.description {
-			margin-top: 10px;
-			width: 300px;
+			margin-top: 4px;
+			width: 100%;
 			text-transform: none;
 		}
 	}

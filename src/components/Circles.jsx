@@ -15,7 +15,7 @@ const Circles = () => {
 	const pointCount = 360;
 
 	const state = useRef({
-		radius: 25,
+		radius: 20,
 		noiseStrength1: 3,
 		noiseStrength2: 5,
 		radiusPulseAmplitude: 0.7,
@@ -132,11 +132,6 @@ const Circles = () => {
 			}}
 			onMouseOut={() => setIsHovered(false)}
 			style={{
-				position: "fixed",
-				top: "60px",
-				right: "60px",
-				// marginTop: "40px",
-				// marginRight: "40px",
 				pointerEvents: "auto",
 				zIndex: 10,
 				background: "transperent",
@@ -146,7 +141,11 @@ const Circles = () => {
 				width={64}
 				height={64}
 				fill="none"
-				style={{ background: "transparent" }}
+				style={{
+					background: "transparent",
+					transformOrigin: "center",
+					transformBox: "fill-box",
+				}}
 			>
 				<line
 					ref={line1}

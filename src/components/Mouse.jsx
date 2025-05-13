@@ -14,7 +14,7 @@ gsap.registerPlugin(CustomEase);
 
 const Mouse = () => {
 	const m1Ref = useRef(null); // this will our current mouse position because it has to follow up
-	const target = useRef({ x: 0, y: 0, width: 40, height: 40 }); // thi will bw updated instantly from user mouse move
+	const target = useRef({ x: 0, y: 0, width: 40, height: 40 }); // this will be updated instantly from user mouse move
 	const current = useRef({ x: 0, y: 0, width: 0, height: 0 }); // this will be updated slowly from the element position
 
 	useLayoutEffect(() => {
@@ -36,7 +36,7 @@ const Mouse = () => {
 			gsap.to(current.current, {
 				x: target.current.x,
 				y: target.current.y,
-				duration: 0.5,
+				duration: 0.6,
 				onUpdate: () => {
 					const dx = current.current.x - target.current.x;
 					const dy = current.current.y - target.current.y;
@@ -44,7 +44,7 @@ const Mouse = () => {
 
 					const minScale = 0.2;
 					const maxScale = 1;
-					const maxDistance = 400;
+					const maxDistance = 500;
 
 					const scale = Math.min(
 						maxScale,
@@ -55,23 +55,17 @@ const Mouse = () => {
           translate3d(${current.current.x}px, ${current.current.y}px, 0) 
           `;
 
-					m1Ref.current.style.width = `${scale * 52}px`;
-					m1Ref.current.style.height = `${scale * 52}px`;
+					m1Ref.current.style.width = `${scale * 40}px`;
+					m1Ref.current.style.height = `${scale * 40}px`;
 				},
-				ease: CustomEase.create("custom", "M0,0 C0,0.599 0.82,1.182 1,1 "),
+				// ease: CustomEase.create("custom", "M0,0 C0,0.599 0.82,1.182 1,1 "),
+				ease: "power1.out",
 			});
 		};
 
 		/***
 		 * PERFECT
 		 */
-		// let animateID;
-		// const animate = () => {
-		// 	current.current.x = lerp(current.current.x, target.current.x, 0.1);
-		// 	current.current.y = lerp(current.current.y, target.current.y, 0.1);
-		// 	m1Ref.current.style.transform = `translate3d(${current.current.x}px, ${current.current.y}px, 0)`;
-		// 	animateID = requestAnimationFrame(animate);
-		// };
 
 		window.addEventListener("mousemove", handleMouseMove);
 		// animate();
@@ -79,8 +73,19 @@ const Mouse = () => {
 			window.removeEventListener("mousemove", handleMouseMove);
 			// cancelAnimationFrame(animateID);
 		};
-	}, []);
+	}, [window.innerWidth]);
 	return <div className="primaryMouse" ref={m1Ref}></div>;
 };
 
 export default Mouse;
+
+/***
+ * PERFECT
+ */
+// let animateID;
+// const animate = () => {
+// 	current.current.x = lerp(current.current.x, target.current.x, 0.1);
+// 	current.current.y = lerp(current.current.y, target.current.y, 0.1);
+// 	m1Ref.current.style.transform = `translate3d(${current.current.x}px, ${current.current.y}px, 0)`;
+// 	animateID = requestAnimationFrame(animate);
+// };

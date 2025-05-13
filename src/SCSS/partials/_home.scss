@@ -6,25 +6,25 @@
 
 .home {
 	width: 100%;
-	min-height: calc(100vh - 80px);
+	min-height: calc(100vh - (var(--gutter) * 2));
 
 	.title {
 		// Positioning
 		position: relative;
-		top: calc((100vh - 80px) / 5);
+		top: calc((100vh - (var(--gutter) * 2)) / 5);
 		left: 15%;
 		// Box model
 		// Typography
 		// Visual
 		// Misc
 
-		font-family: var(--neue);
-		font-variant-ligatures: discretionary-ligatures;
+		font-family: var(--neueVar);
 		max-height: 60vh;
 		max-width: 60%;
 		// min-f, base-f, min, base
 		@include fonts.font_size_be(33, 96, 320, 1920);
 		font-weight: 900;
+		font-variant-ligatures: discretionary-ligatures;
 		transition: all 0.6s cubic-bezier(0.65, 0.74, 0.18, 1);
 		font-feature-settings: "liga" 1, "kern" 1, "ss01" 1;
 		kerning: normal;

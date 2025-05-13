@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
 export const setCornerSectionName = (refs, setCurrentSection) => {
+	console.log("called in animation.js", refs);
+
 	refs.forEach((elm) => {
 		const id = elm.dataset.section;
 

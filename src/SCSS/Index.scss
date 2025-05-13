@@ -1,3 +1,4 @@
+@use "./partials/mixins";
 @use "./partials/fonts";
 @use "./partials/sizes";
 @use "./partials/home";
@@ -12,23 +13,48 @@
 
 :root {
 	--red: #ed3203;
+	--red40: #ed320373;
 	--black: #0f0f0f;
+	--black40: #0f0f0f4b;
 	--cream: #fafad2;
+	--cream40: #fafad2b7;
 	--white: #fffff2;
-	--white40: #fffff282;
+	--white40: #fffff2a7;
 	--fira: "Fira Sans", sans-serif;
 	--neue: "Neue Regrade", sans-serif;
 	--neueVar: "Neue Regrade Variable", sans-serif;
 	--width: 100vw;
 	--height: 100vh;
+	--gutter: 40px;
+	--borderradious: 16px;
 }
-/***
- * --> Serif are small decorative strokes at the end of a letter.
- * -> Sans means "without" 
- * --> Sans-Serif has decorative strokes.
- * 
- * -- Grotesk, Fira Sans, Neue Regrade all are Sans-Serif ~ with no strokes
- */
+@media (max-width: 1024px) {
+	:root {
+		--gutter: 32px;
+		--borderradious: 12px;
+		--border: 1px solid var(--black);
+	}
+}
+@media (max-width: 768px) {
+	:root {
+		--gutter: 20px;
+		--borderradious: 10px;
+		--border: 1px solid var(--black);
+	}
+}
+
+@media (max-width: 480px) {
+	:root {
+		--gutter: 8px;
+		--borderradious: 4px;
+		--border: none;
+	}
+}
+
+//  --> Serif are small decorative strokes at the end of a letter.
+//  -> Sans means "without"
+//  --> Sans-Serif has decorative strokes.
+//  -- Grotesk, Fira Sans, Neue Regrade all are Sans-Serif ~ with no strokes
 
 *,
 html,
@@ -38,33 +64,80 @@ body,
 	margin: 0;
 	box-sizing: border-box;
 	scroll-behavior: auto;
+	overscroll-behavior: none;
+
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	overscroll-behavior: none;
 }
+html,
 body {
+	height: 100%;
+	overflow: auto;
 	background-color: var(--white);
 	color: var(--black);
 	font-family: var(--fira);
 	font-size: 16px;
+}
+// body {
+// 	cursor: none;
+// }
+
+// Fallback for touch devices (disable transforms or fixed heights)
+.no_smoother#smooth-wrapper {
+	height: 100vh;
+	overflow: auto;
+}
+
+.no-smoother#smooth-content {
+	will-change: transform;
+}
+
+/* On touch devices  allow scrolling */
+body.touch #smooth-wrapper {
+	overflow: auto;
+	height: auto;
 }
 
 .border {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: calc(100vw - 80px);
-	height: calc(100vh - 80px);
+	width: calc(100vw - (var(--gutter) * 2));
+	height: calc(100vh - (var(--gutter) * 2));
 	border: 1px solid var(--black);
-	border-radius: 16px;
+	border-radius: var(--borderradious);
 	transform: translate(-50%, -50%);
 	overflow: hidden;
 }
 
+@include mixins.MOBILE {
+	.hiderBar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 5;
+		width: 100%;
+		height: 80px;
+		background-color: var(--white40);
+		border-bottom: 1px solid var(--black40);
+		backdrop-filter: blur(10px);
+	}
+}
+
+// @include mixins.TABLET {
+// 	.hiderBar {
+// 		display: none;
+// 	}
+// }
+
 #MenuCircle {
 	// in this project both here and in svg component has to set trnsperant and fill "none"
 	background: transparent;
+	position: fixed;
+	transform-origin: center;
+	top: calc(var(--gutter) + 10px);
+	left: calc(100vw - (var(--gutter) + 64px + 10px));
 }
 
 .primaryMouse {
@@ -72,9 +145,7 @@ body {
 	z-index: 1000;
 	width: 50px;
 	height: 50px;
-	border: 1px solid var(--white);
-	background-color: var(--white);
-	mix-blend-mode: difference;
+	border: 1px solid var(--black);
 	border-radius: 50%;
 	pointer-events: none;
 	overflow: hidden;

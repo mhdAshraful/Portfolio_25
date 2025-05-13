@@ -8,14 +8,14 @@
 @mixin height_be($min-itemsize, $base-item-size, $min-screen, $base-screen) {
 	height: clamp(
 		#{$min-itemsize}px,
-		calc(#{$base-item-size} * (100vh - 80px) / #{$base-screen}),
-		(100vh - 80px)
+		calc(#{$base-item-size} * (100vh - var(--gutter) * 2) / #{$base-screen}),
+		(100vh - var(--gutter) * 2)
 	);
 }
 @mixin width_be($min-itemsize, $base-item-size, $min-screen, $base-screen) {
 	width: clamp(
 		#{$min-itemsize}px,
-		calc(#{$base-item-size} * (100vw - 80px) / #{$base-screen}),
-		(100vw - 80px)
+		calc(#{$base-item-size} * (100vw - var(--gutter) * 2) / #{$base-screen}),
+		(100vw - var(--gutter) * 2)
 	);
 }
