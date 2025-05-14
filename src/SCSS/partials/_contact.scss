@@ -1,12 +1,16 @@
 @use "./fonts";
+@use "./mixins";
+@use "./sizes";
 
 .contact_wrapper {
 	width: 100%;
-	min-height: calc(100vh - (var(--gutter) * 2));
+	height: 100%;
+	// min-height: calc(100vh - (var(--gutter) * 2));
 	.contact {
 		position: relative;
 		width: calc(100vw - (var(--gutter) * 2));
-		min-height: calc(100vh - (var(--gutter) * 2));
+		height: auto;
+		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
@@ -23,14 +27,14 @@
 			font-family: var(--fira);
 			font-weight: 900;
 			// $min-font, $base-font-size, $min-screen, $base-screen
-			@include fonts.font_size_be(33, 100, 320, 1920);
+			@include fonts.font_size_be(26, 100, 320, 1920);
 			font-feature-settings: "liga" 1, "kern" 1;
 			text-transform: capitalize;
 		}
 
 		.middle_content {
 			position: relative;
-			width: calc(100vw - 160px);
+			width: calc(100vw - (var(--gutter) * 2 + 10px));
 			height: 240px;
 			top: 30%;
 			left: 50%;
@@ -45,7 +49,7 @@
 		.client_time {
 			position: relative;
 			align-self: flex-start;
-			margin-top: 10px;
+			// margin-top: 6px;
 			.heading {
 				font-family: var(--fira);
 				font-weight: 700;
@@ -72,26 +76,28 @@
 				line-height: 0.7;
 			}
 		}
-
+		a {
+			text-decoration: none;
+		}
 		.email_me {
 			position: relative;
 			align-self: flex-end;
 			text-align: right;
-			margin-bottom: 8px;
+			margin-bottom: 10px;
 			.heading {
-				font-size: 16;
+				font-size: 16px;
 				font-weight: 600;
 			}
 			.email {
 				// font-size: 54px;
-				@include fonts.font_size_be(20, 54, 320, 1920);
+				@include fonts.font_size_be(24, 54, 320, 1920);
 				font-weight: 900;
 			}
 		}
 
 		.ending_part {
 			position: relative;
-			width: calc(100vw - 160px);
+			width: calc(100vw - (var(--gutter) * 2 + 10px));
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, 30%);
@@ -145,9 +151,55 @@
 			}
 		}
 		.spinner {
-			position: relative;
-			bottom: -15px;
-			left: -60px;
+			position: absolute;
+			bottom: -2vh;
+			left: -6vw;
+		}
+
+		@include mixins.MOBILE {
+			.middle_content {
+				width: calc(100vw - (var(--gutter) * 2 + 10px));
+				height: auto;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: center;
+
+				.client_time {
+					align-self: flex-start;
+				}
+				.time_freme {
+					margin-top: 10px;
+					align-self: center;
+				}
+				a {
+					text-decoration: none;
+				}
+				.email_me {
+					align-self: flex-end;
+					margin-bottom: 8px;
+				}
+			}
+
+			.ending_part {
+				&::before {
+					content: none;
+					flex: 0;
+				}
+				margin-top: 2rem;
+				.res_loc {
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: start;
+					width: 50%;
+					font-size: 12px;
+
+					gap: 0;
+				}
+			}
+			.spinner {
+			}
 		}
 	}
 

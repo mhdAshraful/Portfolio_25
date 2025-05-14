@@ -1,7 +1,12 @@
+@use "./mixins";
+@use "./sizes";
+
 .flower_box {
 	position: relative;
 	width: 400px;
+	@include sizes.width_be(200, 400, 320, 1024);
 	height: 400px;
+	@include sizes.height_be(220, 420, 320, 1024);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -20,5 +25,5 @@
 	height: auto;
 }
 #flower {
-	margin: 0 40px 86px 20px;
+	margin: 0 70px 30px 55px;
 }

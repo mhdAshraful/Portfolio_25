@@ -82,10 +82,12 @@ const Contact = forwardRef((props, ref) => {
 					</div>
 					<div className="email_me">
 						<p className="heading">Email</p>
-						<p className="email highilighted">
-							hey@ <br />
-							mhdAshraful.com
-						</p>
+						<a href="mailto:someone@example.com?subject=We%20May%20Have%20an%20Opportunity!">
+							<p className="email highilighted">
+								hey@ <br />
+								mhdAshraful.com
+							</p>
+						</a>
 					</div>
 				</div>
 

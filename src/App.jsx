@@ -126,7 +126,7 @@ function App() {
 		 */
 		console.log("useeffect--3: smooth scroll", loaded);
 		smoother.current = ScrollSmoother.create({
-			smooth: 1.2,
+			smooth: 1.5,
 			effects: true,
 			smoothTouch: true,
 			wrapper: "#smooth-wrapper",
