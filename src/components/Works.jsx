@@ -1,7 +1,9 @@
-import React, { forwardRef, use, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useRef } from "react";
 import Data from "../utils/info";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useNavigate } from "react-router";
+import { useR3fCanvasContext } from "../utils/SecitonContext";
 gsap.registerPlugin(useGSAP);
 
 const Works = forwardRef((props, ref) => {
@@ -9,7 +11,24 @@ const Works = forwardRef((props, ref) => {
 	const titleRef = useRef();
 	const boxRef = useRef();
 
+	const { setRenderCanvas } = useR3fCanvasContext();
 	const { title, works } = Data[2].myworks;
+	const navigate = useNavigate();
+	/**
+	 * Navigate to details page
+	 */
+	const handleClick = (elm) => {
+		const typeKey = elm.worktype;
+		/**
+		 * Clear WebGL context by removing canvas elements
+		 */
+		setRenderCanvas(false);
+		setTimeout((e) => {
+			// Use navigate instead of modifying window.location directly
+			navigate(`/works/${typeKey}`);
+			console.log("timing");
+		}, 500);
+	};
 
 	/***
 	 * NUmber and Headline Animaiton
@@ -141,6 +160,7 @@ const Works = forwardRef((props, ref) => {
 							id={`item_${index}`}
 							ref={boxRef}
 							className="work_box"
+							onClick={() => handleClick(elm)}
 						>
 							<div className="box_heading">
 								<p className="num">0{index + 1}</p>

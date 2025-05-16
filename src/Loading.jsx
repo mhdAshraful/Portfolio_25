@@ -6,7 +6,7 @@ const Loading = ({ percent }) => {
 				top: "50%",
 				left: "50%",
 				transform: "translate(-50%,-50%)",
-				fontSize: "180px",
+				fontSize: "20vw",
 				textAlign: "center",
 				alignItems: "center",
 				color: "#023012",

@@ -55,12 +55,23 @@ export async function preloadAssets(onProgress) {
 		"Neue Regrade",
 	];
 
+	const videoPaths = [
+		"/assets/videos/ashiq_.webm",
+		"/assets/videos/audiophile_.webm",
+		"/assets/videos/webgl_.webm",
+		"/assets/videos/art_.webm",
+	];
+
 	/**
 	 *   Progress Tracking by Counting total assets
 	 *   Increment a counter every time one asset
 	 *   finishes loading.
 	 */
-	const totalAssets = imagePaths.length + modelPaths.length + fontNames.length;
+	const totalAssets =
+		imagePaths.length +
+		modelPaths.length +
+		fontNames.length +
+		videoPaths.length;
 	let loadedCount = 0;
 
 	/** Update inside every Load Call Promise */
@@ -111,10 +122,32 @@ export async function preloadAssets(onProgress) {
 		updateProgress();
 	});
 
+	/*** Promises for Videos */
+	const videoPromise = videoPaths.map((eachPath) => {
+		return new Promise((resolve, reject) => {
+			const video = document.createElement("video");
+			video.src = eachPath;
+			video.preload = "auto";
+			video.oncanplaythrough = () => {
+				updateProgress();
+				resolve(true);
+			};
+			video.onerror = () => {
+				updateProgress();
+				reject(`Video failed: ${eachPath}`);
+			};
+		});
+	});
+
 	/*** Return All Promises
 	 * following line means
 	 * result = await Promise.all([...fontPromise, ...imagePromise, ...modelPromise]);
 	 * return result;
 	 */
-	return Promise.all([...fontPromise, ...imagePromise, ...modelPromise]);
+	return Promise.all([
+		...fontPromise,
+		...imagePromise,
+		...modelPromise,
+		...videoPromise,
+	]);
 }

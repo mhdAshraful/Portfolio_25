@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
 import ScrambleTextPlugin from "gsap/ScrambleTextPlugin";
+import { useNavigate } from "react-router";
 gsap.registerPlugin(useGSAP, SplitText, ScrambleTextPlugin);
 
 export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
@@ -108,6 +109,14 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 		return () => splited.revert();
 	}, [hovered]);
 
+	
+	const customNavigation = () => {
+		const navigate = useNavigate();
+		
+		navigate("/#home");
+		
+	};
+
 	if (!shouldRender) return null;
 
 	return (
@@ -120,6 +129,7 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 				className="mylogo"
 				onMouseOver={() => setHovered(true)}
 				onMouseOut={() => setHovered(false)}
+				onClick={() => customNavigation}
 			>
 				<div className="logo_Text">
 					<p className="logo_T1" ref={lineRef}>

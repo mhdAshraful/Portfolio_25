@@ -15,7 +15,7 @@ const Cornerinfo = forwardRef(
 		},
 		ref
 	) => {
-		const [time, setTime] = useState(new Date());
+		const [timeString, seTimeString] = useState();
 		const [am, setAsAM] = useState(false);
 		const [pm, setAsPM] = useState(false);
 		const [seconds, setSeconds] = useState(0);
@@ -23,38 +23,39 @@ const Cornerinfo = forwardRef(
 		const cornerAnimationRef = useRef();
 
 		useEffect(() => {
-			const interval = setInterval(() => {
-				// Get the current time in Dhaka timezone
-				const dhakaTime = new Date(
-					new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
-				);
-				setTime(dhakaTime);
+			/**
+			 * This is to getrid of Flush of Null time on first render
+			 */
+			// N:1
+			const updateTime = () => {
+				const tm = new Intl.DateTimeFormat("en-US", {
+					timeZone: "Asia/Dhaka",
+					hour: "numeric",
+					minute: "numeric",
+					second: "numeric",
+					hour24: false,
+				});
+				const fullString = tm.format(new Date());
+				/** Separate time and am-pm */
+				const [timePart, ampm] = fullString.split(" ");
+				const [h, m, s] = timePart.split(":");
 
-				// hours
-				const hours = dhakaTime.getHours();
-				if (hours < 12) {
-					setAsAM(true);
-					setAsPM(false);
-				} else if (hours >= 12) {
-					setAsAM(false);
-					setAsPM(true);
-				}
+				// State updates
+				seTimeString(`${h}:${m}`);
+				setAsAM(ampm === "AM");
+				setAsPM(ampm === "PM");
+				setSeconds(s);
+				setFillColor(seconds % 2 === 0 ? "limegreen" : "#0000000");
+			};
+			// N:2
+			updateTime();
 
-				// seconds
-				setSeconds(dhakaTime.getSeconds());
-				setFillColor(seconds % 2 === 0 ? "limeGreen" : "#0000000");
-			}, 1000);
-
-			return () => clearInterval(interval);
+			/**
+			 * Interval
+			 */
+			const intervalID = setInterval(updateTime, 1000);
+			return () => clearInterval(intervalID);
 		}, [seconds]);
-
-		const formattedTime = time
-			.toLocaleTimeString("en-US", {
-				timeZone: "Asia/Dhaka",
-				hour: "2-digit",
-				minute: "2-digit",
-			})
-			.replace(/ AM| PM/, " ");
 
 		/***
 		 * ANIMATION
@@ -109,7 +110,7 @@ const Cornerinfo = forwardRef(
 				>
 					<p>{topLine}</p>
 					<div className="time_svg">
-						<p className="mainTime">{formattedTime}</p>
+						<p className="mainTime">{timeString}</p>
 						<div className="amPm">
 							<svg
 								width="31"

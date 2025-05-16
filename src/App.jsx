@@ -7,7 +7,10 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 /*** Data */
 import Data from "./utils/info";
-import { useSectionContext } from "./utils/SecitonContext.jsx";
+import {
+	useR3fCanvasContext,
+	useSectionContext,
+} from "./utils/SecitonContext.jsx";
 import { cornerDescription } from "./utils/cornerDescription";
 
 /*** R3F */
@@ -31,7 +34,7 @@ import { Education, Focus, Interaction, UIEng, Web3d } from "@cmpnnts/UIEng";
 import { preloadAssets } from "./utils/preloadAssets";
 import { setCornerSectionName } from "./utils/animations";
 import { useTouchDevice } from "./utils/deviceDetector";
-import { replace, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
 /***
@@ -45,15 +48,19 @@ function App() {
 	const [showSocial, setShowSocial] = useState(true);
 	const [showCornerInfo, setShowCornerInfo] = useState(true);
 	const [showLogo, setShowlogo] = useState(true);
+
 	const { sociallinks } = Data[4];
 	const { twitter, linkedin, github } = sociallinks;
 	const { currentSection, setCurrentSection } = useSectionContext();
+	const { renderCanvas } = useR3fCanvasContext();
+
+	console.log("canvas contest:", renderCanvas);
 
 	/***
 	 * Component Refs
 	 *
 	 */
-	const containerRef = useRef();
+
 	const homeRef = useRef();
 	const worksRef = useRef();
 	const uiRef = useRef();
@@ -73,11 +80,13 @@ function App() {
 	const navgate = useNavigate();
 	const location = useLocation();
 
+	const touchDevice = useTouchDevice();
+
 	useEffect(() => {
 		if (location.pathname === "/" && currentSection) {
 			navgate(`#${currentSection}`, { replace: true });
 		}
-	}, [currentSection]);
+	}, [currentSection, location.pathname, navgate]);
 
 	/**
 	 * Local Storage Check
@@ -85,7 +94,6 @@ function App() {
 	useEffect(() => {
 		const previouslyLoaded = localStorage.getItem("@mhdAshraful");
 		if (previouslyLoaded) {
-			console.log("useeffect--1: localstorage", loaded);
 			setLoaded(true);
 		} else {
 			preloadAssets(setPercentage)
@@ -98,11 +106,6 @@ function App() {
 				});
 		}
 	}, []);
-
-	/**
-	 * MOBILE check
-	 */
-	const touchDevice = useTouchDevice();
 
 	useEffect(() => {
 		if (!loaded) return;
@@ -124,7 +127,6 @@ function App() {
 		/**
 		 * Smooth Scroller ----- runs first
 		 */
-		console.log("useeffect--3: smooth scroll", loaded);
 		smoother.current = ScrollSmoother.create({
 			smooth: 1.5,
 			effects: true,
@@ -181,12 +183,10 @@ function App() {
 				},
 				onLeave: () => {
 					setShowSocial(true);
-					console.log("on leave", width);
 					width < 768 && setShowCornerInfo(true);
 				},
 				onLeaveBack: () => {
 					setShowSocial(true);
-					console.log("on leave", width);
 					width < 768 && setShowCornerInfo(true);
 				},
 			});
@@ -233,7 +233,6 @@ function App() {
 		const handleResize = () => {
 			setWidth(window.innerWidth);
 			setHeight(window.innerHeight);
-			console.log("useLayoutEffect--4: height", height, width);
 			ScrollTrigger.refresh();
 		};
 
@@ -248,64 +247,61 @@ function App() {
 		<Loading percent={percentLoading} />
 	) : (
 		<>
-			<CanvasContainer />
+			{/* Only render Canvas on the home page */}
+			{renderCanvas && <CanvasContainer />}
+			{!touchDevice && <Mouse />}
 
-			<div ref={containerRef}>
-				<div ref={main} id="smooth-wrapper">
-					{/* Use Mouse if not touch device */}
-					{!touchDevice && <Mouse />}
+			<div ref={main} id="smooth-wrapper">
+				{/* LOGO */}
 
-					{/* LOGO */}
+				<Logo show={showLogo} />
 
-					<Logo show={showLogo} />
+				<Circles />
 
-					<Circles />
+				{width > 768 && height > 800 && showSocial && (
+					<SocialMedia
+						twitter={twitter}
+						linkedin={linkedin}
+						github={github}
+					/>
+				)}
+				{showCornerInfo && (
+					<Cornerinfo
+						ref={cornerRef}
+						description={description}
+						cornerH2={cornerH2}
+					/>
+				)}
 
-					{width > 768 && height > 800 && showSocial && (
-						<SocialMedia
-							twitter={twitter}
-							linkedin={linkedin}
-							github={github}
+				<div className="border">
+					<span className="hiderBar" />
+					<div
+						id="smooth-content"
+						ref={contentRef}
+						className="container_all"
+					>
+						<Home ref={homeRef} id="home" />
+						<UIEng ref={uiRef} id="ui" />
+						<Web3d ref={webglRef} id="webgl" />
+						<Interaction
+							ref={interactionRef}
+							loaded={loaded}
+							id="interaction"
 						/>
-					)}
-					{showCornerInfo && (
-						<Cornerinfo
-							ref={cornerRef}
-							description={description}
-							cornerH2={cornerH2}
+						<Focus
+							ref={focusRef}
+							loaded={loaded}
+							width={width}
+							id="focus"
 						/>
-					)}
-
-					<div className="border">
-						<span className="hiderBar" />
-						<div
-							id="smooth-content"
-							ref={contentRef}
-							className="cont	ainer_all"
-						>
-							<Home ref={homeRef} id="home" />
-							<UIEng ref={uiRef} id="ui" />
-							<Web3d ref={webglRef} id="webgl" />
-							<Interaction
-								ref={interactionRef}
-								loaded={loaded}
-								id="interaction"
-							/>
-							<Focus
-								ref={focusRef}
-								loaded={loaded}
-								width={width}
-								id="focus"
-							/>
-							<Education
-								ref={educationRef}
-								loaded={loaded}
-								id="education"
-								width={width}
-							/>
-							<Works ref={worksRef} loaded={loaded} id="works" />
-							<Contact ref={contactRef} loaded={loaded} id="contact" />
-						</div>
+						<Education
+							ref={educationRef}
+							loaded={loaded}
+							id="education"
+							width={width}
+						/>
+						<Works ref={worksRef} loaded={loaded} id="works" />
+						<Contact ref={contactRef} loaded={loaded} id="contact" />
 					</div>
 				</div>
 			</div>

@@ -103,18 +103,22 @@ const Data = [
 				{
 					type: "E-commerce",
 					link: "https://audiophile-green-alpha.vercel.app/",
+					worktype: "ecommerce",
 				},
 				{
 					type: "Art Gallery",
 					link: "https://modern-artgallary.vercel.app/",
+					worktype: "artgallery",
 				},
 				{
 					type: "Portfolio",
 					link: "https://www.ashiqul.net",
+					worktype: "portfolio",
 				},
 				{
-					type: "WebGL",
+					type: "Immersive UX",
 					link: "balljump.com",
+					worktype: "webgl",
 				},
 			],
 
@@ -123,28 +127,28 @@ const Data = [
 
 				link: "https://audiophile-green-alpha.vercel.app/",
 				image1: "/assets/images/audiophile.png",
-				video: "/assets/videos/audiophile.mp4",
+				video: "/assets/videos/audiophile_.webm",
 			},
 			artgallery: {
 				title: "Crafted Art Gallery Website",
 
 				link: "https://modern-artgallary.vercel.app/",
 				image1: "/assets/images/artgallery.png",
-				video: "/assets/videos/audiophile.mp4",
+				video: "/assets/videos/art_.webm",
 			},
 			portfolio: {
 				title: "Crafted Portfolio Website",
-
+				altLink: "https://prtflo-ashql.vercel.app/",
 				link: "https://www.ashiqul.net",
 				image1: "/assets/images/ashiq.png",
-				video: "/assets/videos/audiophile.mp4",
+				video: "/assets/videos/ashiq_.webm",
 			},
 			webgl: {
 				title: "WebGL Playground",
 
 				link: "https://www.ashiqul.net",
 				image1: "/assets/images/audiophile.png",
-				video: "/assets/videos/audiophile.mp4",
+				video: "/assets/videos/webgl_.webm",
 			},
 		},
 	},

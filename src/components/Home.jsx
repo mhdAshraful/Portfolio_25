@@ -12,20 +12,16 @@ const Home = forwardRef((props, ref) => {
 
 	useGSAP(() => {
 		document.fonts.ready.then(() => {
-			const ln = document.querySelector(".home>.title");
+			const ln = document.querySelector(".home .title");
 
 			const words = SplitText.create(ln, {
 				type: "words,lines",
 				wordsClass: "words",
 				linesClass: "line",
 				autoSplit: true,
-				onSplit: (inst) => {
-					console.log("sp:", inst);
-					// return () => {
-
-					// }
-				},
 			});
+			// gsap animation Here
+			console.log("Home cntx:", words);
 		});
 	});
 
