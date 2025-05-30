@@ -6,17 +6,13 @@
 
 .home {
 	width: 100%;
-	min-height: calc(100vh - (var(--gutter) * 2));
+	min-height: calc(var(--height) - (var(--gutter) * 2));
 
 	.title {
 		// Positioning
 		position: relative;
-		top: calc((100vh - (var(--gutter) * 2)) / 5);
+		top: calc((var(--height) - (var(--gutter) * 2)) / 5);
 		left: 15%;
-		// Box model
-		// Typography
-		// Visual
-		// Misc
 
 		font-family: var(--neueVar);
 		max-height: 60vh;

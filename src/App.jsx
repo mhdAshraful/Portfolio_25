@@ -1,5 +1,11 @@
 /*** Tools */
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+	use,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,6 +16,7 @@ import Data from "./utils/info";
 import {
 	useR3fCanvasContext,
 	useSectionContext,
+	useOverlayContext,
 } from "./utils/SecitonContext.jsx";
 import { cornerDescription } from "./utils/cornerDescription";
 
@@ -23,12 +30,14 @@ import { Logo } from "@cmpnnts/MyLogo";
 import Circles from "@cmpnnts/Circles";
 import SocialMedia from "@cmpnnts/SocialMedia";
 import Cornerinfo from "@cmpnnts/Cornerinfo";
+import MenuOverlay from "@cmpnnts/MenuOverlay";
 
 /*** COMP as Page */
 import Home from "@cmpnnts/Home";
 import Contact from "@cmpnnts/Contact";
 import Works from "@cmpnnts/Works";
 import { Education, Focus, Interaction, UIEng, Web3d } from "@cmpnnts/UIEng";
+import Experiences from "@cmpnnts/Experiences";
 
 /** Functions or hooks */
 import { preloadAssets } from "./utils/preloadAssets";
@@ -48,19 +57,19 @@ function App() {
 	const [showSocial, setShowSocial] = useState(true);
 	const [showCornerInfo, setShowCornerInfo] = useState(true);
 	const [showLogo, setShowlogo] = useState(true);
-
 	const { sociallinks } = Data[4];
 	const { twitter, linkedin, github } = sociallinks;
 	const { currentSection, setCurrentSection } = useSectionContext();
 	const { renderCanvas } = useR3fCanvasContext();
-
-	console.log("canvas contest:", renderCanvas);
+	const { shouldRenderModal, setShouldRenderModal, ViewModal, setViewModal } =
+		useOverlayContext();
+	// console.log("canvas contest:", renderCanvas);
 
 	/***
 	 * Component Refs
 	 *
 	 */
-
+	const menupageRef = useRef();
 	const homeRef = useRef();
 	const worksRef = useRef();
 	const uiRef = useRef();
@@ -68,11 +77,16 @@ function App() {
 	const interactionRef = useRef();
 	const focusRef = useRef();
 	const educationRef = useRef();
+	const experiencesRef = useRef();
+
 	const contactRef = useRef();
 	const cornerRef = useRef();
 	const contentRef = useRef();
 	const main = useRef();
 	const smoother = useRef();
+
+	/** context usage */
+	const { description, cornerH2 } = cornerDescription[currentSection];
 
 	/**
 	 * ROUTE URL Update
@@ -128,9 +142,10 @@ function App() {
 		 * Smooth Scroller ----- runs first
 		 */
 		smoother.current = ScrollSmoother.create({
-			smooth: 1.5,
+			smooth: 1,
 			effects: true,
 			smoothTouch: true,
+			scrub: true,
 			wrapper: "#smooth-wrapper",
 			content: "#smooth-content",
 		});
@@ -153,6 +168,7 @@ function App() {
 					focusRef.current,
 					educationRef.current,
 					worksRef.current,
+					experiencesRef.current,
 					contactRef.current,
 				],
 				setCurrentSection
@@ -166,11 +182,12 @@ function App() {
 	 */
 	useGSAP(
 		() => {
-			if (!educationRef.current || !contactRef.current) return;
+			if (!experiencesRef.current || !contactRef.current) return;
 
 			ScrollTrigger.create({
-				trigger: ".education",
-				start: "top 600px",
+				// trigger: ".education",
+				trigger: ".experiences",
+				start: "top center",
 				endTrigger: ".contact",
 				end: "bottom bottom",
 				onEnter: () => {
@@ -241,30 +258,48 @@ function App() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	const { description, cornerH2 } = cornerDescription[currentSection];
+	useEffect(() => {
+		if (ViewModal) {
+			setShouldRenderModal(true);
+		}
+	}, [ViewModal]);
+
+	/***********
+	 *
+	 ****
+	 ******** RETURN STATEMENT
+	 ****
+	 *
+	 ***********/
 
 	return !loaded ? (
 		<Loading percent={percentLoading} />
 	) : (
-		<>
+		<div className="everything">
 			{/* Only render Canvas on the home page */}
 			{renderCanvas && <CanvasContainer />}
-			{!touchDevice && <Mouse />}
 
+			{/* Mouse */}
+			{!touchDevice && <Mouse />}
 			<div ref={main} id="smooth-wrapper">
 				{/* LOGO */}
-
 				<Logo show={showLogo} />
 
+				{/* Menu Circles */}
 				<Circles />
 
-				{width > 768 && height > 800 && showSocial && (
-					<SocialMedia
+				{/* Menu Overlay */}
+				{shouldRenderModal && (
+					/* Only mount when needed */
+					<MenuOverlay
+						ref={menupageRef}
 						twitter={twitter}
 						linkedin={linkedin}
 						github={github}
 					/>
 				)}
+
+				{/* Corner Info */}
 				{showCornerInfo && (
 					<Cornerinfo
 						ref={cornerRef}
@@ -273,8 +308,18 @@ function App() {
 					/>
 				)}
 
+				{width > 768 && height > 800 && showSocial && (
+					<SocialMedia
+						twitter={twitter}
+						linkedin={linkedin}
+						github={github}
+					/>
+				)}
+
 				<div className="border">
+					{/* fixed Elements inside border */}
 					<span className="hiderBar" />
+
 					<div
 						id="smooth-content"
 						ref={contentRef}
@@ -301,11 +346,13 @@ function App() {
 							width={width}
 						/>
 						<Works ref={worksRef} loaded={loaded} id="works" />
+						<Experiences ref={experiencesRef} id="experience" />
+						{/* <Timeline ref={timelineRef} loaded={loaded} /> */}
 						<Contact ref={contactRef} loaded={loaded} id="contact" />
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

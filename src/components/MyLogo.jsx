@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
@@ -109,12 +109,10 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 		return () => splited.revert();
 	}, [hovered]);
 
-	
 	const customNavigation = () => {
 		const navigate = useNavigate();
-		
+
 		navigate("/#home");
-		
 	};
 
 	if (!shouldRender) return null;

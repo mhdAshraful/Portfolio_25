@@ -22,12 +22,12 @@ export const cornerDescription = {
 	interaction: {
 		cornerH2: "based - dhaka",
 		description:
-			"Memorable and Impactful design requires a user to interact with the website. When we build, we are not just building a website, It's a Brand.",
+			"A Memorable and Impactful website requires users to interact with the website. Motion captures users attention. It makes user to memember the website.",
 	},
 	focus: {
 		cornerH2: "Dsgnd - 2025",
 		description:
-			"As Quality does not always come from doing more, but doing less with intention. I try to centralise my thinking, this helps me to focus on one thing rather wondering around on multiples.",
+			"As Quality does not always come from doing more, but doing less with intention. I try to centralise my thinking, this helps me to focus on one thing rather wondering around on multiples. Because,  when we build, we are not just building a website, It's a Brand.",
 	},
 	education: {
 		cornerH2: "Darwin - Australia",
@@ -59,6 +59,10 @@ export const cornerDescription = {
 		cornerH2: "based - dhaka",
 		description:
 			"Current design trend is to create immersive web experience. Which is impossible to achieve with only HTML, CSS and JS. WebGL opens door to this opportunity.",
+	},
+	experiences: {
+		cornerH2: "",
+		description: "",
 	},
 	contact: {
 		cornerH2: "",

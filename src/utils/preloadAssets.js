@@ -15,9 +15,7 @@ export async function preloadAssets(onProgress) {
 		"/assets/images/icon.webp",
 		"/assets/images/quote.svg",
 		"/assets/images/arrow.png",
-		"/assets/images/artgallery.png",
-		"/assets/images/ashiq.png",
-		"/assets/images/audiophile.png",
+		"/assets/images/tooltip.svg",
 		"/assets/images/flowerbucket.png",
 		"/assets/images/books.webp",
 		"/assets/images/b3.webp",
@@ -52,14 +50,7 @@ export async function preloadAssets(onProgress) {
 	const fontNames = [
 		"Fira Sans", // Must match your @font-face
 		"Neue Regrade Variable",
-		"Neue Regrade",
-	];
-
-	const videoPaths = [
-		"/assets/videos/ashiq_.webm",
-		"/assets/videos/audiophile_.webm",
-		"/assets/videos/webgl_.webm",
-		"/assets/videos/art_.webm",
+		"Space Grotesk Variable",
 	];
 
 	/**
@@ -67,11 +58,7 @@ export async function preloadAssets(onProgress) {
 	 *   Increment a counter every time one asset
 	 *   finishes loading.
 	 */
-	const totalAssets =
-		imagePaths.length +
-		modelPaths.length +
-		fontNames.length +
-		videoPaths.length;
+	const totalAssets = imagePaths.length + modelPaths.length + fontNames.length;
 	let loadedCount = 0;
 
 	/** Update inside every Load Call Promise */
@@ -122,32 +109,10 @@ export async function preloadAssets(onProgress) {
 		updateProgress();
 	});
 
-	/*** Promises for Videos */
-	const videoPromise = videoPaths.map((eachPath) => {
-		return new Promise((resolve, reject) => {
-			const video = document.createElement("video");
-			video.src = eachPath;
-			video.preload = "auto";
-			video.oncanplaythrough = () => {
-				updateProgress();
-				resolve(true);
-			};
-			video.onerror = () => {
-				updateProgress();
-				reject(`Video failed: ${eachPath}`);
-			};
-		});
-	});
-
 	/*** Return All Promises
 	 * following line means
 	 * result = await Promise.all([...fontPromise, ...imagePromise, ...modelPromise]);
 	 * return result;
 	 */
-	return Promise.all([
-		...fontPromise,
-		...imagePromise,
-		...modelPromise,
-		...videoPromise,
-	]);
+	return Promise.all([...fontPromise, ...imagePromise, ...modelPromise]);
 }

@@ -12,7 +12,7 @@ export const setCornerSectionName = (refs, setCurrentSection) => {
 
 	refs.forEach((elm) => {
 		const id = elm.dataset.section;
-		console.log("animation js:", id);
+		// console.log("animation js:", id);
 
 		ScrollTrigger.create({
 			trigger: elm,

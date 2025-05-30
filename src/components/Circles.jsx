@@ -1,15 +1,15 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { createNoise2D } from "simplex-noise";
+import { useOverlayContext } from "../utils/SecitonContext";
 
 const Circles = () => {
 	const path1Ref = useRef(null);
 	const path2Ref = useRef(null);
 	const animationRef = useRef(null);
 	const [isHovered, setIsHovered] = useState(false);
-
 	const noise2d = useRef(createNoise2D()).current;
-
+	const { setViewModal, ViewModal } = useOverlayContext();
 	const centerX = 32;
 	const centerY = 32;
 	const pointCount = 360;
@@ -124,67 +124,74 @@ const Circles = () => {
 		}
 	}, [isHovered]);
 
+	const changeViewModal = () => {
+		console.log("mouse clicked 1", ViewModal);
+		setViewModal((ViewModal) => !ViewModal);
+		console.log("mouse clicked 2", ViewModal);
+	};
+
 	return (
-		<div
-			id="MenuCircle"
-			onMouseOver={() => {
-				setIsHovered(true);
-			}}
-			onMouseOut={() => setIsHovered(false)}
-			style={{
-				pointerEvents: "auto",
-				zIndex: 10,
-				background: "transperent",
-			}}
-		>
-			<svg
-				width={64}
-				height={64}
-				fill="none"
+		<>
+			<div
+				id="MenuCircle"
+				onMouseOver={() => setIsHovered(true)}
+				onMouseOut={() => setIsHovered(false)}
+				onClick={() => changeViewModal()}
 				style={{
-					background: "transparent",
-					transformOrigin: "center",
-					transformBox: "fill-box",
+					pointerEvents: "auto",
+					zIndex: 1000,
+					background: "transperent",
 				}}
 			>
-				<line
-					ref={line1}
-					x1={45}
-					y1={28}
-					x2={30}
-					y2={28}
-					stroke="#0F0F0F"
-					strokeWidth="1"
-					strokeOpacity="1"
-					shapeRendering="crispEdges"
-				/>
-				<line
-					ref={line2}
-					x1={45}
-					y1={32}
-					x2={25}
-					y2={32}
-					stroke="#0F0F0F"
-					strokeWidth="1"
-					strokeOpacity="1"
-					shapeRendering="crispEdges"
-				/>
-				<path
-					ref={path1Ref}
+				<svg
+					width={64}
+					height={64}
 					fill="none"
-					stroke="#0F0F0F"
-					strokeWidth="1"
-					shapeRendering="crispEdges"
-				/>
-				<path
-					ref={path2Ref}
-					fill="none"
-					stroke="#0F0F0F"
-					strokeWidth="1"
-					shapeRendering="crispEdges"
-				/>
-			</svg>
-		</div>
+					style={{
+						background: "transparent",
+						transformOrigin: "center",
+						transformBox: "fill-box",
+					}}
+				>
+					<line
+						ref={line1}
+						x1={45}
+						y1={28}
+						x2={30}
+						y2={28}
+						stroke="#0F0F0F"
+						strokeWidth="1"
+						strokeOpacity="1"
+						shapeRendering="crispEdges"
+					/>
+					<line
+						ref={line2}
+						x1={45}
+						y1={32}
+						x2={25}
+						y2={32}
+						stroke="#0F0F0F"
+						strokeWidth="1"
+						strokeOpacity="1"
+						shapeRendering="crispEdges"
+					/>
+					<path
+						ref={path1Ref}
+						fill="none"
+						stroke="#0F0F0F"
+						strokeWidth="1"
+						shapeRendering="crispEdges"
+					/>
+					<path
+						ref={path2Ref}
+						fill="none"
+						stroke="#0F0F0F"
+						strokeWidth="1"
+						shapeRendering="crispEdges"
+					/>
+				</svg>
+			</div>
+		</>
 	);
 };
 

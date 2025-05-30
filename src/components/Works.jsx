@@ -2,8 +2,7 @@ import React, { forwardRef, useRef } from "react";
 import Data from "../utils/info";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useNavigate } from "react-router";
-import { useR3fCanvasContext } from "../utils/SecitonContext";
+
 gsap.registerPlugin(useGSAP);
 
 const Works = forwardRef((props, ref) => {
@@ -11,23 +10,14 @@ const Works = forwardRef((props, ref) => {
 	const titleRef = useRef();
 	const boxRef = useRef();
 
-	const { setRenderCanvas } = useR3fCanvasContext();
 	const { title, works } = Data[2].myworks;
-	const navigate = useNavigate();
+
 	/**
 	 * Navigate to details page
 	 */
 	const handleClick = (elm) => {
-		const typeKey = elm.worktype;
-		/**
-		 * Clear WebGL context by removing canvas elements
-		 */
-		setRenderCanvas(false);
-		setTimeout((e) => {
-			// Use navigate instead of modifying window.location directly
-			navigate(`/works/${typeKey}`);
-			console.log("timing");
-		}, 500);
+		console.log(elm.link);
+		window.open(elm.link, "_blank", "noopener,noreferrer");
 	};
 
 	/***
@@ -117,7 +107,7 @@ const Works = forwardRef((props, ref) => {
 				});
 			}
 		},
-		{ scope: workref.current }
+		{ scope: workref }
 	);
 
 	/***
@@ -143,7 +133,7 @@ const Works = forwardRef((props, ref) => {
 			data-section="myworks"
 			className="works_container snapper"
 		>
-			<div className="works" ref={workref}>
+			<div className="myworks" ref={workref}>
 				<div className="title_container">
 					<h1 className="title" ref={titleRef}>
 						{highlightedWord}

@@ -149,7 +149,7 @@ export const SpinnedFlower = ({ flowerURL, textMaskUrl }) => {
 			</div>
 			<div className="lets_make spin360">
 				<img
-					id="spinner"
+					id="spinner_text"
 					src={textMaskUrl}
 					alt="let's make something awesome "
 				/>

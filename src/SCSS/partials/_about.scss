@@ -7,15 +7,19 @@
 .focus_wrapper,
 .education_wrapper {
 	width: 100%;
-	max-height: calc(100vh - (var(--gutter) * 2));
+	max-height: calc(var(--height) - (var(--gutter) * 2));
 
 	section {
 		position: relative;
 		width: calc(100vw - (var(--gutter) * 2));
-		min-height: calc(100vh - (var(--gutter) * 2));
+		min-height: calc(var(--height) - (var(--gutter) * 2));
 		// display: flex;
 		// justify-content: center;
 		// align-items: center;
+
+		.title {
+			@include fonts.font_size_be(22, 96, 320, 1920);
+		}
 
 		/** UI */
 		&.ui {
@@ -28,17 +32,17 @@
 				text-align: center;
 			}
 			.middle {
-				margin: 10% 0 0 10%;
+				margin: 5% 0 0 10%;
 				display: flex;
 				flex-direction: row;
 				// justify-content: space-evenly;
 				align-items: center;
 				gap: 2%;
 				.title {
-					width: 40%;
+					width: 30%;
 				}
 				.iphone {
-					// height: calc(100vh - 240px);
+					// height: calc(var(--height) - 240px);
 					position: relative;
 					@include sizes.width_be(150, 460, 768, 1920);
 					aspect-ratio: 200/433;
@@ -46,7 +50,7 @@
 					img {
 						width: 100%;
 						height: 100%;
-						// height: calc(100vh - 240px);
+						// height: calc(var(--height) - 240px);
 						// @include sizes.height_be(250, 600, 320, 1920);
 						object-fit: cover;
 					}
@@ -63,30 +67,42 @@
 				position: absolute;
 				top: 20%;
 				right: calc(var(--gutter) + 10px);
-				@include sizes.width_be(42, 150, 320, 1920);
+				@include sizes.width_be(22, 150, 320, 1920);
 				img {
 					width: 100%;
 					object-fit: cover;
+				}
+				@include mixins.MOBILE {
+					top: 20%;
+					right: calc(var(--gutter) + 5px);
 				}
 			}
 			.img4 {
 				position: absolute;
 				right: calc(var(--gutter) + 10px);
 				bottom: calc(var(--gutter) + 10px);
-				@include sizes.width_be(40, 150, 320, 1920);
+				@include sizes.width_be(20, 150, 320, 1920);
 				img {
 					width: 100%;
 					object-fit: cover;
+				}
+				@include mixins.MOBILE {
+					right: calc(var(--gutter) + 5px);
+					bottom: calc(var(--gutter) + 15vh);
 				}
 			}
 			.img5 {
 				position: absolute;
 				left: calc(var(--gutter) + 30vw);
 				bottom: calc(var(--gutter) + 20vh);
-				@include sizes.width_be(50, 120, 320, 1920);
+				@include sizes.width_be(30, 120, 320, 1920);
 				img {
 					width: 100%;
 					object-fit: cover;
+				}
+				@include mixins.MOBILE {
+					left: calc(var(--gutter) + 20vw);
+					bottom: calc(var(--gutter) + 40vh);
 				}
 			}
 		}
@@ -345,10 +361,10 @@
 				position: absolute;
 				z-index: 10;
 				width: 144px;
-				@include sizes.width_be(100, 144, 768, 1920);
+				@include sizes.width_be(90, 144, 768, 1920);
 				aspect-ratio: 144/ 171;
 				bottom: calc(var(--gutter) + 10px);
-				left: 30vw;
+				left: 28vw;
 				img {
 					width: 100%;
 					height: 100%;

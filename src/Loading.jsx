@@ -9,7 +9,7 @@ const Loading = ({ percent }) => {
 				fontSize: "20vw",
 				textAlign: "center",
 				alignItems: "center",
-				color: "#023012",
+				color: "#0f0f0f",
 			}}
 		>
 			{percent}% Loaded

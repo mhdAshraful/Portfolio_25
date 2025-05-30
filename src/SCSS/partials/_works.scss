@@ -3,13 +3,13 @@
 @use "./mixins";
 .works_container {
 	width: 100%;
-	min-height: calc(100vh - (var(--gutter) * 2));
+	min-height: calc(var(--height) - (var(--gutter) * 2));
 	// background-color: rgb(172, 255, 227);
 
-	.works {
+	.myworks {
 		position: relative;
 		min-width: calc(100vw - (var(--gutter) * 2));
-		min-height: calc(100vh - (var(--gutter) * 2));
+		min-height: calc(var(--height) - (var(--gutter) * 2));
 
 		.title_container {
 			position: relative;

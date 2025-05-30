@@ -1,12 +1,18 @@
 @use "./mixins";
 @use "./sizes";
 
+.spinner {
+	position: absolute;
+	bottom: calc(0vh + var(--gutter) * 0.8);
+	left: calc(0vw - var(--gutter) * 0.8);
+}
+
 .flower_box {
 	position: relative;
-	width: 400px;
-	@include sizes.width_be(200, 400, 320, 1024);
-	height: 400px;
-	@include sizes.height_be(220, 420, 320, 1024);
+	// width: 400px;
+	@include sizes.width_be(190, 400, 320, 1920);
+	// height: 400px;
+	@include sizes.height_be(200, 420, 320, 1920);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -21,9 +27,9 @@
 
 .flowers img,
 .lets_make img {
-	max-width: 100%;
+	width: 100%;
 	height: auto;
 }
 #flower {
-	margin: 0 70px 30px 55px;
+	margin: 0 70px 33px 55px;
 }

@@ -1,4 +1,9 @@
-import React, { forwardRef, useEffect, useRef } from "react";
+import React, {
+	forwardRef,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Data from "../utils/info";
@@ -141,6 +146,10 @@ export const Interaction = forwardRef((props, ref) => {
 	);
 });
 
+/***
+ * FOCUS
+ */
+
 export const Focus = forwardRef((props, ref) => {
 	const { focus } = Data[1].about;
 	const { title } = focus;
@@ -148,6 +157,7 @@ export const Focus = forwardRef((props, ref) => {
 	const focusRef = useRef();
 	const lineRef = useRef(null);
 	const splitedText = useRef(null);
+
 	const vowelChars = useRef([]);
 
 	useGSAP(() => {
@@ -220,15 +230,22 @@ export const Focus = forwardRef((props, ref) => {
 	);
 });
 
+/***
+ * EDUCATION
+ */
+
 export const Education = forwardRef((props, ref) => {
 	const { education } = Data[1].about;
 	const { title } = education;
 	const { maincourse, othercourse } = education;
+	const tooltipRef = useRef();
+	const [tooltip, showtooltip] = useState(false);
+	const [SRtooltip, setSRtooltip] = useState(false);
 	const eduRef = useRef();
 	const lineRef = useRef();
 	const splited = useRef(null);
 	const italicChar = useRef([]);
-
+	const allLinesRef = useRef(null);
 	useGSAP(() => {
 		if (!props.loaded) return;
 
@@ -255,14 +272,77 @@ export const Education = forwardRef((props, ref) => {
 			tl.to(italicChar.current, {
 				duration: 0.5,
 				fontStyle: "italic",
-				stagger: 0.3,
-				ease: "power2.inOut",
+				stagger: 0.5,
+				ease: "power1.inOut",
 			});
 		});
 		return () => {
 			if (splited.current) splited.current.revert();
 		};
 	}, []);
+
+	useLayoutEffect(() => {
+		if (!props.loaded) return;
+		document.fonts.ready.then(() => {
+			const domEl = document.querySelectorAll("td");
+			allLinesRef.current = new SplitText(domEl, {
+				type: "lines",
+				linesClass: "lines",
+			});
+
+			// console.log("->>>>>>>", allLinesRef.current);
+
+			const tl2 = gsap.timeline({
+				scrollTrigger: {
+					trigger: lineRef.current,
+					start: "top center",
+				},
+			});
+
+			tl2.from(allLinesRef.current.lines, {
+				yPercent: 50,
+				opacity: 0,
+				duration: 0.5,
+				stagger: 0.06,
+			});
+		});
+
+		return () => {
+			if (allLinesRef.current) allLinesRef.current.revert();
+		};
+	}, []);
+
+	/***
+	 * Tooltop animating in and out
+	 */
+	useLayoutEffect(() => {
+		if (tooltip) {
+			setSRtooltip(true);
+		} else if (tooltipRef.current) {
+			// Animate out before unmounting
+			gsap.to(tooltipRef.current, {
+				scale: 0,
+				duration: 0.3,
+				ease: "back.inOut",
+				onComplete: () => {
+					setSRtooltip(false); // unmount after animation
+				},
+			});
+		}
+	}, [tooltip]);
+
+	useLayoutEffect(() => {
+		if (tooltip && tooltipRef.current)
+			gsap.fromTo(
+				tooltipRef.current,
+				{ scale: 0 },
+				{
+					scale: 1,
+					duration: 0.4,
+					ease: "back.inOut",
+				}
+			);
+	}, [SRtooltip]);
 
 	return (
 		<div
@@ -289,7 +369,7 @@ export const Education = forwardRef((props, ref) => {
 				</div>
 
 				{props.width > 768 ? (
-					<>
+					<div className="table">
 						<table className="course-table">
 							<tbody>
 								{Object.entries(maincourse).map(([key, value]) => (
@@ -316,9 +396,9 @@ export const Education = forwardRef((props, ref) => {
 								))}
 							</tbody>
 						</table>
-					</>
+					</div>
 				) : (
-					<>
+					<div className="table">
 						<table className="mbl_tbl">
 							<tbody>
 								{Object.entries(maincourse).map(([key, val]) => (
@@ -340,10 +420,23 @@ export const Education = forwardRef((props, ref) => {
 								))}
 							</tbody>
 						</table>
-					</>
+					</div>
 				)}
 
-				<div className="bookImage">
+				<div
+					className="bookImage"
+					onMouseEnter={() => showtooltip(true)}
+					onMouseLeave={() => showtooltip(false)}
+				>
+					{SRtooltip && (
+						<div className="tooltip" ref={tooltipRef}>
+							<img
+								src={"assets/images/tooltip.svg"}
+								alt="image saying books i enjoyed reading"
+							/>
+						</div>
+					)}
+
 					<img src="/assets/images/b3.webp" alt="bookImages" />
 				</div>
 			</section>
