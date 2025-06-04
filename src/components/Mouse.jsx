@@ -14,12 +14,37 @@ const Mouse = () => {
 	const pathDOT =
 		'M20 17.5C21.3807 17.5 22.5 18.6193 22.5 20C22.5 21.3807 21.3807 22.5 20 22.5C18.6193 22.5 17.5 21.3807 17.5 20C17.5 18.6193 18.6193 17.5 20 17.5Z' // circle
 	const pathARROW = 'M10.5 31.5L29.9998 9M29.9998 9H15.6147M29.9998 9V23.5' // basic arrow triangle
+	const pathArrowUPDown =
+		'M23.5 25.5L20.24 29M20.24 11L17 15M20.24 11L23.5 15M20.24 11V17.5M17 25.5L20.24 29M20.24 29V22.5'
 
 	const target = useRef(new THREE.Vector2())
 	const current = useRef(new THREE.Vector2())
 
 	const touchDevice = useTouchDevice()
 	if (touchDevice) return null
+
+	const onEnter = (e) => {
+		let t = e.target.className.baseVal === 'follow'
+
+		gsap.to(pathRef.current, {
+			duration: 0.3,
+			fill: '#ed3203',
+			stroke: '#ed3203',
+			strokeWidth: 2,
+			morphSVG: { d: t ? pathArrowUPDown : pathARROW },
+			ease: 'back.inOut',
+		})
+	}
+
+	const onLeave = (e) => {
+		gsap.to(pathRef.current, {
+			duration: 0.3,
+			fill: '#0F0F0F',
+			stroke: '#0F0F0F',
+			morphSVG: { d: pathDOT },
+			ease: 'back.inOut',
+		})
+	}
 
 	useLayoutEffect(() => {
 		document.body.style.cursor = 'none'
@@ -36,38 +61,18 @@ const Mouse = () => {
 			target.current.set(e.clientX - width / 2, e.clientY - height / 2)
 		}
 
-		const onEnter = (e) => {
-			gsap.to(pathRef.current, {
-				duration: 0.3,
-				fill: '#ed3203',
-				stroke: '#ed3203',
-				strokeWidth: 2,
-				morphSVG: { d: pathARROW },
-				ease: 'back.inOut',
-			})
-		}
-
-		const onLeave = (e) => {
-			gsap.to(pathRef.current, {
-				duration: 0.3,
-				fill: '#0F0F0F',
-				stroke: '#0F0F0F',
-				morphSVG: { d: pathDOT },
-				ease: 'back.inOut',
-			})
-		}
-
 		// adding a mutation observer to tackle the issue where mouse may not ditect some tags "a" after comonent remounts
 		const pathElements = new Set()
 		const addListeners = () => {
-			document.querySelectorAll('.work_box, button, a').forEach((el) => {
-				if (!pathElements.has(el)) {
-					el.addEventListener('mouseenter', onEnter)
-					el.addEventListener('mouseleave', onLeave)
-					pathElements.add(el) // add them back to set
-					console.log('set', pathElements)
-				}
-			})
+			document
+				.querySelectorAll('.work_box, button, a, g.follow')
+				.forEach((el) => {
+					if (!pathElements.has(el)) {
+						el.addEventListener('mouseenter', onEnter)
+						el.addEventListener('mouseleave', onLeave)
+						pathElements.add(el) // add them to set
+					}
+				})
 		}
 
 		const observer = new MutationObserver(() => {
@@ -119,9 +124,9 @@ const Mouse = () => {
 
 			observer.disconnect()
 
-			pathElements.forEach((element) => {
-				element.removeEventListener('mouseenter', onEnter)
-				element.removeEventListener('mouseleave', onLeave)
+			pathElements.forEach((el) => {
+				el.removeEventListener('mouseenter', onEnter)
+				el.removeEventListener('mouseleave', onLeave)
 			})
 
 			cancelAnimationFrame(animationFrame)
@@ -155,6 +160,7 @@ const Mouse = () => {
 				<defs>
 					<path id="dot" d={pathDOT} />
 					<path id="arrow" d={pathARROW} />
+					<path id="arrowUpDown" d={pathArrowUPDown} />
 				</defs>
 
 				{/* Visible element */}
