@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 
+// logic for when to chagnge which scene
 const SceneController = () => {
-	return <></>;
-};
+	const location = window.location.hash.split('#')
+	console.log('Scene controller location', location)
 
-export default SceneController;
+	return <></>
+}
+
+export default SceneController

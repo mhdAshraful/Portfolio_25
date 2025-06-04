@@ -1,52 +1,52 @@
-import React, { forwardRef, useEffect, useState } from "react";
-import Data from "../utils/info";
-import Cornerinfo from "./Cornerinfo";
+import React, { forwardRef, useEffect, useState } from 'react'
+import Data from '../utils/info'
+import Cornerinfo from './Cornerinfo'
 
 const Contact = forwardRef((props, ref) => {
-	const { title, subtitle, res1, res2, phone, location } = Data[3].contact;
+	const { title, subtitle, res1, res2, phone, location } = Data[3].contact
 	const { twitter, linkedin, github, gitImg, twitImg, linkdImg } =
-		Data[4].sociallinks;
-	const ttl = title.split("|||");
+		Data[4].sociallinks
+	const ttl = title.split('|||')
 
-	const part1 = subtitle.split("|||");
-	const part2 = res2.split("|||");
-	const loc = location.split("|||");
+	const part1 = subtitle.split('|||')
+	const part2 = res2.split('|||')
+	const loc = location.split('|||')
 
-	const [clientFormatedTime, setClientTime] = useState();
-	const [mydate, setmyDate] = useState("");
-	const [myYear, setmyDYear] = useState(0);
+	const [clientFormatedTime, setClientTime] = useState()
+	const [mydate, setmyDate] = useState('')
+	const [myYear, setmyDYear] = useState(0)
 
 	useEffect(() => {
 		const updatTime = () => {
 			let ftCt = new Intl.DateTimeFormat(undefined, {
-				hour: "numeric",
-				minute: "numeric",
-			}).format(new Date());
-			setClientTime(ftCt);
+				hour: 'numeric',
+				minute: 'numeric',
+			}).format(new Date())
+			setClientTime(ftCt)
 
-			let mydate = new Date();
-			let d1 = new Intl.DateTimeFormat("en-US", {
-				timeZone: "Asia/Dhaka",
-				day: "numeric",
-				month: "short",
-				weekday: "long",
-				year: "numeric",
-			}).formatToParts(mydate);
+			let mydate = new Date()
+			let d1 = new Intl.DateTimeFormat('en-US', {
+				timeZone: 'Asia/Dhaka',
+				day: 'numeric',
+				month: 'short',
+				weekday: 'long',
+				year: 'numeric',
+			}).formatToParts(mydate)
 
 			// Extract parts
-			const day = d1.find((p) => p.type === "day")?.value;
-			const month = d1.find((p) => p.type === "month")?.value;
-			const weekday = d1.find((p) => p.type === "weekday")?.value;
-			const year = d1.find((p) => p.type === "year")?.value;
+			const day = d1.find((p) => p.type === 'day')?.value
+			const month = d1.find((p) => p.type === 'month')?.value
+			const weekday = d1.find((p) => p.type === 'weekday')?.value
+			const year = d1.find((p) => p.type === 'year')?.value
 
-			setmyDate(`${day} ${month}, ${weekday}`);
-			setmyDYear(year);
-		};
+			setmyDate(`${day} ${month}, ${weekday}`)
+			setmyDYear(year)
+		}
 
-		const interID = setInterval(() => updatTime(), 1000);
+		const interID = setInterval(() => updatTime(), 1000)
 
-		return () => clearInterval(interID);
-	}, []);
+		return () => clearInterval(interID)
+	}, [])
 
 	return (
 		<section
@@ -116,13 +116,25 @@ const Contact = forwardRef((props, ref) => {
 							<p className="phone highilighted">{phone}</p>
 						</div>
 						<div className="socail_icon">
-							<a href={linkedin} className="urls">
+							<a
+								href={linkedin}
+								className="urls"
+								rel="noopener noreferrer"
+							>
 								<img src={linkdImg} alt="linkedin icon" />
 							</a>
-							<a href={twitter} className="urls">
+							<a
+								href={twitter}
+								className="urls"
+								rel="noopener noreferrer"
+							>
 								<img src={twitImg} alt="twitter icon" />
 							</a>
-							<a href={github} className="urls">
+							<a
+								href={github}
+								className="urls"
+								rel="noopener noreferrer"
+							>
 								<img src={gitImg} alt="github icon" />
 							</a>
 						</div>
@@ -136,10 +148,10 @@ const Contact = forwardRef((props, ref) => {
 				</div>
 			</div>
 		</section>
-	);
-});
+	)
+})
 
-export default Contact;
+export default Contact
 
 export const SpinnedFlower = ({ flowerURL, textMaskUrl }) => {
 	return (
@@ -155,5 +167,5 @@ export const SpinnedFlower = ({ flowerURL, textMaskUrl }) => {
 				/>
 			</div>
 		</div>
-	);
-};
+	)
+}
