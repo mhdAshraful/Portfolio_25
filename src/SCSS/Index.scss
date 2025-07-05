@@ -1,17 +1,17 @@
-@use "./partials/mixins";
-@use "./partials/fonts";
-@use "./partials/sizes";
-@use "./partials/home";
-@use "./partials/about";
-@use "./partials/works";
-@use "./partials/experiences";
-@use "./partials/contact";
-@use "./partials/socialmedia";
-@use "./partials/logo";
-@use "./partials/corner";
-@use "./partials/canvas";
-@use "./partials/spinFlower";
-@use "./partials/menupage";
+@use './partials/mixins';
+@use './partials/fonts';
+@use './partials/sizes';
+@use './partials/home';
+@use './partials/about';
+@use './partials/works';
+@use './partials/experiences';
+@use './partials/contact';
+@use './partials/socialmedia';
+@use './partials/logo';
+@use './partials/corner';
+@use './partials/canvas';
+@use './partials/spinFlower';
+@use './partials/menupage';
 
 :root {
 	--greener: #9dff0a;
@@ -23,10 +23,10 @@
 	--cream40: #fafad2b7;
 	--white: #fffff2;
 	--white40: #fffff2a7;
-	--fira: "Fira Sans", sans-serif; // Variable only
+	--fira: 'Fira Sans', sans-serif; // Variable only
 	// --neue: "Neue Regrade", sans-serif;
-	--neueVar: "Neue Regrade Variable", sans-serif; // Variable only
-	--grotesk: "Space Grotesk Variable", sans-serif; // Variable only
+	--neueVar: 'Neue Regrade Variable', sans-serif; // Variable only
+	--grotesk: 'Space Grotesk Variable', sans-serif; // Variable only
 	--width: 100vw;
 	--height: 100dvh;
 	--gutter: 40px;
@@ -77,7 +77,8 @@ body,
 html,
 body {
 	overflow: auto;
-	background-color: var(--white);
+	// background-color: var(--white);
+	// background-color: transparent;
 	color: var(--black);
 	font-family: var(--fira);
 	font-size: 16px;
@@ -104,13 +105,18 @@ body.touch #smooth-wrapper {
 	overflow: auto;
 	height: auto;
 }
-
+.everything {
+	background-color: var(--white);
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+}
 .border {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	width: calc(
-		100vw -
+		100dvw -
 			(
 				var(--gutter) * 2 + env(safe-area-inset-left) +
 					env(safe-area-inset-right)
@@ -127,6 +133,7 @@ body.touch #smooth-wrapper {
 	border-radius: var(--borderradious);
 	transform: translate(-50%, -50%);
 	overflow: hidden;
+	background-color: transparent;
 
 	@include mixins.MOBILE {
 		.hiderBar {

@@ -98,9 +98,11 @@ const Experiences = forwardRef((props, ref) => {
 
 	const color = {
 		drawer: '#fffff2',
-		emptyFile: '#fafad2',
+		emptyFile: '#F3F390',
+		// emptyFile: '#fafad2',
 		emptyFileTops: '#fffff2',
-		mainFile: '#e6e6ff',
+		// mainFile: '#e6e6ff',
+		mainFile: '#ECFED1',
 		mainFileTops: '#0F0F0F',
 	}
 

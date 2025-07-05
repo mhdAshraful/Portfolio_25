@@ -1,59 +1,57 @@
-import React, {
-	forwardRef,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import Data from "../utils/info";
-import { SplitText } from "gsap/SplitText";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import Data from '../utils/info'
+import { SplitText } from 'gsap/SplitText'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useDomElmPositions } from '../utils/animations'
 
-gsap.registerPlugin(SplitText, ScrollTrigger);
+gsap.registerPlugin(SplitText, ScrollTrigger)
 
 export const UIEng = forwardRef((props, ref) => {
-	const { ui } = Data[1].about;
-	const uiRef = useRef();
+	const { ui } = Data[1].about
+	const uiRef = useRef()
+
+	useDomElmPositions(uiRef, 'ui')
 
 	useGSAP(
 		() => {
-			gsap.to(".img5 img", {
+			gsap.to('.img5 img', {
 				rotation: 360,
 				duration: 2,
-				ease: "none",
+				ease: 'none',
 				scrollTrigger: {
-					trigger: ".img5",
-					start: "top bottom",
-					end: "bottom top",
+					trigger: '.img5',
+					start: 'top bottom',
+					end: 'bottom top',
 					scrub: true,
-					scroller: "#smooth-wrapper",
+					scroller: '#smooth-wrapper',
 				},
-			});
+			})
 
-			gsap.utils.toArray(".anim").forEach((elm) => {
+			gsap.utils.toArray('.anim').forEach((elm) => {
 				gsap.to(elm, {
 					opacity: 0,
 					xPercent: () =>
 						-(
-							document.querySelector(".middle").scrollWidth -
+							document.querySelector('.middle').scrollWidth -
 							window.innerWidth
 						),
 					duration: 0.6,
-					ease: "sine.inOut",
+					ease: 'sine.inOut',
 					stagger: 0.2,
 					scrollTrigger: {
-						trigger: ".middle",
-						start: "top 40px",
-						end: "bottom top",
+						trigger: '.middle',
+						start: 'top 40px',
+						end: 'bottom top',
 						scrub: true,
-						scroller: "#smooth-wrapper",
+						scroller: '#smooth-wrapper',
 					},
-				});
-			});
+				})
+			})
 		},
 		{ scope: uiRef.current }
-	);
+	)
 
 	return (
 		<div data-section="ui" className="ui_wrapper snapper" ref={ref}>
@@ -75,45 +73,12 @@ export const UIEng = forwardRef((props, ref) => {
 				</div>
 			</section>
 		</div>
-	);
-});
+	)
+})
 
 export const Web3d = forwardRef((props, ref) => {
-	const { webgl } = Data[1].about;
-	const webglRef = useRef();
-
-	useGSAP(
-		() => {
-			// gsap.to(".img5", {
-			// 	rotation: 360,
-			// 	duration: 2,
-			// 	ease: "none",
-			// 	scrollTrigger: {
-			// 		trigger: ".img5",
-			// 		start: "top bottom",
-			// 		end: "bottom top",
-			// 		scrub: true,
-			// 		scroller: "#smooth-wrapper",
-			// 	},
-			// });
-			// gsap.utils.toArray(".anim").forEach((elm) => {
-			// 	gsap.to(elm, {
-			// 		opacity: 0,
-			// 		duration: 0.4,
-			// 		ease: "sine.out",
-			// 		// stagger: 0.2,
-			// 		scrollTrigger: {
-			// 			trigger: ".middle",
-			// 			start: "top 100px",
-			// 			end: "bottom center",
-			// 			scrub: true,
-			// 			scroller: "#smooth-wrapper",
-			// 		},
-			// 	});
-			// });
-		},
-		{ scope: webglRef.current }
-	);
+	const { webgl } = Data[1].about
+	const webglRef = useRef()
 
 	return (
 		<div data-section="webgl" className="webgl_wrapper" ref={ref}>
@@ -123,13 +88,13 @@ export const Web3d = forwardRef((props, ref) => {
 				</div>
 			</section>
 		</div>
-	);
-});
+	)
+})
 
 export const Interaction = forwardRef((props, ref) => {
-	const { interaction } = Data[1].about;
-	const interactionRef = useRef();
-	const boxRef = useRef({ width: 0, height: 0 });
+	const { interaction } = Data[1].about
+	const interactionRef = useRef()
+	const boxRef = useRef({ width: 0, height: 0 })
 
 	return (
 		<div
@@ -143,76 +108,76 @@ export const Interaction = forwardRef((props, ref) => {
 				</div>
 			</section>
 		</div>
-	);
-});
+	)
+})
 
 /***
  * FOCUS
  */
 
 export const Focus = forwardRef((props, ref) => {
-	const { focus } = Data[1].about;
-	const { title } = focus;
-	const t1 = title.split("|||");
-	const focusRef = useRef();
-	const lineRef = useRef(null);
-	const splitedText = useRef(null);
+	const { focus } = Data[1].about
+	const { title } = focus
+	const t1 = title.split('|||')
+	const focusRef = useRef()
+	const lineRef = useRef(null)
+	const splitedText = useRef(null)
 
-	const vowelChars = useRef([]);
+	const vowelChars = useRef([])
 
 	useGSAP(() => {
-		if (!props.loaded) return;
+		if (!props.loaded) return
 
 		document.fonts.ready.then(() => {
 			splitedText.current = new SplitText(lineRef.current, {
-				type: "chars, words",
-				charsClass: "chars",
-				wordsClass: "words",
-				tag: "span",
-			});
+				type: 'chars, words',
+				charsClass: 'chars',
+				wordsClass: 'words',
+				tag: 'span',
+			})
 
-			const allChars = splitedText.current.chars;
+			const allChars = splitedText.current.chars
 			vowelChars.current = allChars.filter((char) =>
 				/[aeiuAEIU]/.test(char.textContent)
-			);
+			)
 
-			gsap.set(allChars, { fontStyle: "normal", fontWeight: 100 });
+			gsap.set(allChars, { fontStyle: 'normal', fontWeight: 100 })
 
 			const tl = gsap.timeline({
 				scrollTrigger: {
 					trigger: lineRef.current,
-					start: "top 40%",
+					start: 'top 40%',
 					once: false, // run only once
 				},
-			});
+			})
 			tl.to(allChars, {
 				duration: 0.4,
 				fontVariationSettings: "'wght' 400",
-				ease: "power2.inOut",
+				ease: 'power2.inOut',
 			})
 				.to(allChars, {
 					duration: 0.4,
 					fontVariationSettings: "'wght' 100",
-					ease: "power2.inOut",
+					ease: 'power2.inOut',
 				})
 				.to(allChars, {
 					duration: 0.5,
 					fontVariationSettings: "'wght' 1000",
-					ease: "power2.inOut",
+					ease: 'power2.inOut',
 				})
 				.to(vowelChars.current, {
 					delay: 0.4, // delay after font weight changes
 					duration: 0.6,
-					fontStyle: "italic",
+					fontStyle: 'italic',
 					stagger: 0.03,
-					ease: "power2.inOut",
-				});
-		});
+					ease: 'power2.inOut',
+				})
+		})
 
 		return () => {
-			if (splitedText.current) splitedText.current.revert();
-		};
-	}, []);
+			if (splitedText.current) splitedText.current.revert()
+		}
+	}, [])
 
 	return (
 		<div data-section="focus" className="focus_wrapper snapper" ref={ref}>
@@ -222,114 +187,114 @@ export const Focus = forwardRef((props, ref) => {
 				</div>
 				<h1 className="title" ref={lineRef}>
 					{title}
-					{"\u201D"}
+					{'\u201D'}
 				</h1>
 				<p className="reference">{focus.reference}</p>
 			</section>
 		</div>
-	);
-});
+	)
+})
 
 /***
  * EDUCATION
  */
 
 export const Education = forwardRef((props, ref) => {
-	const { education } = Data[1].about;
-	const { title } = education;
-	const { maincourse, othercourse } = education;
-	const tooltipRef = useRef();
-	const [tooltip, showtooltip] = useState(false);
-	const [SRtooltip, setSRtooltip] = useState(false);
-	const eduRef = useRef();
-	const lineRef = useRef();
-	const splited = useRef(null);
-	const italicChar = useRef([]);
-	const allLinesRef = useRef(null);
+	const { education } = Data[1].about
+	const { title } = education
+	const { maincourse, othercourse } = education
+	const tooltipRef = useRef()
+	const [tooltip, showtooltip] = useState(false)
+	const [SRtooltip, setSRtooltip] = useState(false)
+	const eduRef = useRef()
+	const lineRef = useRef()
+	const splited = useRef(null)
+	const italicChar = useRef([])
+	const allLinesRef = useRef(null)
 	useGSAP(() => {
-		if (!props.loaded) return;
+		if (!props.loaded) return
 
 		document.fonts.ready.then(() => {
 			splited.current = new SplitText(lineRef.current, {
-				type: "chars",
-				charsClass: "chars",
-			});
+				type: 'chars',
+				charsClass: 'chars',
+			})
 
-			const allchar = splited.current.chars;
+			const allchar = splited.current.chars
 			italicChar.current = allchar.filter((char) =>
 				/[dctnDCTN]/.test(char.textContent)
-			);
+			)
 
-			gsap.set(allchar, { fontStyle: "normal", fontWeight: 1000 });
+			gsap.set(allchar, { fontStyle: 'normal', fontWeight: 1000 })
 
 			const tl = gsap.timeline({
 				scrollTrigger: {
 					trigger: lineRef.current,
-					start: "top center",
+					start: 'top center',
 				},
-			});
+			})
 
 			tl.to(italicChar.current, {
 				duration: 0.5,
-				fontStyle: "italic",
+				fontStyle: 'italic',
 				stagger: 0.5,
-				ease: "power1.inOut",
-			});
-		});
+				ease: 'power1.inOut',
+			})
+		})
 		return () => {
-			if (splited.current) splited.current.revert();
-		};
-	}, []);
+			if (splited.current) splited.current.revert()
+		}
+	}, [])
 
 	useLayoutEffect(() => {
-		if (!props.loaded) return;
+		if (!props.loaded) return
 		document.fonts.ready.then(() => {
-			const domEl = document.querySelectorAll("td");
+			const domEl = document.querySelectorAll('td')
 			allLinesRef.current = new SplitText(domEl, {
-				type: "lines",
-				linesClass: "lines",
-			});
+				type: 'lines',
+				linesClass: 'lines',
+			})
 
 			// console.log("->>>>>>>", allLinesRef.current);
 
 			const tl2 = gsap.timeline({
 				scrollTrigger: {
 					trigger: lineRef.current,
-					start: "top center",
+					start: 'top center',
 				},
-			});
+			})
 
 			tl2.from(allLinesRef.current.lines, {
 				yPercent: 50,
 				opacity: 0,
 				duration: 0.5,
 				stagger: 0.06,
-			});
-		});
+			})
+		})
 
 		return () => {
-			if (allLinesRef.current) allLinesRef.current.revert();
-		};
-	}, []);
+			if (allLinesRef.current) allLinesRef.current.revert()
+		}
+	}, [])
 
 	/***
 	 * Tooltop animating in and out
 	 */
 	useLayoutEffect(() => {
 		if (tooltip) {
-			setSRtooltip(true);
+			setSRtooltip(true)
 		} else if (tooltipRef.current) {
 			// Animate out before unmounting
 			gsap.to(tooltipRef.current, {
 				scale: 0,
 				duration: 0.3,
-				ease: "back.inOut",
+				ease: 'back.inOut',
 				onComplete: () => {
-					setSRtooltip(false); // unmount after animation
+					setSRtooltip(false) // unmount after animation
 				},
-			});
+			})
 		}
-	}, [tooltip]);
+	}, [tooltip])
 
 	useLayoutEffect(() => {
 		if (tooltip && tooltipRef.current)
@@ -339,10 +304,10 @@ export const Education = forwardRef((props, ref) => {
 				{
 					scale: 1,
 					duration: 0.4,
-					ease: "back.inOut",
+					ease: 'back.inOut',
 				}
-			);
-	}, [SRtooltip]);
+			)
+	}, [SRtooltip])
 
 	return (
 		<div
@@ -431,7 +396,7 @@ export const Education = forwardRef((props, ref) => {
 					{SRtooltip && (
 						<div className="tooltip" ref={tooltipRef}>
 							<img
-								src={"assets/images/tooltip.svg"}
+								src={'assets/images/tooltip.svg'}
 								alt="image saying books i enjoyed reading"
 							/>
 						</div>
@@ -441,8 +406,8 @@ export const Education = forwardRef((props, ref) => {
 				</div>
 			</section>
 		</div>
-	);
-});
+	)
+})
 
 /***
  * Mobile Interface animated
@@ -453,5 +418,5 @@ const MobileInterface = ({ urls }) => {
 		<div className="iphone anim">
 			<img src={urls} alt="iphone svg" />
 		</div>
-	);
-};
+	)
+}
