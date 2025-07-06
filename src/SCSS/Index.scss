@@ -1,18 +1,3 @@
-@use './partials/mixins';
-@use './partials/fonts';
-@use './partials/sizes';
-@use './partials/home';
-@use './partials/about';
-@use './partials/works';
-@use './partials/experiences';
-@use './partials/contact';
-@use './partials/socialmedia';
-@use './partials/logo';
-@use './partials/corner';
-@use './partials/canvas';
-@use './partials/spinFlower';
-@use './partials/menupage';
-
 :root {
 	--greener: #9dff0a;
 	--red: #ed3203;
@@ -67,9 +52,8 @@ body,
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	scroll-behavior: auto;
-	overscroll-behavior: none;
-	cursor: none;
+	background-color: var(--white);
+
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -82,12 +66,6 @@ body {
 	color: var(--black);
 	font-family: var(--fira);
 	font-size: 16px;
-}
-body,
-a,
-button,
-link {
-	cursor: none;
 }
 
 // Fallback for touch devices (disable transforms or fixed heights)
@@ -134,47 +112,7 @@ body.touch #smooth-wrapper {
 	transform: translate(-50%, -50%);
 	overflow: hidden;
 	background-color: transparent;
-
-	@include mixins.MOBILE {
-		.hiderBar {
-			position: fixed;
-			top: 0;
-			left: 0;
-			z-index: 5;
-			width: 100%;
-			height: 80px;
-			background-color: var(--white40);
-			border-bottom: 1px solid var(--black40);
-			backdrop-filter: blur(10px);
-			padding-top: env(safe-area-inset-top);
-		}
-	}
 }
-// .border {
-// 	position: fixed;
-// 	top: 50%;
-// 	left: 50%;
-// 	width: calc(100vw - (var(--gutter) * 2));
-// 	height: calc(100vh - (var(--gutter) * 2));
-// 	border: 1px solid var(--black);
-// 	border-radius: var(--borderradious);
-// 	transform: translate(-50%, -50%);
-// 	overflow: hidden;
-
-// 	@include mixins.MOBILE {
-// 		.hiderBar {
-// 			position: relative;
-// 			top: 0;
-// 			left: 0;
-// 			z-index: 5;
-// 			width: 100%;
-// 			height: 80px;
-// 			background-color: var(--white40);
-// 			border-bottom: 1px solid var(--black40);
-// 			backdrop-filter: blur(10px);
-// 		}
-// 	}
-// }
 
 #MenuCircle {
 	// in this project both here and in svg component has to set trnsperant and fill "none"
@@ -183,17 +121,4 @@ body.touch #smooth-wrapper {
 	transform-origin: center;
 	top: calc(var(--gutter) + 10px);
 	left: calc(100vw - (var(--gutter) + 64px + 10px));
-}
-
-// outerCircle
-.primaryMouse {
-	position: fixed;
-	z-index: 1001;
-	width: 50px;
-	height: 50px;
-	border: 1px solid var(--black);
-	border-radius: 50%;
-	pointer-events: none;
-	overflow: hidden;
-	transform: translate3d(0, 0, 0);
 }
