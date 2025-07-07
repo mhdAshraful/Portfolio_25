@@ -52,7 +52,7 @@ body,
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	background-color: var(--white);
+	background-color: var(--red);
 
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
@@ -61,7 +61,7 @@ body,
 html,
 body {
 	overflow: auto;
-	// background-color: var(--white);
+
 	// background-color: transparent;
 	color: var(--black);
 	font-family: var(--fira);
