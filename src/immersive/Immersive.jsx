@@ -7,14 +7,17 @@ import { Environment, OrbitControls } from '@react-three/drei'
 const CanvasContainer = (props) => {
 	return (
 		<div className="canvas_wrapper">
-			<Canvas orthographic camera={{ position: [0, 0, 100], zoom: 50 }}>
+			<Canvas camera={{ position: [0, 0, 100], zoom: 5 }}>
 				<color attach={'background'} args={['#fffff2']} />
 				<SceneCleanup />
-				<ambientLight color={'#fffff2'} intensity={1} />
+				<ambientLight color={'#ffffff'} intensity={1} />
+				{/* <gridHelper
+					args={[20, 20, '#f67070', '#ed6161']}
+					rotation={[Math.PI / 2, 0, 0]}
+				/> */}
+				<Environment preset="city" />
+				<SceneController />
 
-				{/* <Environment preset="studio"> */}
-				{/* <SceneController /> */}
-				{/* </Environment> */}
 				<OrbitControls />
 			</Canvas>
 		</div>
