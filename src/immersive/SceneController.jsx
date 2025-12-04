@@ -1,6 +1,6 @@
-import React, { Suspense } from 'react'
-import { Physics } from '@react-three/rapier'
-import Band from './Card'
+import React, { Suspense } from "react";
+import { Physics } from "@react-three/rapier";
+import Band from "./Card";
 
 // logic for when to chagnge which scene
 const SceneController = () => {
@@ -10,15 +10,15 @@ const SceneController = () => {
 			<Suspense>
 				<Physics
 					interpolate
-					gravity={[0, -60, 0]}
+					gravity={[0, -40, 0]}
 					timeStep={1 / 60}
-					// debug={true}
+					debug={true}
 				>
 					<Band />
 				</Physics>
 			</Suspense>
 		</>
-	)
-}
+	);
+};
 
-export default SceneController
+export default SceneController;

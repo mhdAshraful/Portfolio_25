@@ -9,6 +9,11 @@
 		"lint": "eslint .",
 		"preview": "vite preview"
 	},
+	"engines": {
+		"node": "22.x",
+		"pnpm": "10.x"
+	},
+	"packageManager": "pnpm@10.14.0",
 	"dependencies": {
 		"@gsap/react": "^2.1.2",
 		"@react-three/drei": "^10.0.6",
