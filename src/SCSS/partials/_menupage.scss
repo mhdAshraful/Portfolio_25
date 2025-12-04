@@ -1,9 +1,9 @@
-@use './mixins';
-@use './fonts';
-@use './sizes';
+@use "./mixins";
+@use "./fonts";
+@use "./sizes";
 
 .menu {
-	position: fixed;
+	position: relative;
 	width: 100vw;
 	height: var(--height);
 	scroll-behavior: stop;
@@ -110,7 +110,7 @@
 						svg {
 							fill: var(--cream);
 
-							transition: all 0.6s 'ease.inOut';
+							transition: all 0.6s "ease.inOut";
 						}
 					}
 				}

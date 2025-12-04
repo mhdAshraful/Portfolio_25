@@ -38,7 +38,6 @@ export async function preloadAssets(onProgress) {
 		'/assets/images/mhdAshraful.svg',
 		'/assets/images/mobileInterface.svg',
 		'/assets/images/MobileInterface.png',
-		'/assets/3d/bp.webp',
 	]
 
 	const modelPaths = [
@@ -46,7 +45,7 @@ export async function preloadAssets(onProgress) {
 		'/assets/3d/hpointed.glb',
 		'/assets/3d/grad.glb',
 		'/assets/3d/Boxed.glb',
-		'/assets/3d/newCARD.glb',
+		'/assets/3d/card.glb',
 	]
 
 	const fontNames = [
