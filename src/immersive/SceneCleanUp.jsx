@@ -4,7 +4,6 @@ import { useEffect } from "react";
 function SceneCleanup() {
 	const { gl, scene } = useThree();
 	useEffect(() => {
-
 		// anything that is in retur statement in useEffect will run when component dismounts
 		return () => {
 			// Dispose the scene manually
@@ -23,7 +22,5 @@ function SceneCleanup() {
 			gl.dispose();
 		};
 	}, []);
-
-	return null;
 }
 export default SceneCleanup;
