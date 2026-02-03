@@ -109,16 +109,39 @@
 		/** WEBGL */
 		&.webgl {
 			width: 100%;
-			height: 100%;
+			height: 100vh;
+			min-height: 100vh;
 			position: relative;
+			overflow: hidden;
 
+			// Canvas container - full viewport coverage
+			.webgl_canvas_container {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+				pointer-events: none; // Allow scroll through canvas
+
+				canvas {
+					width: 100% !important;
+					height: 100% !important;
+				}
+			}
+
+			// Content overlay
 			.middle {
 				width: 50vw;
 				position: relative;
+				z-index: 2;
+				pointer-events: auto;
+
 				.title {
 					max-width: 100%;
 					top: 30vh;
 					left: 10vw;
+					position: relative;
 				}
 			}
 		}
@@ -174,7 +197,10 @@
 				@include fonts.font_size_be(33, 96, 320, 1920);
 				font-weight: 1000;
 				// letter-spacing: 3px;
-				font-feature-settings: "liga" 1, "kern" 1, "ss01" 0;
+				font-feature-settings:
+					"liga" 1,
+					"kern" 1,
+					"ss01" 0;
 			}
 			.reference {
 				position: absolute;
@@ -393,7 +419,10 @@
 		@include fonts.font_size_be(33, 96, 320, 1920);
 		font-weight: 1000;
 		transition: all 0.6s cubic-bezier(0.65, 0.74, 0.18, 1);
-		font-feature-settings: "liga" 1, "kern" 1, "ss01" 1;
+		font-feature-settings:
+			"liga" 1,
+			"kern" 1,
+			"ss01" 1;
 		kerning: normal;
 		// background-color: #2ec7c5;
 	}

@@ -20,8 +20,7 @@ const BackCircles = ({ handleBack }) => {
 		noiseStrength2: 5,
 		radiusPulseAmplitude: 0.7,
 	});
-	const line1 = useRef(null);
-	const line2 = useRef(null);
+
 
 	let tick = 0;
 
@@ -50,21 +49,21 @@ const BackCircles = ({ handleBack }) => {
 		const { radius, noiseStrength1, noiseStrength2, radiusPulseAmplitude } =
 			state.current;
 
-		const dynamicRadious1 =
+		const dynamicRadius1 =
 			radius + Math.sin(tick * 1.5) * radiusPulseAmplitude;
-		const dynamicRadious2 =
+		const dynamicRadius2 =
 			radius + Math.cos(tick * 1.1) * radiusPulseAmplitude;
 
 		if (path1Ref.current) {
 			path1Ref.current.setAttribute(
 				"d",
-				generatedPath(dynamicRadious1, noiseStrength1, angleOffset * 0.5)
+				generatedPath(dynamicRadius1, noiseStrength1, angleOffset * 0.5)
 			);
 		}
 		if (path2Ref.current) {
 			path2Ref.current.setAttribute(
 				"d",
-				generatedPath(dynamicRadious2, noiseStrength2, angleOffset * 0.2)
+				generatedPath(dynamicRadius2, noiseStrength2, angleOffset * 0.2)
 			);
 		}
 	};

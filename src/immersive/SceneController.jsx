@@ -1,13 +1,23 @@
-import React, { Suspense } from 'react'
-import { Physics } from '@react-three/rapier'
-import Band from './Card'
+import React, { Suspense } from "react";
+import { Physics } from "@react-three/rapier";
+import Band from "./Card";
+import FloatingRibbon, { MultiRibbon } from "./FloatingRibbon";
 
-// logic for when to chagnge which scene
-const SceneController = () => {
+/**
+ * SceneController - Manages which 3D elements are visible based on current section
+ * Uses section context to show/hide elements as user scrolls
+ */
+const SceneController = ({ currentSection = "home" }) => {
+	// Determine which elements should be visible based on section
+	const showRibbon =
+		currentSection === "webgl" || currentSection === "interaction";
+
+	// const showBand = currentSection === "webgl";
+
 	return (
 		<>
-			{/* <Particles /> */}
-			<Suspense>
+			{/* Physics-based Band (existing) */}
+			{/* {showBand && (
 				<Physics
 					interpolate
 					gravity={[0, -60, 0]}
@@ -16,9 +26,18 @@ const SceneController = () => {
 				>
 					<Band />
 				</Physics>
+			)} */}
+
+			{/* Floating Ribbon for webgl section */}
+			<Suspense fallback={null}>
+				<MultiRibbon
+					count={1}
+					isVisible={showRibbon}
+					currentSection={currentSection}
+				/>
 			</Suspense>
 		</>
-	)
-}
+	);
+};
 
-export default SceneController
+export default SceneController;

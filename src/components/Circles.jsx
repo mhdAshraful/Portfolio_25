@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { createNoise2D } from "simplex-noise";
 import { useOverlayContext } from "../utils/SecitonContext";

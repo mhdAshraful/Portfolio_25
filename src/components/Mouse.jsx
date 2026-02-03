@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { useTouchDevice } from '../utils/deviceDetector'
 
 import MorphSVGPlugin from 'gsap/MorphSVGPlugin'
