@@ -1,8 +1,8 @@
 @use "./fonts";
 .mylogo {
 	position: fixed;
-	top: calc(var(--gutter) + 20px);
-	left: calc(var(--gutter) + 20px);
+	top: calc(var(--gutter));
+	left: calc(var(--gutter));
 	z-index: 100;
 
 	display: flex;
@@ -10,7 +10,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	gap: 5px;
-	width: 240px;
+	width: 250px;
 	height: 80px;
 
 	transition: all 0.5s ease-in-out;

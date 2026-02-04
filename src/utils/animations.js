@@ -49,7 +49,7 @@ export const setCornerSectionName = (refs, setCurrentSection) => {
 export const useDomElmPositions = (ref, key) => {
 	const { updateDomElmPos } = useLayoutTrackerContext();
 	const prev = useRef({ x: null, y: null });
-	let frameId;
+	const frameId = useRef(null);
 
 	useEffect(() => {
 		const updateXY = () => {
@@ -57,17 +57,29 @@ export const useDomElmPositions = (ref, key) => {
 				const elm = ref.current;
 				const rect = elm.getBoundingClientRect();
 
-				const newX = rect.left + window.scrollX;
-				const newY = rect.top + window.scrollY;
+				const newX = rect.left;
+				const newY = rect.top;
+				const newW = rect.width;
+				const newH = rect.height;
 
-				if (prev.current.x !== newX || prev.current.y !== newY) {
-					prev.current = { x: newX, y: newY };
-					updateDomElmPos(key, { left: newX, top: newY });
+				if (
+					prev.current.x !== newX ||
+					prev.current.y !== newY ||
+					prev.current.w !== newW ||
+					prev.current.h !== newH
+				) {
+					prev.current = { x: newX, y: newY, w: newW, h: newH };
+					updateDomElmPos(key, {
+						left: newX,
+						top: newY,
+						width: newW,
+						height: newH,
+					});
 				}
 			}
-			frameId = requestAnimationFrame(updateXY);
+			frameId.current = requestAnimationFrame(updateXY);
 		};
 		updateXY();
-		return () => cancelAnimationFrame(frameId);
+		return () => cancelAnimationFrame(frameId.current);
 	}, [ref, key, updateDomElmPos]);
 };

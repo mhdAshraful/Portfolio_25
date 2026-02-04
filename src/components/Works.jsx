@@ -107,7 +107,7 @@ const Works = forwardRef((props, ref) => {
 				});
 			}
 		},
-		{ scope: workref }
+		{ scope: workref },
 	);
 
 	/***

@@ -27,8 +27,8 @@ const Data = [
 				ribbontext: "Motion Scroll and smooth user flows",
 			},
 			focus: {
-				title: "Focusing is about saying no.",
-				reference: "- STEVE JOBS",
+				title: "The measure of intelligence is the ability to change.",
+				reference: "- Albert Einstein",
 				img: "/assets/images/quote.svg",
 
 				aday: {

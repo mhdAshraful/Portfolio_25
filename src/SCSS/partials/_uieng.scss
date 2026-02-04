@@ -7,7 +7,7 @@
 .focus_wrapper,
 .education_wrapper {
 	width: 100%;
-	max-height: calc(var(--height) - (var(--gutter) * 2));
+	max-height: calc(var(--height) - (var(--gutter)));
 
 	section {
 		position: relative;
@@ -201,10 +201,14 @@
 					"liga" 1,
 					"kern" 1,
 					"ss01" 0;
+
+					@include mixins.MOBILE {
+						max-width: 70%;
+					}
 			}
 			.reference {
 				position: absolute;
-				top: 35vh;
+				top: 45vh;
 				left: 35vw;
 				font-size: 20px;
 			}

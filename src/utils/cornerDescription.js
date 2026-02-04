@@ -1,26 +1,25 @@
-import Data from "./info";
 /***
  * Corner Component Descriptions
  */
 export const cornerDescription = {
 	home: {
-		cornerH2: "Dsgnd - 2025",
+		cornerH2: "Updated - 2026",
 		description:
 			"UI Engineer turning designs into code. Building Interfaces that feel as good as they look. Focused on Pixel-Perfect, Responsive & Immersive web experience.",
 	},
 
 	ui: {
-		cornerH2: "based - dhaka",
+		cornerH2: "based - Sydney",
 		description:
 			"I build digital experiences that blend user-centric designs with creativity, bringing ideas to life accross web, mobile and interactive device — and leave a lasting impression",
 	},
 	webgl: {
-		cornerH2: "Dsgnd - 2025",
+		cornerH2: "DSGND - 2025",
 		description:
 			"Lot of people don't realize the importance of user engagement with their product. 3D can enable it easily.",
 	},
 	interaction: {
-		cornerH2: "based - dhaka",
+		cornerH2: "ED - darwin",
 		description:
 			"A Memorable and Impactful website requires users to interact with the website. Motion captures users attention. It makes user to memember the website.",
 	},
@@ -54,11 +53,6 @@ export const cornerDescription = {
 		cornerH2: "based - dhaka",
 		description:
 			"I collaborated with designers and developed personal portfolio. Created custom card slider without any framework.",
-	},
-	webgl: {
-		cornerH2: "based - dhaka",
-		description:
-			"Current design trend is to create immersive web experience. Which is impossible to achieve with only HTML, CSS and JS. WebGL opens door to this opportunity.",
 	},
 	experiences: {
 		cornerH2: "",

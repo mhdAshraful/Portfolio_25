@@ -4,6 +4,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RibbonMaterial } from "./RibbonMaterial";
+import { useTouchDevice } from "/src/utils/deviceDetector";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,6 +47,8 @@ const FloatingRibbon = ({
 	const hasAnimatedRef = useRef(false);
 
 	const { viewport, size } = useThree();
+	const isTouch = useTouchDevice();
+	console.log("touch", isTouch);
 
 	// Calculate responsive dimensions based on viewport
 	const dimensions = useMemo(() => {
@@ -53,12 +56,12 @@ const FloatingRibbon = ({
 		const vh = viewport.height;
 
 		return {
-			width: vw * 0.05, // Ribbon width
+			width: isTouch ? vw * 0.15 : vw * 0.06, // Ribbon width
 			height: vh * 1.14, // Taller than viewport
-			posX: vw * 0.3, // Position to the right side
+			posX: vw * 0.24, // Position to the right side
 			posY: vh * 0.6, // Anchor at top of viewport
 		};
-	}, [viewport.width, viewport.height]);
+	}, [viewport.width, viewport.height, isTouch]);
 
 	// Create the ribbon geometry
 	const geometry = useMemo(() => {
@@ -107,7 +110,7 @@ const FloatingRibbon = ({
 			// Phase 1: Fade in and start unroll
 			tl.to(anim, {
 				entranceProgress: 1,
-				duration: 0.6,
+				duration: 0.5,
 				ease: "power4.out",
 			});
 
@@ -119,7 +122,7 @@ const FloatingRibbon = ({
 					duration: 1,
 					ease: "power4.inOut",
 				},
-				"-=0.2",
+				"+=",
 			);
 
 			// Phase 3: Bring in wave movement
@@ -130,7 +133,7 @@ const FloatingRibbon = ({
 					duration: 1,
 					ease: "power2.inOut",
 				},
-				"-=0.2",
+				"+=",
 			);
 		} else if (!shouldShow && hasAnimatedRef.current) {
 			// Roll up animation when leaving section
@@ -228,7 +231,7 @@ const FloatingRibbon = ({
  * MultiRibbon - Creates multiple ribbons for a fuller effect
  */
 export const MultiRibbon = ({
-	count = 3,
+	count = 1,
 	isVisible = true,
 	currentSection = "webgl",
 }) => {

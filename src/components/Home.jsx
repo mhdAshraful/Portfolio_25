@@ -14,7 +14,7 @@ const getHeartScale = (
 	k1 = 40, // Sharpness of 1st beat		20–40
 	k2 = 10, // Sharpness of 2nd beat		10–30
 	phi1 = 0, // Phase of first beat		0
-	phi2 = Math.PI * 0.35 // Phase of second beat	π/2, π * 0.6, etc.
+	phi2 = Math.PI * 0.35, // Phase of second beat	π/2, π * 0.6, etc.
 ) => {
 	const s1 = Math.sin(2 * Math.PI * f * t - phi1);
 	const s2 = Math.sin(2 * Math.PI * f * t - phi2);
@@ -52,7 +52,7 @@ const Home = forwardRef((props, ref) => {
 			});
 			// Find the 🫀 word once & update the word ref
 			heartWordRef.current = splitRef.current.words.find(
-				(wd) => wd.innerHTML === "🫀"
+				(wd) => wd.innerHTML === "🫀",
 			);
 			if (heartWordRef.current) {
 				heartWordRef.current.style.willChange = "transform";

@@ -95,7 +95,7 @@ export const Web3d = forwardRef((props, ref) => {
 export const Interaction = forwardRef((props, ref) => {
 	const { interaction } = Data[1].about;
 	const interactionRef = useRef();
-
+	useDomElmPositions(interactionRef, "interaction");
 	return (
 		<div
 			data-section="interaction"
@@ -118,7 +118,7 @@ export const Interaction = forwardRef((props, ref) => {
 export const Focus = forwardRef((props, ref) => {
 	const { focus } = Data[1].about;
 	const { title } = focus;
-	const t1 = title.split("|||");
+
 	const focusRef = useRef();
 	const lineRef = useRef(null);
 	const splitedText = useRef(null);
@@ -275,7 +275,7 @@ export const Education = forwardRef((props, ref) => {
 		return () => {
 			if (allLinesRef.current) allLinesRef.current.revert();
 		};
-	}, []);
+	}, [props.loaded]);
 
 	/***
 	 * Tooltop animating in and out
@@ -307,7 +307,7 @@ export const Education = forwardRef((props, ref) => {
 					ease: "back.inOut",
 				},
 			);
-	}, [SRtooltip]);
+	}, [tooltip]);
 
 	return (
 		<div

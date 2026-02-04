@@ -134,9 +134,9 @@ function App() {
 		 * Smooth Scroller ----- runs first
 		 */
 		smoother.current = ScrollSmoother.create({
-			smooth: 2,
+			smooth: 0.4,
 			effects: true,
-			smoothTouch: 0.1,
+			smoothTouch: 0.4,
 			normalizeScroll: true, // Intercepts all scroll events for consistent behavior
 			wrapper: "#smooth-wrapper",
 			content: "#smooth-content",
@@ -260,9 +260,9 @@ function App() {
 	// This extra check is to make sure that view model is there to animate out
 	useEffect(() => {
 		if (ViewModal) {
-			setShouldRenderModal(true);
+			setShouldRenderModal(ViewModal);
 		}
-	}, [ViewModal]);
+	}, [ViewModal, setShouldRenderModal]);
 
 	// ************ ********************** ************ ************ ********************** ************
 	// ************ ********************** ************ ************ Main return satatement ************

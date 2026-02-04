@@ -12,6 +12,11 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 	const lineRef = useRef();
 	const [hovered, setHovered] = useState(false);
 	const [shouldRender, setShouldRender] = useState(show);
+	const [logoSize, setLogoSize] = useState(() => {
+		if (window.innerWidth <= 480) return 40;
+		if (window.innerWidth <= 1024) return 60;
+		return 80;
+	});
 
 	/** Track Window Size */
 	const [isVisibleByScreen, setIsisVisibleByScreen] = useState(() => {
@@ -24,6 +29,13 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 			setIsisVisibleByScreen(
 				window.innerHeight > minSCHeight && window.innerWidth > minSCWidth,
 			);
+			if (window.innerWidth <= 480) {
+				setLogoSize(40);
+			} else if (window.innerWidth <= 1024) {
+				setLogoSize(60);
+			} else {
+				setLogoSize(80);
+			}
 		};
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
@@ -123,7 +135,7 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 				onMouseOver={() => setHovered(true)}
 				onMouseOut={() => setHovered(false)}
 			>
-				<ShaderLogo width={60} height={60} />
+				<ShaderLogo width={logoSize} height={logoSize} />
 				<div className="logo_Text">
 					<p className="logo_T1" ref={lineRef}>
 						Mohammed <br /> Ashraful Islam

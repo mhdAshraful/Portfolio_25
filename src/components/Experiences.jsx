@@ -4,34 +4,34 @@ import React, {
 	useLayoutEffect,
 	useRef,
 	useState,
-} from 'react'
-import gsap from 'gsap'
-import CSSRulePlugin from 'gsap/CSSRulePlugin'
-import { useTouchDevice } from '../utils/deviceDetector'
-gsap.registerPlugin(CSSRulePlugin)
+} from "react";
+import gsap from "gsap";
+import CSSRulePlugin from "gsap/CSSRulePlugin";
+import { useTouchDevice } from "../utils/deviceDetector";
+gsap.registerPlugin(CSSRulePlugin);
 
 const Experiences = forwardRef((props, ref) => {
-	const [showing, setShowing] = useState(false)
-	const [translate, setTranslate] = useState({ x: 0, y: 0 })
-	const [size, setSize] = useState({ width: 0, height: 0 })
+	const [showing, setShowing] = useState(false);
+	const [translate, setTranslate] = useState({ x: 0, y: 0 });
+	const [size, setSize] = useState({ width: 0, height: 0 });
 
-	const expRef = useRef()
-	const svgRef = useRef()
-	const drawerRef = useRef()
-	const isTouch = useTouchDevice()
+	const expRef = useRef();
+	const svgRef = useRef();
+	const drawerRef = useRef();
+	const isTouch = useTouchDevice();
 
 	const seeking = (e) => {
-		e.stopPropagation()
+		e.stopPropagation();
 
-		let newState = !showing
-		setShowing(newState) // still async, but we're ahead of it
+		let newState = !showing;
+		setShowing(newState); // still async, but we're ahead of it
 
 		// console.log("clicked on", e.target.closest("g").id);
-		const thisID = e.target.closest('g').id
-		const thiselm = document.getElementById(thisID)
+		const thisID = e.target.closest("g").id;
+		const thiselm = document.getElementById(thisID);
 
-		let nextid = `${thisID}_hide`
-		const nextelm = document.getElementById(nextid)
+		let nextid = `${thisID}_hide`;
+		const nextelm = document.getElementById(nextid);
 		// console.log("awesome", nextid);
 		// console.log("", nextelm);
 
@@ -40,31 +40,31 @@ const Experiences = forwardRef((props, ref) => {
 			y: -10,
 			scaleY: 1,
 			duration: 0.4,
-			visibility: 'visible',
-			ease: 'power3.inOut',
+			visibility: "visible",
+			ease: "power3.inOut",
 			onStart: () => {
 				gsap.to(thiselm, {
 					opacity: 0,
-					visibility: 'hidden',
+					visibility: "hidden",
 					duration: 0.2,
-					ease: 'power3.inOut',
-				})
+					ease: "power3.inOut",
+				});
 			},
-		})
-	}
+		});
+	};
 	const hiding = (e) => {
-		e.stopPropagation()
+		e.stopPropagation();
 		// console.log("", showing);
-		let newState = !showing
+		let newState = !showing;
 		// console.log("", newState);
-		setShowing(newState) // still async, but we're ahead of it
+		setShowing(newState); // still async, but we're ahead of it
 
 		// console.log("clicked on", e.target.closest("g").id);
-		const thisID = e.target.closest('g').id
-		const thiselm = document.getElementById(thisID)
+		const thisID = e.target.closest("g").id;
+		const thiselm = document.getElementById(thisID);
 
-		let nextid = `${thisID.replace('_hide', '')}`
-		const nextelm = document.getElementById(nextid)
+		let nextid = `${thisID.replace("_hide", "")}`;
+		const nextelm = document.getElementById(nextid);
 		// console.log("awesome", nextid);
 		// console.log("", nextelm);
 
@@ -73,89 +73,89 @@ const Experiences = forwardRef((props, ref) => {
 			y: 0,
 			scaleY: 0,
 			duration: 0.4,
-			ease: 'back.inOut',
+			ease: "back.inOut",
 
 			onComplete: () => {
-				gsap.set(thiselm, { visibility: 'hidden' })
+				gsap.set(thiselm, { visibility: "hidden" });
 				gsap.to(nextelm, {
 					y: 0,
 					opacity: 1,
-					visibility: 'visible',
+					visibility: "visible",
 					duration: 0.2,
-					ease: 'bcak.inOut',
-				})
+					ease: "bcak.inOut",
+				});
 			},
-		})
-	}
+		});
+	};
 
 	const hidable = [
-		'exp_1_hide',
-		'exp_2_hide',
-		'exp_3_hide',
-		'exp_4_hide',
-		'exp_5_hide',
-	]
+		"exp_1_hide",
+		"exp_2_hide",
+		"exp_3_hide",
+		"exp_4_hide",
+		"exp_5_hide",
+	];
 
 	const color = {
-		drawer: '#fffff2',
-		emptyFile: '#F3F390',
+		drawer: "#fffff2",
+		emptyFile: "#F3F390",
 		// emptyFile: '#fafad2',
-		emptyFileTops: '#fffff2',
+		emptyFileTops: "#fffff2",
 		// mainFile: '#e6e6ff',
-		mainFile: '#ECFED1',
-		mainFileTops: '#0F0F0F',
-	}
+		mainFile: "#ECFED1",
+		mainFileTops: "#0F0F0F",
+	};
 
 	useLayoutEffect(() => {
 		hidable.forEach((hid) => {
-			gsap.set(`#${hid}`, { visibility: 'hidden', scaleY: 0 })
-		})
-	}, [])
+			gsap.set(`#${hid}`, { visibility: "hidden", scaleY: 0 });
+		});
+	}, []);
 
 	/** Consider svg width and drawer width */
 	useEffect(() => {
-		const mainsvg = svgRef.current
-		const drawer = drawerRef.current
+		const mainsvg = svgRef.current;
+		const drawer = drawerRef.current;
 		// console.log("-----", mainsvg.viewBox);
-		if (!mainsvg || !drawer) return
+		if (!mainsvg || !drawer) return;
 
 		const updateTranslate = () => {
-			const svgrect = mainsvg.getBoundingClientRect()
-			const drawerrect = drawer.getBBox()
-			const baseWidth = 1920
-			const currentWidth = window.innerWidth
-			const scale = Math.min(1, (currentWidth / baseWidth) * 1.2)
+			const svgrect = mainsvg.getBoundingClientRect();
+			const drawerrect = drawer.getBBox();
+			const baseWidth = 1920;
+			const currentWidth = window.innerWidth;
+			const scale = Math.min(1, (currentWidth / baseWidth) * 1.2);
 			// console.log("current", scale);
 			// new we can multiply by scale
-			let x = svgrect.width / 2 - (drawerrect.width * scale) / 2
-			let y = svgrect.height / 8 - (drawerrect.height * scale) / 2
+			let x = svgrect.width / 2 - (drawerrect.width * scale) / 2;
+			let y = svgrect.height / 8 - (drawerrect.height * scale) / 2;
 
-			setTranslate({ x: x, y: y })
+			setTranslate({ x: x, y: y });
 
-			gsap.set(drawer, { x: x, y: y })
+			gsap.set(drawer, { x: x, y: y });
 			gsap.to(drawer, {
 				scale: isTouch ? 0.32 : scale,
-				transformOrigin: 'top left',
+				transformOrigin: "top left",
 				duration: 0.4,
-				ease: 'sine.out',
-			})
-		}
+				ease: "sine.out",
+			});
+		};
 
 		const updateSize = () => {
 			// main svg view box
-			let width = window.innerWidth
-			let height = window.innerHeight
-			setSize({ width: width, height: height })
-		}
+			let width = window.innerWidth;
+			let height = window.innerHeight;
+			setSize({ width: width, height: height });
+		};
 
 		const handleBoth = () => {
-			updateTranslate() // Initial
-			updateSize()
-		}
-		handleBoth()
-		window.addEventListener('resize', handleBoth)
-		return () => window.removeEventListener('resize', handleBoth)
-	}, [])
+			updateTranslate(); // Initial
+			updateSize();
+		};
+		handleBoth();
+		window.addEventListener("resize", handleBoth);
+		return () => window.removeEventListener("resize", handleBoth);
+	}, []);
 
 	return (
 		<div ref={ref} data-section="experiences" className="exp_wrapper">
@@ -167,17 +167,17 @@ const Experiences = forwardRef((props, ref) => {
 					className="mysvg"
 					viewBox={`0 0 ${size.width} ${size.height}`}
 					style={{
-						position: 'absolute',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignContent: 'flex-end',
+						position: "absolute",
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignContent: "flex-end",
 						// bottom: "-10%",
 						// backgroundColor: "#e0fad2",
-						width: '100%',
-						height: '100%',
-						zIndex: '500',
-						overflow: 'hidden',
+						width: "100%",
+						height: "100%",
+						zIndex: "500",
+						overflow: "hidden",
 					}}
 				>
 					<g
@@ -317,9 +317,9 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0em"
 							>
 								<tspan x="179.328" y="697.994">
-									{' '}
+									{" "}
 									Providing service and operational support in a
-									customer-facing retail{' '}
+									customer-facing retail{" "}
 								</tspan>
 								<tspan x="143" y="716.994">
 									environment. Played a key role in maintaining
@@ -424,11 +424,11 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="384.513" y="555.677">
-									{' '}
-									May 2020,{' '}
+									{" "}
+									May 2020,{" "}
 								</tspan>
 								<tspan x="474.728" y="555.677">
-									{' '}
+									{" "}
 									Jul 2022
 								</tspan>
 							</text>
@@ -466,8 +466,8 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="265.493" y="651.141">
-									{' '}
-									PART-TIME{' '}
+									{" "}
+									PART-TIME{" "}
 								</tspan>
 							</text>
 							<text
@@ -501,7 +501,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="584.597" y="651.35">
-									{' '}
+									{" "}
 									DARWIN, NT AUSTRALIA
 								</tspan>
 							</text>
@@ -539,10 +539,10 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="373.823" y="609.562">
-									{' '}
+									{" "}
 								</tspan>
 								<tspan x="401.828" y="609.562">
-									{' '}
+									{" "}
 									Woolworths Australia
 								</tspan>
 							</text>
@@ -708,7 +708,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0em"
 							>
 								<tspan x="170.215" y="745.04">
-									{' '}
+									{" "}
 									Built custom PC systems and supported day-to-day
 									retail operations in a fast-
 								</tspan>
@@ -751,7 +751,7 @@ const Experiences = forwardRef((props, ref) => {
 								</tspan>
 								<tspan x="169.212" y="872.609">
 									Processed transactions and orders while maintaining a
-									high level of customer{' '}
+									high level of customer{" "}
 								</tspan>
 								<tspan x="169.212" y="891.609">
 									service
@@ -827,11 +827,11 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="396.22" y="607.445">
-									{' '}
-									Feb 2018,{' '}
+									{" "}
+									Feb 2018,{" "}
 								</tspan>
 								<tspan x="483.049" y="607.445">
-									{' '}
+									{" "}
 									Jun 2018
 								</tspan>
 							</text>
@@ -869,8 +869,8 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="259.692" y="697.33">
-									{' '}
-									CONTRACT{' '}
+									{" "}
+									CONTRACT{" "}
 								</tspan>
 							</text>
 							<text
@@ -904,7 +904,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="589.805" y="697.528">
-									{' '}
+									{" "}
 									WOOLNER, NT AUSTRALIA
 								</tspan>
 							</text>
@@ -942,10 +942,10 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="389.069" y="658.085">
-									{' '}
+									{" "}
 								</tspan>
 								<tspan x="417.074" y="658.085">
-									{' '}
+									{" "}
 									PC-Mart Darwin
 								</tspan>
 							</text>
@@ -1208,9 +1208,9 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0em"
 							>
 								<tspan x="162.034" y="843.155">
-									{' '}
+									{" "}
 									Provided on-site technical support and network setup
-									for businesses, addressing a{' '}
+									for businesses, addressing a{" "}
 								</tspan>
 								<tspan x="125.706" y="862.155">
 									wide range of hardware and software issues with
@@ -1240,7 +1240,7 @@ const Experiences = forwardRef((props, ref) => {
 							>
 								<tspan x="162.17" y="919.818">
 									Diagnosed and resolved IT issues across hardware,
-									software, and networking{' '}
+									software, and networking{" "}
 								</tspan>
 								<tspan x="162.17" y="938.818">
 									environments&#10;
@@ -1335,11 +1335,11 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="394.313" y="696.96">
-									{' '}
-									Apr 2017,{' '}
+									{" "}
+									Apr 2017,{" "}
 								</tspan>
 								<tspan x="482.537" y="696.96">
-									{' '}
+									{" "}
 									Jun 2021
 								</tspan>
 							</text>
@@ -1377,8 +1377,8 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="263.423" y="792.149">
-									{' '}
-									CASUAL{' '}
+									{" "}
+									CASUAL{" "}
 								</tspan>
 							</text>
 							<text
@@ -1412,7 +1412,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="592.116" y="792.358">
-									{' '}
+									{" "}
 									DARWIN, NT AUSTRALIA
 								</tspan>
 							</text>
@@ -1450,10 +1450,10 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="361.071" y="750.589">
-									{' '}
+									{" "}
 								</tspan>
 								<tspan x="389.077" y="750.589">
-									{' '}
+									{" "}
 									Best Technology Services
 								</tspan>
 							</text>
@@ -1668,13 +1668,13 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0em"
 							>
 								<tspan x="160.293" y="907.094">
-									{' '}
+									{" "}
 									Contributed to several end-to-end web development
-									projects during a{' '}
+									projects during a{" "}
 								</tspan>
 								<tspan x="123.965" y="926.094">
 									comprehensive internship. Gained exposure to user
-									research, design systems, testing, and{' '}
+									research, design systems, testing, and{" "}
 								</tspan>
 								<tspan x="123.965" y="945.094">
 									deployment within a collaborative team environment.
@@ -1703,7 +1703,7 @@ const Experiences = forwardRef((props, ref) => {
 							>
 								<tspan x="162.671" y="989.155">
 									Interviewed users and stakeholders to gather business
-									requirements and{' '}
+									requirements and{" "}
 								</tspan>
 								<tspan x="162.671" y="1008.15">
 									translated them into personas and workflows&#10;
@@ -1714,21 +1714,21 @@ const Experiences = forwardRef((props, ref) => {
 								</tspan>
 								<tspan x="162.671" y="1046.15">
 									Assisted in testing web apps with end-users and
-									integrated feedback into iterative{' '}
+									integrated feedback into iterative{" "}
 								</tspan>
 								<tspan x="162.671" y="1065.15">
 									design improvements&#10;
 								</tspan>
 								<tspan x="162.671" y="1084.15">
 									Participated in project meetings, presented design
-									concepts, and addressed client{' '}
+									concepts, and addressed client{" "}
 								</tspan>
 								<tspan x="162.671" y="1103.15">
 									feedback&#10;
 								</tspan>
 								<tspan x="162.671" y="1122.15">
 									Documented development processes and ensured
-									compliance with WHS policies{' '}
+									compliance with WHS policies{" "}
 								</tspan>
 								<tspan x="162.671" y="1141.15">
 									and procedures
@@ -1794,7 +1794,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="332.523" y="802.805">
-									{' '}
+									{" "}
 									Web Developer
 								</tspan>
 							</text>
@@ -1808,11 +1808,11 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="394.553" y="772.937">
-									{' '}
-									Nov 2020,{' '}
+									{" "}
+									Nov 2020,{" "}
 								</tspan>
 								<tspan x="483.796" y="772.937">
-									{' '}
+									{" "}
 									Apr 2021
 								</tspan>
 							</text>
@@ -1850,8 +1850,8 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="250.07" y="866.059">
-									{' '}
-									INTERNSHIP{' '}
+									{" "}
+									INTERNSHIP{" "}
 								</tspan>
 							</text>
 							<text
@@ -1885,7 +1885,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="594.176" y="866.264">
-									{' '}
+									{" "}
 									DARWIN, NT AUSTRALIA
 								</tspan>
 							</text>
@@ -1923,10 +1923,10 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="279.906" y="825.401">
-									{' '}
+									{" "}
 								</tspan>
 								<tspan x="307.911" y="825.401">
-									{' '}
+									{" "}
 									Charles Darwin University, Dep. of Health &#38;
 									Research
 								</tspan>
@@ -2259,16 +2259,16 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0em"
 							>
 								<tspan x="149.328" y="1015.19">
-									{' '}
+									{" "}
 									Build custom websites and revamp existing platforms
-									with a focus on responsive{' '}
+									with a focus on responsive{" "}
 								</tspan>
 								<tspan x="113" y="1034.19">
 									design, accessibility, and scalable architecture.
-									Worked closely with designers and clients to{' '}
+									Worked closely with designers and clients to{" "}
 								</tspan>
 								<tspan x="113" y="1053.19">
-									align functionality with user experience.{' '}
+									align functionality with user experience.{" "}
 								</tspan>
 							</text>
 							<text
@@ -2293,9 +2293,9 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0em"
 							>
 								<tspan x="153" y="1097.25">
-									{' '}
+									{" "}
 									Transformed static designs into dynamic,
-									mobile-friendly web interfaces using React{' '}
+									mobile-friendly web interfaces using React{" "}
 								</tspan>
 								<tspan x="153" y="1116.25">
 									and SASS/SCSS.&#10;
@@ -2306,21 +2306,21 @@ const Experiences = forwardRef((props, ref) => {
 								</tspan>
 								<tspan x="153" y="1154.25">
 									Communicated directly with clients to gather
-									requirements, set expectations, and{' '}
+									requirements, set expectations, and{" "}
 								</tspan>
 								<tspan x="153" y="1173.25">
 									deliver progress updates.&#10;
 								</tspan>
 								<tspan x="153" y="1192.25">
 									Implemented React Context API to manage global state
-									and simplify component{' '}
+									and simplify component{" "}
 								</tspan>
 								<tspan x="153" y="1211.25">
 									communication&#10;
 								</tspan>
 								<tspan x="153" y="1230.25">
 									Optimized SEO through structured data, clean markup,
-									and performance{' '}
+									and performance{" "}
 								</tspan>
 								<tspan x="153" y="1249.25">
 									enhancements&#34;,
@@ -2386,7 +2386,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="277.12" y="910.897">
-									Full-Stack Web Developer{' '}
+									Full-Stack Web Developer{" "}
 								</tspan>
 							</text>
 
@@ -2399,11 +2399,11 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="391.513" y="881.028">
-									{' '}
-									Mar 2023,{' '}
+									{" "}
+									Mar 2023,{" "}
 								</tspan>
 								<tspan x="479.736" y="881.028">
-									{' '}
+									{" "}
 									Current
 								</tspan>
 							</text>
@@ -2638,8 +2638,8 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="246.677" y="974.15">
-									{' '}
-									FREELANCE{' '}
+									{" "}
+									FREELANCE{" "}
 								</tspan>
 							</text>
 							<text
@@ -2673,7 +2673,7 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="644.265" y="974.15">
-									{' '}
+									{" "}
 									REMOTE
 								</tspan>
 							</text>
@@ -2711,10 +2711,10 @@ const Experiences = forwardRef((props, ref) => {
 								letterSpacing="0.04em"
 							>
 								<tspan x="391.922" y="933.493">
-									{' '}
+									{" "}
 								</tspan>
 								<tspan x="419.928" y="933.493">
-									{' '}
+									{" "}
 									Self-Employed.
 								</tspan>
 							</text>
@@ -2851,7 +2851,7 @@ const Experiences = forwardRef((props, ref) => {
 				</svg>
 			</div>
 		</div>
-	)
-})
+	);
+});
 
-export default Experiences
+export default Experiences;
