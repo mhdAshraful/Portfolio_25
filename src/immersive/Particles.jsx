@@ -1,7 +1,7 @@
 import React from 'react'
 import { SphereGeometry } from 'three'
 
-const Particles = React.forwardRef((props, ref) => {
+export const NewParticles = React.forwardRef((props, ref) => {
 	const pointsRef = React.useRef(ref)
 
 	const count = 64

@@ -29,12 +29,12 @@
 	--grotesk: "Space Grotesk Variable", sans-serif; // Variable only
 	--width: 100vw;
 	--height: 100dvh;
-	--gutter: 0px;
+	--gutter: 20px;
 	--borderradious: 16px;
 }
 @media (max-width: 1024px) {
 	:root {
-		--gutter: 10px;
+		--gutter: 20px;
 		--borderradious: 12px;
 		--border: 1px solid var(--black);
 	}

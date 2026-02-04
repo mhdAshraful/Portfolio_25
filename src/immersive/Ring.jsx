@@ -18,7 +18,6 @@ export function Model({ currentSection = "home" }) {
 
 	const isVisible = currentSection === "interaction";
 	const isTouch = useTouchDevice();
-
 	useEffect(() => {
 		const handleMouseMove = (event) => {
 			targetMouseRef.current.x = (event.clientX / size.width) * 2 - 1;
@@ -84,19 +83,21 @@ export function Model({ currentSection = "home" }) {
 	});
 
 	return (
-		<group
-			ref={ringRef}
-			visible={false}
-			scale={isTouch ? 0.7 : 1}
-			dispose={null}
-		>
-			<mesh
-				castShadow
-				receiveShadow
-				geometry={nodes.Circle.geometry}
-				material={materials["Material.001"]}
-			></mesh>
-		</group>
+		<>
+			<group
+				ref={ringRef}
+				visible={false}
+				scale={isTouch ? 0.7 : 1}
+				dispose={null}
+			>
+				<mesh
+					castShadow
+					receiveShadow
+					geometry={nodes.Circle.geometry}
+					material={materials["Material.001"]}
+				></mesh>
+			</group>
+		</>
 	);
 }
 

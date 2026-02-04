@@ -4,8 +4,8 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const PARTICLE_COUNT_X = 100;
-const PARTICLE_COUNT_Y = 100;
+const PARTICLE_COUNT_X = 200;
+const PARTICLE_COUNT_Y = 200;
 
 const ParticleGrid = ({
 	currentSection = "interaction",
@@ -32,11 +32,23 @@ const ParticleGrid = ({
 				pointsRef.current.visible = true;
 			}
 			gsap.to(pointsRef.current.scale, {
-				x: isVisible ? 1 : 1,
+				x: isVisible ? 1 : 0,
 				y: isVisible ? 1 : 0,
 				z: isVisible ? 1 : 0,
-				duration: 0.6,
-				ease: isVisible ? "power4.out" : "power4.in",
+				duration: 0.5,
+				ease: isVisible ? "power4.inOut" : "power4.inOut",
+				onComplete: () => {
+					if (!isVisible && pointsRef.current) {
+						pointsRef.current.visible = false;
+					}
+				},
+			});
+			gsap.to(pointsRef.current.scale, {
+				x: isVisible ? 1 : 0,
+				y: isVisible ? 1 : 0,
+				z: isVisible ? 1 : 0,
+				duration: 0.5,
+				ease: isVisible ? "power4.inOut" : "power4.inOut",
 				onComplete: () => {
 					if (!isVisible && pointsRef.current) {
 						pointsRef.current.visible = false;
@@ -150,15 +162,15 @@ void main() {
 	vUv = position.xy;
 
 	float dist = distance(pos.xy, uMouseWorld.xy);
-	float radius = 10.;
+	float radius = 5.;
 	float influence = max(0.0, 1.0 - dist / radius);
 
-	float freq = .5;
+	float freq = .2;
 	float speed = 2.0;
-	float amp = 1.0;
+	float amp = .83;
 	float wave = sin(dist * freq - uTime * speed) * amp * influence;
-	float noise = snoise(vec3(pos.xy * 0.32, uTime * 0.4)) * 0.25;
-	wave += noise * influence;
+	float noise = snoise(vec3(pos.xy * 0.3, uTime )) * 0.25;
+	 wave += noise * influence;
 
 	vDistort = wave;
 	pos.z += wave * uIntensity;
@@ -217,7 +229,7 @@ void main() {
 	useFrame((state) => {
 		if (!pointsRef.current || !isVisible) return;
 
-		mouseRef.current.lerp(targetMouseRef.current, 0.08);
+		mouseRef.current.lerp(targetMouseRef.current, 0.9);
 
 		raycasterRef.current.setFromCamera(mouseRef.current, camera);
 		const intersectionPoint = new THREE.Vector3();
