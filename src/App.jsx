@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 /*** Data */
 import Data from "./utils/info";
@@ -40,7 +39,8 @@ import { setCornerSectionName } from "./utils/animations";
 import { useLocation, useNavigate } from "react-router";
 import { useTouchDevice } from "./utils/deviceDetector";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
+import Lenis from "lenis";
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 /***
  * MAIN APP
  */
@@ -78,7 +78,7 @@ function App() {
 	const cornerRef = useRef();
 	const contentRef = useRef();
 	const main = useRef();
-	const smoother = useRef();
+	// const smoother = useRef();
 
 	/** context usage */
 	const { description, cornerH2 } = cornerDescription[currentSection];
@@ -130,26 +130,69 @@ function App() {
 	/**
 	 * Smooth Scroll
 	 */
+	// useEffect(() => {
+	// 	if (!loaded) return;
+
+	// 	/**
+	// 	 * Smooth Scroller ----- runs first
+	// 	 */
+	// 	smoother.current = ScrollSmoother.create({
+	// 		smooth: 0.2,
+	// 		effects: true,
+	// 		smoothTouch: 0.5,
+	// 		normalizeScroll: true, // Intercepts all scroll events for consistent behavior
+	// 		wrapper: "#smooth-wrapper",
+	// 		content: "#smooth-content",
+	// 	});
+
+	// 	return () => {
+	// 		if (smoother.current) {
+	// 			smoother.current.kill();
+	// 			smoother.current = null;
+	// 		}
+	// 	};
+	// }, [loaded]);
+
 	useEffect(() => {
 		if (!loaded) return;
 
-		/**
-		 * Smooth Scroller ----- runs first
-		 */
-		smoother.current = ScrollSmoother.create({
-			smooth: 0.2,
-			effects: true,
-			smoothTouch: 0.5,
-			normalizeScroll: true, // Intercepts all scroll events for consistent behavior
-			wrapper: "#smooth-wrapper",
-			content: "#smooth-content",
+		const lenis = new Lenis({
+			smooth: true,
+			lerp: 0.08, // smoothness (lower = smoother)
+			wheelMultiplier: 1,
+			touchMultiplier: 1,
+			smoothTouch: false,
 		});
 
+		const raf = (time) => {
+			lenis.raf(time);
+			requestAnimationFrame(raf);
+		};
+		requestAnimationFrame(raf);
+
+		// Sync Lenis with GSAP ScrollTrigger
+		lenis.on("scroll", ScrollTrigger.update);
+		ScrollTrigger.scrollerProxy(document.body, {
+			scrollTop(value) {
+				return arguments.length
+					? lenis.scrollTo(value, { immediate: true })
+					: lenis.scroll;
+			},
+			getBoundingClientRect() {
+				return {
+					top: 0,
+					left: 0,
+					width: window.innerWidth,
+					height: window.innerHeight,
+				};
+			},
+			pinType: document.body.style.transform ? "transform" : "fixed",
+		});
+
+		ScrollTrigger.refresh();
+
 		return () => {
-			if (smoother.current) {
-				smoother.current.kill();
-				smoother.current = null;
-			}
+			lenis.destroy();
 		};
 	}, [loaded]);
 
@@ -216,7 +259,6 @@ function App() {
 				trigger: ".contact",
 				start: "top 10%",
 				end: "bottom 90%",
-				markers: true,
 				onEnter: () => {
 					if (width >= 768) setShowlogo(false);
 					setShowCornerInfo(false);
@@ -239,7 +281,7 @@ function App() {
 		const handleResize = () => {
 			setWidth(window.innerWidth);
 			setHeight(window.innerHeight);
-			ScrollTrigger.refresh();
+			// ScrollTrigger.refresh();
 		};
 
 		window.addEventListener("resize", handleResize);
@@ -254,14 +296,10 @@ function App() {
 		}
 	}, [ViewModal, setShouldRenderModal]);
 
-	// ************ ********************** ************ ************ ********************** ************
-	// ************ ********************** ************ ************ Main return satatement ************
-	// ************ ********************** ************ ************ ********************** ************
-
 	return !loaded ? (
 		<Loading percent={percentLoading} />
 	) : (
-		<div ref={main} id="smooth-wrapper">
+		<div ref={main}>
 			{/* Only render Canvas on the home page */}
 			{renderCanvas && <CanvasContainer />}
 
@@ -301,7 +339,12 @@ function App() {
 				/>
 			)}
 
-			<div id="smooth-content" ref={contentRef} className="container_all">
+			{/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                 All Content                                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */}
+			<div ref={contentRef} className="container_all">
 				<Home ref={homeRef} id="home" />
 				<UIEng ref={uiRef} id="ui" />
 				<Web3d ref={webglRef} id="webgl" />
@@ -318,6 +361,7 @@ function App() {
 					width={width}
 				/>
 				<Works ref={worksRef} loaded={loaded} id="works" />
+
 				<Experiences ref={experiencesRef} id="experience" />
 				{/* <Timeline ref={timelineRef} loaded={loaded} /> */}
 				<Contact ref={contactRef} loaded={loaded} id="contact" />

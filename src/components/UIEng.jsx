@@ -25,7 +25,7 @@ export const UIEng = forwardRef((props, ref) => {
 					start: "top bottom",
 					end: "bottom top",
 					scrub: true,
-					scroller: "#smooth-wrapper",
+					// scroller: "#smooth-wrapper",
 				},
 			});
 
@@ -45,7 +45,7 @@ export const UIEng = forwardRef((props, ref) => {
 						start: "top 40px",
 						end: "bottom top",
 						scrub: true,
-						scroller: "#smooth-wrapper",
+						// scroller: "#smooth-wrapper",
 					},
 				});
 			});
