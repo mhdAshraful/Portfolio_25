@@ -8,12 +8,12 @@ gsap.registerPlugin(SplitText);
 const Cornerinfo = forwardRef(
 	(
 		{
-			topLine = "Local time (UTC +6:00)",
+			topLine = "Dev Local time (UTC +6:00)",
 			description,
 			cornerH2,
 			clientTime = false,
 		},
-		ref
+		ref,
 	) => {
 		const [timeString, seTimeString] = useState();
 		const [am, setAsAM] = useState(false);
@@ -65,19 +65,19 @@ const Cornerinfo = forwardRef(
 				gsap.fromTo(
 					"#heading2",
 					{ y: 10, opacity: 0 },
-					{ duration: 0.4, y: 0, opacity: 1, ease: "elastic.inOut" }
+					{ duration: 0.4, y: 0, opacity: 1, ease: "elastic.inOut" },
 				);
 				gsap.fromTo(
 					".description",
 					{ y: 10, opacity: 0 },
-					{ y: 0, opacity: 1, duration: 0.6, ease: "elastic.inOut" }
+					{ y: 0, opacity: 1, duration: 0.6, ease: "elastic.inOut" },
 				);
 			},
 			{
 				dependencies: [description, cornerH2],
 				scope: cornerAnimationRef.current,
 				revertOnUpdate: true,
-			}
+			},
 		);
 
 		const touchDevice = useTouchDevice();
@@ -173,7 +173,7 @@ const Cornerinfo = forwardRef(
 				</div>
 			</div>
 		);
-	}
+	},
 );
 
 export default Cornerinfo;

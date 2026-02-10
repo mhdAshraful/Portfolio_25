@@ -19,7 +19,7 @@ export const cornerDescription = {
 			"Lot of people don't realize the importance of user engagement with their product. 3D can enable it easily.",
 	},
 	interaction: {
-		cornerH2: "ED - darwin",
+		cornerH2: "EDU - darwin",
 		description:
 			"A Memorable and Impactful website requires users to interact with the website. Motion captures users attention. It makes user to memember the website.",
 	},

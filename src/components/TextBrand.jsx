@@ -7,7 +7,7 @@ import { ShaderLogo } from "./ShaderLogo";
 
 gsap.registerPlugin(useGSAP, SplitText, ScrambleTextPlugin);
 
-export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
+export const Logo = ({ show, minScreenHeight = 400, minScreenWidth = 300 }) => {
 	const logoRef = useRef();
 	const lineRef = useRef();
 	const [hovered, setHovered] = useState(false);
@@ -20,14 +20,18 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 
 	/** Track Window Size */
 	const [isVisibleByScreen, setIsisVisibleByScreen] = useState(() => {
-		return window.innerHeight > minSCHeight && window.innerWidth > minSCWidth;
+		return (
+			window.innerHeight > minScreenHeight &&
+			window.innerWidth > minScreenWidth
+		);
 	});
 
 	/** Handle Resize */
 	useEffect(() => {
 		const handleResize = () => {
 			setIsisVisibleByScreen(
-				window.innerHeight > minSCHeight && window.innerWidth > minSCWidth,
+				window.innerHeight > minScreenHeight &&
+					window.innerWidth > minScreenWidth,
 			);
 			if (window.innerWidth <= 480) {
 				setLogoSize(40);
@@ -39,7 +43,7 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 		};
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
-	}, [minSCWidth, minSCHeight]);
+	}, [minScreenWidth, minScreenHeight]);
 
 	/** This will be used to triggar GSAP show/hide */
 	useEffect(() => {
@@ -122,27 +126,27 @@ export const Logo = ({ show, minSCHeight = 400, minSCWidth = 300 }) => {
 		return () => splited.revert();
 	}, [hovered]);
 
-	if (!shouldRender) return null;
-
 	return (
-		<div
-			ref={logoRef}
-			className="logo_wrap"
-			style={{ position: "fixed", top: 0, left: 0, zIndex: 100 }}
-		>
+		shouldRender && (
 			<div
-				className="mylogo"
-				onMouseOver={() => setHovered(true)}
-				onMouseOut={() => setHovered(false)}
+				ref={logoRef}
+				className="logo_wrap"
+				style={{ position: "fixed", top: 0, left: 0, zIndex: 100 }}
 			>
-				<ShaderLogo width={logoSize} height={logoSize} />
-				<div className="logo_Text">
-					<p className="logo_T1" ref={lineRef}>
-						Mohammed <br /> Ashraful Islam
-					</p>
-					<p className="logo_T2">full-stack Developer</p>
+				<div
+					className="mylogo"
+					onMouseOver={() => setHovered(true)}
+					onMouseOut={() => setHovered(false)}
+				>
+					<ShaderLogo width={logoSize} height={logoSize} />
+					<div className="logo_Text">
+						<p className="logo_T1" ref={lineRef}>
+							Mohammed <br /> Ashraful Islam
+						</p>
+						<p className="logo_T2">full-stack Developer</p>
+					</div>
 				</div>
 			</div>
-		</div>
+		)
 	);
 };

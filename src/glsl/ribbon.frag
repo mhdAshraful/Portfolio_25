@@ -48,7 +48,7 @@ void main() {
     textureAlpha = texColor.a;
     
     // Add metallic shimmer based on wave
-    float shimmer = sin(vWave * 10.0 + uTime * 2.0) * 0.5 + 0.5;
+    float shimmer = sin(vWave * 5.0 + uTime * 2.0) * 0.5 + 0.5;
     baseColor += shimmer * 0.35 * vec3(1.0, 0.95, 0.8);
     
     // Fresnel highlight for metallic/shiny look

@@ -28,7 +28,9 @@
 			font-weight: 900;
 			// $min-font, $base-font-size, $min-screen, $base-screen
 			@include fonts.font_size_be(26, 100, 320, 1920);
-			font-feature-settings: "liga" 1, "kern" 1;
+			font-feature-settings:
+				"liga" 1,
+				"kern" 1;
 			text-transform: capitalize;
 		}
 
@@ -150,7 +152,6 @@
 				}
 			}
 		}
-		
 
 		@include mixins.MOBILE {
 			.middle_content {

@@ -178,6 +178,37 @@ const Data = [
 	},
 	{
 		experiences: [
+			// Recent client work (update dates as needed)
+			{
+				title: "Frontend Engineer (Client Project)",
+				type: "Freelance / Contract",
+				org: "AS Enterprize",
+				location: "Remote",
+				duration: {
+					start: "JAN 2026",
+					end: "Present",
+				},
+				role: "Built AES Enterprize e-commerce storefront using Next.js 15 (App Router) and TypeScript. Owned UI architecture, responsive catalog experiences, and checkout/payment integration.",
+				achievements: [
+					"Implemented product catalog with responsive product grid, reusable UI components, and animated interactions",
+					"Built client-side cart with persistent storage, plus checkout dialog and cart drawer UX",
+					"Integrated server-side SSLCommerz payment flows (init/success/fail/cancel) and wired end-to-end checkout states",
+					"Maintained clean, scalable component architecture using shadcn/ui primitives",
+				],
+				tools: [
+					"/assets/images/NextJS.svg",
+					"/assets/images/React.svg",
+					"/assets/images/VS Code.svg",
+				],
+				skills: [
+					"Next.js (App Router)",
+					"TypeScript",
+					"E-commerce UX",
+					"Payment Integration (SSLCommerz)",
+					"Component Architecture",
+					"Responsive UI",
+				],
+			},
 			{
 				title: "Full-Stack Web Developer (Frontend Focused)",
 				type: "Freelance",
@@ -309,30 +340,30 @@ const Data = [
 					"Inventory Management",
 				],
 			},
-			// {
-			// 	title: "Team Member",
-			// 	type: "Part-time",
-			// 	org: "Woolworths",
-			// 	location: "Coolalinga, NT Australia",
-			// 	duration: {
-			// 		start: "May 2020",
-			// 		end: "Jul 2022",
-			// 	},
-			// 	role: "Providing service and operational support in a customer-facing retail environment. Played a key role in maintaining inventory flow and product quality.",
-			// 	achievements: [
-			// "Assisted customers with product inquiries and checkout experiences",
-			// "Monitored and restocked inventory to ensure product availability",
-			// "Checked and maintained quality standards for fresh produce",
-			// "Handled deliveries and organized back-of-house stock areas",
-			// 	],
-			// 	tools: ["POS Systems", "Inventory Tools"],
-			// 	skills: [
-			// 		"Customer Service",
-			// 		"Inventory Management",
-			// 		"Teamwork",
-			// 		"Time Management",
-			// 	],
-			// },
+			{
+				title: "Team Member",
+				type: "Part-time",
+				org: "Woolworths",
+				location: "Coolalinga, NT Australia",
+				duration: {
+					start: "May 2020",
+					end: "Jul 2022",
+				},
+				role: "Providing service and operational support in a customer-facing retail environment. Played a key role in maintaining inventory flow and product quality.",
+				achievements: [
+					"Assisted customers with product inquiries and checkout experiences",
+					"Monitored and restocked inventory to ensure product availability",
+					"Checked and maintained quality standards for fresh produce",
+					"Handled deliveries and organized back-of-house stock areas",
+				],
+				tools: ["POS Systems", "Inventory Tools"],
+				skills: [
+					"Customer Service",
+					"Inventory Management",
+					"Teamwork",
+					"Time Management",
+				],
+			},
 		],
 	},
 ];

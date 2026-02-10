@@ -4,8 +4,8 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const PARTICLE_COUNT_X = 200;
-const PARTICLE_COUNT_Y = 200;
+const PARTICLE_COUNT_X = 100;
+const PARTICLE_COUNT_Y = 100;
 
 const ParticleGrid = ({
 	currentSection = "interaction",
@@ -162,7 +162,7 @@ void main() {
 	vUv = position.xy;
 
 	float dist = distance(pos.xy, uMouseWorld.xy);
-	float radius = 5.;
+	float radius = 3.;
 	float influence = max(0.0, 1.0 - dist / radius);
 
 	float freq = .2;

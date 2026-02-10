@@ -38,6 +38,7 @@ import { preloadAssets } from "./utils/preloadAssets";
 import { setCornerSectionName } from "./utils/animations";
 
 import { useLocation, useNavigate } from "react-router";
+import { useTouchDevice } from "./utils/deviceDetector";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
 /***
@@ -81,6 +82,8 @@ function App() {
 
 	/** context usage */
 	const { description, cornerH2 } = cornerDescription[currentSection];
+
+	const isTouchDevice = useTouchDevice();
 
 	/**
 	 * ROUTE URL Update
@@ -134,9 +137,9 @@ function App() {
 		 * Smooth Scroller ----- runs first
 		 */
 		smoother.current = ScrollSmoother.create({
-			smooth: 0.4,
+			smooth: 0.2,
 			effects: true,
-			smoothTouch: 0.4,
+			smoothTouch: 0.5,
 			normalizeScroll: true, // Intercepts all scroll events for consistent behavior
 			wrapper: "#smooth-wrapper",
 			content: "#smooth-content",
@@ -181,33 +184,26 @@ function App() {
 	 */
 	useGSAP(
 		() => {
-			if (!experiencesRef.current || !contactRef.current) return;
+			if (!main.current) return;
 
-			ScrollTrigger.create({
-				// trigger: ".education",
-				trigger: ".experiences",
-				start: "top center",
-				endTrigger: ".contact",
-				end: "bottom bottom",
+			const trigger = ScrollTrigger.create({
+				trigger: ".education",
+				start: "top top",
+				endTrigger: ".myworks",
+				end: "top top",
 				onEnter: () => {
 					setShowSocial(false);
-					width < 768 && setShowCornerInfo(false);
+					if (width >= 768) setShowCornerInfo(false);
 				},
 				onEnterBack: () => {
-					setShowSocial(false);
-					width < 768 && setShowCornerInfo(false);
-				},
-				onLeave: () => {
 					setShowSocial(true);
-					width < 768 && setShowCornerInfo(true);
-				},
-				onLeaveBack: () => {
-					setShowSocial(true);
-					width < 768 && setShowCornerInfo(true);
+					if (width >= 768) setShowCornerInfo(true);
 				},
 			});
+
+			return () => trigger.kill();
 		},
-		{ dependencies: [loaded], scope: main.current },
+		{ dependencies: [width, loaded], scope: main.current },
 	);
 	/***
 	 * Corner Info, Logo Controller for Contact Page
@@ -216,30 +212,24 @@ function App() {
 		() => {
 			if (!contactRef.current) return;
 
-			ScrollTrigger.create({
+			const trigger = ScrollTrigger.create({
 				trigger: ".contact",
-				start: "top 95%",
-				endTrigger: ".contact",
-				end: "bottom bottom",
+				start: "top 10%",
+				end: "bottom 90%",
+				markers: true,
 				onEnter: () => {
-					width >= 768 ? setShowlogo(false) : null;
+					if (width >= 768) setShowlogo(false);
 					setShowCornerInfo(false);
-				},
-				onEnterBack: () => {
-					width >= 768 ? setShowlogo(false) : null;
-					setShowCornerInfo(false);
-				},
-				onLeave: () => {
-					width >= 768 ? setShowlogo(true) : null;
-					width > 768 && setShowCornerInfo(true);
 				},
 				onLeaveBack: () => {
-					width >= 768 ? setShowlogo(true) : null;
-					width > 768 && setShowCornerInfo(true);
+					if (width >= 768) setShowlogo(true);
+					setShowCornerInfo(true);
 				},
 			});
+
+			return () => trigger.kill();
 		},
-		{ dependencies: [loaded], scope: main.current },
+		{ dependencies: [width, loaded], scope: main.current },
 	);
 
 	/***
@@ -276,7 +266,7 @@ function App() {
 			{renderCanvas && <CanvasContainer />}
 
 			{/* Mouse */}
-			{/* {!touchDevice && <Mouse />} */}
+			{!isTouchDevice && <Mouse />}
 			{/* LOGO */}
 			<Logo show={showLogo} />
 

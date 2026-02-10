@@ -124,7 +124,7 @@ void main() {
   float waveFreq = 2.0;
   
   float wave1 = sin(uv.y * waveFreq * 3.14159 + uTime * waveSpeed) * 0.3;
-  float wave2 = sin(uv.y * waveFreq * 2.0 + uTime * waveSpeed * 0.7 + 1.0) * 0.15;
+  float wave2 = sin(uv.y * waveFreq * .20 + uTime * waveSpeed * 0.7 + 1.0) * 0.15;
   float wave3 = snoise(vec3(uv * 3.0, uTime * 0.3)) * 0.1;
   
   float totalWave = (wave1 + wave2 + wave3) * hangFactor * waveMultiplier;
@@ -132,7 +132,7 @@ void main() {
   
   // Apply wave to X and Z for 3D movement
   pos.x += totalWave * 0.8;
-  pos.z += sin(uv.y * 4.0 + uTime * 0.5) * hangFactor * 0.2 * waveMultiplier;
+  pos.z += sin(uv.y * .4 + uTime * 0.5) * hangFactor * 0.2 * waveMultiplier;
   
   // === MOUSE REPULSION ===
   vec2 mouseNDC = uMouse;
@@ -147,12 +147,12 @@ void main() {
   
   if (mouseInfluence > 0.0) {
     vec2 repelDir = normalize(screenPos - mouseNDC);
-    float ripple = sin(mouseDist * 30.0 - uTime * 5.0) * 0.5 + 0.5;
+    float ripple = sin(mouseDist * 20. - uTime * 5.) * 0.5 + 0.5;
     
-    pos.x += repelDir.x * mouseInfluence * ripple * 0.5 * hangFactor;
-    pos.z += mouseInfluence * ripple * 0.3 * hangFactor;
+    pos.x += repelDir.x * mouseInfluence * ripple * 0.2 * hangFactor;
+    pos.z += mouseInfluence * ripple * 0.2 * hangFactor;
     
-    float perpWave = sin(uv.y * 10.0 - uTime * 3.0) * mouseInfluence * 0.2;
+    float perpWave = sin(uv.y * 4.0 - uTime * .5) * mouseInfluence *0.1;
     pos.x += perpWave * hangFactor;
   }
   

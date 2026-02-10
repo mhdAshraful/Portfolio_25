@@ -48,7 +48,7 @@ const FloatingRibbon = ({
 
 	const { viewport, size } = useThree();
 	const isTouch = useTouchDevice();
-	console.log("touch", isTouch);
+	// console.log("touch", isTouch);
 
 	// Calculate responsive dimensions based on viewport
 	const dimensions = useMemo(() => {
@@ -129,9 +129,9 @@ const FloatingRibbon = ({
 			tl.to(
 				anim,
 				{
-					waveIntensity: 9,
-					duration: 1,
-					ease: "power2.inOut",
+					waveIntensity: 10,
+					duration: 2,
+					ease: "power4.inOut",
 				},
 				"+=",
 			);
@@ -147,7 +147,7 @@ const FloatingRibbon = ({
 			tl.to(anim, {
 				waveIntensity: 0,
 				duration: 0.2,
-				ease: "power2.in",
+				ease: "power4.out",
 			});
 
 			// Roll back up
