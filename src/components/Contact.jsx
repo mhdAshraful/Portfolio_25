@@ -49,11 +49,7 @@ const Contact = forwardRef((props, ref) => {
 	}, []);
 
 	return (
-		<section
-			ref={ref}
-			data-section="contact"
-			className="contact_wrapper snapper"
-		>
+		<section ref={ref} data-section="contact" className="contact_wrapper">
 			<div className="contact">
 				<h1 className="title">
 					{ttl[0]} <br />

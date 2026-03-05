@@ -1,13 +1,12 @@
 @use "./fonts";
 .home_container {
-	width: 100%;
+	width: calc(100vw - (var(--gutter) * 2));
 	min-height: calc(var(--height) - (var(--gutter) * 2));
 	position: relative;
 }
 
 .home {
 	width: 100%;
-	min-height: calc(var(--height) - (var(--gutter) * 2));
 
 	.title {
 		// Positioning

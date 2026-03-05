@@ -74,9 +74,9 @@ body,
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-html,
+
 body {
-	overflow: auto;
+	overflow: hidden;
 	background-color: var(--white);
 	// background-color: transparent;
 	color: var(--black);
@@ -84,31 +84,12 @@ body {
 	font-size: 16px;
 }
 
-#smooth-wrapper {
-	height: 100vh;
-	overflow: hidden;
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+	display: none;
 }
-
-#smooth-content,
-.container_all {
-	position: relative;
-	width: 100%;
-	min-height: 100vh;
-	pointer-events: auto; // Ensure wheel events are captured
-}
-
-// Fallback for touch devices (disable transforms or fixed heights)
-.no_smoother#smooth-wrapper {
-	height: 100vh;
-	overflow: auto;
-}
-
-.no-smoother#smooth-content {
-	will-change: transform;
-}
-
 /* On touch devices  allow scrolling */
-body.touch #smooth-wrapper {
+body.touch {
 	overflow: auto;
 	height: auto;
 }

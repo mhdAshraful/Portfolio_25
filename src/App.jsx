@@ -127,42 +127,25 @@ function App() {
 		}
 	}, [loaded]);
 
-	/**
-	 * Smooth Scroll
-	 */
-	// useEffect(() => {
-	// 	if (!loaded) return;
-
-	// 	/**
-	// 	 * Smooth Scroller ----- runs first
-	// 	 */
-	// 	smoother.current = ScrollSmoother.create({
-	// 		smooth: 0.2,
-	// 		effects: true,
-	// 		smoothTouch: 0.5,
-	// 		normalizeScroll: true, // Intercepts all scroll events for consistent behavior
-	// 		wrapper: "#smooth-wrapper",
-	// 		content: "#smooth-content",
-	// 	});
-
-	// 	return () => {
-	// 		if (smoother.current) {
-	// 			smoother.current.kill();
-	// 			smoother.current = null;
-	// 		}
-	// 	};
-	// }, [loaded]);
+	/* 
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  Lenis Smooth Scrolling Setup                                           │
+  └─────────────────────────────────────────────────────────────────────────┘
+ */
 
 	useEffect(() => {
 		if (!loaded) return;
 
 		const lenis = new Lenis({
 			smooth: true,
-			lerp: 0.08, // smoothness (lower = smoother)
-			wheelMultiplier: 1,
+			lerp: 0.8, // smoothness (lower = smoother)
+			wheelMultiplier: 0.5, // scroll speed (higher = faster)
 			touchMultiplier: 1,
 			smoothTouch: false,
 		});
+
+		// Expose globally so any component can call window.lenis.scrollTo()
+		window.lenis = lenis;
 
 		const raf = (time) => {
 			lenis.raf(time);
@@ -172,6 +155,8 @@ function App() {
 
 		// Sync Lenis with GSAP ScrollTrigger
 		lenis.on("scroll", ScrollTrigger.update);
+		// Re-calculate Lenis limit whenever ScrollTrigger adds/removes pin spacers
+		ScrollTrigger.addEventListener("refresh", () => lenis.resize());
 		ScrollTrigger.scrollerProxy(document.body, {
 			scrollTop(value) {
 				return arguments.length
@@ -193,6 +178,7 @@ function App() {
 
 		return () => {
 			lenis.destroy();
+			window.lenis = null;
 		};
 	}, [loaded]);
 
@@ -222,9 +208,12 @@ function App() {
 		{ dependencies: [loaded], scope: main },
 	);
 
-	/***
-	 * Social Media (Vertical Icon) Controller
-	 */
+	/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │     Social Media (Vertical Icon) Controller                                 │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
 	useGSAP(
 		() => {
 			if (!main.current) return;
@@ -248,23 +237,29 @@ function App() {
 		},
 		{ dependencies: [width, loaded], scope: main.current },
 	);
-	/***
-	 * Corner Info, Logo Controller for Contact Page
-	 */
+
+	/* 
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │     Corner Info, Logo Controller for Experiences Page                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+ */
+
 	useGSAP(
 		() => {
-			if (!contactRef.current) return;
+			if (!experiencesRef.current) return;
 
 			const trigger = ScrollTrigger.create({
-				trigger: ".contact",
-				start: "top 10%",
+				trigger: ".exp_wrapper",
+				start: "top top",
 				end: "bottom 90%",
 				onEnter: () => {
-					if (width >= 768) setShowlogo(false);
+					// if (width >= 768) setShowlogo(false); //from tablet
+					setShowlogo(false);
 					setShowCornerInfo(false);
 				},
 				onLeaveBack: () => {
-					if (width >= 768) setShowlogo(true);
+					// if (width >= 768) setShowlogo(true); // from tablet
+					setShowlogo(true);
 					setShowCornerInfo(true);
 				},
 			});
@@ -339,11 +334,6 @@ function App() {
 				/>
 			)}
 
-			{/* 
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                 All Content                                                 │
-  └─────────────────────────────────────────────────────────────────────────────┘
- */}
 			<div ref={contentRef} className="container_all">
 				<Home ref={homeRef} id="home" />
 				<UIEng ref={uiRef} id="ui" />
@@ -361,9 +351,7 @@ function App() {
 					width={width}
 				/>
 				<Works ref={worksRef} loaded={loaded} id="works" />
-
-				<Experiences ref={experiencesRef} id="experience" />
-				{/* <Timeline ref={timelineRef} loaded={loaded} /> */}
+				<Experiences ref={experiencesRef} id="experiences" />
 				<Contact ref={contactRef} loaded={loaded} id="contact" />
 			</div>
 		</div>

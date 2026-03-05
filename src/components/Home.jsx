@@ -38,13 +38,14 @@ const Home = forwardRef((props, ref) => {
 	const splitRef = useRef(null);
 
 	useLayoutEffect(() => {
-		const ln = document.querySelector("#heart");
+		const wordHeart = document.querySelector("#heart");
+		let resizeRafId = null;
 
 		const init = () => {
 			// reset/kill prevoius splits text references
 			if (splitRef.current) splitRef.current.revert();
 			// re-split after resize ----1
-			splitRef.current = SplitText.create(ln, {
+			splitRef.current = SplitText.create(wordHeart, {
 				type: "words, lines",
 				wordsClass: "words",
 				linesClass: "lines",
@@ -108,25 +109,35 @@ const Home = forwardRef((props, ref) => {
 		init();
 		rafId.current = requestAnimationFrame(anim);
 
+		const scheduleInit = () => {
+			if (resizeRafId) cancelAnimationFrame(resizeRafId);
+			resizeRafId = requestAnimationFrame(() => {
+				init();
+				resizeRafId = null;
+			});
+		};
+
 		// re-initialize on resize
-		const ro = new ResizeObserver(() => init());
-		ro.observe(ln);
+		const ro = new ResizeObserver(scheduleInit);
+		ro.observe(wordHeart);
 
 		// re init after resize --- refer to ----1
-		const HandleResize = () => init();
+		const HandleResize = () => scheduleInit();
 		window.addEventListener("resize", HandleResize);
 		// re-init on ScrollTrigger refresh (in case GSAP flushes DOM)
-		ScrollTrigger.create({
+		const refreshTrigger = ScrollTrigger.create({
 			trigger: ".home",
 			start: "top bottom",
-			onEnterBack: () => init(),
+			onEnterBack: () => scheduleInit(),
 		});
 
 		return () => {
 			// cleanup
 			cancelAnimationFrame(rafId.current);
+			if (resizeRafId) cancelAnimationFrame(resizeRafId);
 			ro.disconnect();
 			window.removeEventListener("resize", HandleResize);
+			refreshTrigger.kill();
 			if (splitRef.current) splitRef.current.revert();
 		};
 	}, []);

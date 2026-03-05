@@ -92,8 +92,8 @@ const Cornerinfo = forwardRef(
 				style={{
 					width: clientTime ? "auto" : touchDevice ? "240px" : "270px",
 					position: clientTime ? "relative" : "fixed",
-					bottom: clientTime ? "none" : "calc(var(--gutter) + 16px)",
-					left: clientTime ? "none" : "calc(var(--gutter) + 10px)",
+					bottom: clientTime ? "none" : "calc(var(--gutter) + 50px)",
+					left: clientTime ? "none" : "calc(var(--gutter) + 16px)",
 					backdropFilter: clientTime ? "none" : "blur(32px)",
 					WebkitBackdropFilter: clientTime ? "none" : "blur(32px)",
 					borderRadius: clientTime ? "0px" : "8px",

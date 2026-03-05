@@ -1,5 +1,4 @@
 import gsap from "gsap";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { forwardRef, useEffect, useRef } from "react";
 import { useOverlayContext } from "../utils/SecitonContext";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
@@ -18,13 +17,10 @@ const MenuOverlay = forwardRef((props, ref) => {
 	const { setShouldRenderModal, ViewModal, setViewModal } =
 		useOverlayContext();
 
-	let smoother = ScrollSmoother.get();
-
 	const handleClick = (e) => {
-		// console.log("e.target", e.target);
-		// console.log("e.target.dataset.dest:", e.target.dataset.dest);
 		const dest = e.target.dataset.dest;
-		smoother.scrollTo(`.${dest}`, true, "top 100px");
+		// window.lenis?.scrollTo(`.${dest}`, { offset: -100, duration: 1.2 });
+		window.lenis?.scrollTo(`.${dest}`, { duration: 1.2 });
 		setViewModal(false);
 	};
 
@@ -91,7 +87,7 @@ const MenuOverlay = forwardRef((props, ref) => {
 							},
 						});
 					},
-				}
+				},
 			);
 		} else {
 			/***

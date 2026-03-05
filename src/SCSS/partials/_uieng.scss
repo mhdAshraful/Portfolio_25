@@ -6,12 +6,12 @@
 .interaction_wrapper,
 .focus_wrapper,
 .education_wrapper {
-	width: 100%;
+	// width: 100%;
+	width: calc(100vw - (var(--gutter) * 2));
 	max-height: calc(var(--height) - (var(--gutter)));
 
 	section {
 		position: relative;
-		width: calc(100vw - (var(--gutter) * 2));
 		min-height: calc(var(--height) - (var(--gutter) * 2));
 		// display: flex;
 		// justify-content: center;
@@ -202,15 +202,15 @@
 					"kern" 1,
 					"ss01" 0;
 
-					@include mixins.MOBILE {
-						max-width: 70%;
-					}
+				@include mixins.MOBILE {
+					max-width: 70%;
+				}
 			}
 			.reference {
 				position: absolute;
-				top: 45vh;
+				top: 48vh;
 				left: 35vw;
-				font-size: 20px;
+				font-size: 22px;
 			}
 		}
 
