@@ -182,7 +182,7 @@ const Data = [
 			{
 				title: "Fullstack Developer",
 				type: "Freelance Contract",
-				org: "AS Enterprize",
+				org: "AS Enterprize (Under Development)",
 				link: "https://a-a-mamun.vercel.app/",
 				location: "Remote",
 				duration: {

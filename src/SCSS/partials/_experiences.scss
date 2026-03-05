@@ -117,6 +117,17 @@
 		@include fonts.font_size_be(11, 16, 320, 1920);
 		color: #666;
 		margin-bottom: 1rem;
+		a {
+			color: orange;
+
+			text-decoration: none;
+			border-bottom: 1px solid transparent;
+			transition: border-color 0.3s;
+
+			&:hover {
+				border-color: var(--red);
+			}
+		}
 	}
 
 	.card_role {

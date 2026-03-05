@@ -15,6 +15,7 @@ const ExperienceCard = ({
 	location,
 	duration,
 	role,
+	link,
 	achievements,
 	skills,
 }) => {
@@ -34,7 +35,13 @@ const ExperienceCard = ({
 				<div className="card_body">
 					<h2 className="card_title">{title}</h2>
 					<p className="card_org">
-						{org}
+						{link ? (
+							<a href={link} target="_blank" rel="noopener noreferrer">
+								{org}
+							</a>
+						) : (
+							org
+						)}
 						{location && ` · ${location}`}
 					</p>
 					<p className="card_role">{role}</p>
