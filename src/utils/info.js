@@ -183,7 +183,7 @@ const Data = [
 				title: "Fullstack Developer",
 				type: "Freelance Contract",
 				org: "AS Enterprize",
-				link: "https://asenterprize.com/",
+				link: "https://a-a-mamun.vercel.app/",
 				location: "Remote",
 				duration: {
 					start: "JAN 2026",
@@ -210,7 +210,7 @@ const Data = [
 				title: "Software Engineer (Frontend)",
 				type: "Fulltime",
 				org: "Bulipetech (Ceased Operations)",
-				link: "https://bulipetech.com/",
+				link: "https://www.linkedin.com/company/bulipeglobal/posts/?feedView=all",
 				location: "On-site (Dhaka, Bangladesh)",
 				duration: {
 					start: "Jun 2025",

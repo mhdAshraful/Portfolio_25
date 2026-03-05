@@ -3,16 +3,15 @@
 @use "./sizes";
 
 .contact_wrapper {
-	width: 100%;
+	width: calc(100vw - (var(--gutter) * 2));
 	height: 100vh;
+	position: relative;
+	margin: auto;
 
 	.contact {
-		position: relative;
-		width: calc(100vw - (var(--gutter) * 2));
-		height: calc(100vh - (var(--gutter) * 2));
-		// display: flex;
-		// align-items: center;
-		// justify-content: space-around;
+		width: 100%;
+		height: 100%;
+		display: flex;
 		flex-direction: column;
 
 		.highilighted {
@@ -20,10 +19,6 @@
 		}
 
 		.title {
-			position: relative;
-			width: 100%;
-			// top: 5vh;
-			left: 2vw;
 			font-family: var(--fira);
 			font-weight: 900;
 			// $min-font, $base-font-size, $min-screen, $base-screen
@@ -36,11 +31,12 @@
 
 		.middle_content {
 			position: relative;
-			width: calc(100vw - (var(--gutter) * 2 + 10px));
+			// width: calc(100vw - (var(--gutter) * 2 + 10px));
 			height: 240px;
-			// top: 30%;
+
 			left: 50%;
 			transform: translate(-50%, 20%);
+
 			display: flex;
 			border-top: 1px solid var(--black);
 			border-bottom: 1px solid var(--black);
@@ -49,9 +45,9 @@
 		}
 
 		.client_time {
-			position: relative;
+			// position: relative;
 			align-self: flex-start;
-			// margin-top: 6px;
+			margin-top: 6px;
 			.heading {
 				font-family: var(--fira);
 				font-weight: 700;
